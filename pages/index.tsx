@@ -1,22 +1,12 @@
-import type { NextPage } from "next";
-import Container from "../components/Container";
-import Image from "next/image";
-import RecentPosts from "../components/RecentPosts";
-import metadata from "../data/metadata";
-import { allPosts } from "../.contentlayer/generated";
-import { InferGetStaticPropsType } from "next";
-import Head from "next/head";
-
+import type { NextPage } from 'next';
+import Container from '../components/Container';
+import Image from 'next/image';
+import RecentPosts from '../components/RecentPosts';
+import metadata from '../data/metadata';
+import { allPosts } from '../.contentlayer/generated';
+import { InferGetStaticPropsType } from 'next';
 
 const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
-   <div>
-     <Head>
-    <meta
-          property="og:image"
-          content="../public/sky.jpeg"
-        />
-      </Head>
-  </div>
   return (
     <Container>
       <div className={`my-5 w-full`}>
@@ -31,7 +21,7 @@ const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
             className={`rounded-3xl`}
           />
           <span
-            className={`absolute top-14 font-bold italic text-white text-5xl md:text-7xl text flex justify-center w-full drop-shadow-lg`}
+            className={`absolute top-12 font-extrabold italic text-white text-5xl md:text-9xl text flex justify-center w-full drop-shadow-lg`}
           >
             {metadata.title}
           </span>
@@ -48,8 +38,8 @@ export const getStaticProps = async () => {
   );
   return {
     props: {
-      posts,
-    },
+      posts
+    }
   };
 };
 

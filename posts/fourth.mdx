@@ -1,0 +1,107 @@
+---
+title: App 루트 컴포넌트
+date: 2022-03-15
+description: 이것이 왜 유용한가?
+---
+
+- react.lazy() 와 suspense 를 사용하여 컴포넌트를 리팩토링합니다.
+
+### 이것이 왜 유용한가?
+
+<aside>
+✍🏻 리액트 프로젝트 파일은 크고 아름답습니다. 
+그 의미는 프로그램이 돌아가는데 많은 연산 비용이 들어간다는 의미를 내표합니다. 
+이것을 ‘프로그램이 무겁다' 라고 표현하기도 하며, 많은 개발자들은 이 현상을 기피합니다. 
+왜냐하면,  한번 로딩하는데 쓸데없이 모든 파일을 불러오느라 시간을 많이 소모하기도 하는 등, 말 그대로 쓸데없이 반복되는 일을 하는 것은 개발자들의 발작버튼이기 때문이죠.
+
+이 현상을 제거하기 위해  만들어진 것이 바로 Lazy와 Suspense 입니다. 
+이 두가지는 언제나 같이 움직이죠 , 마치 async 와 await 처럼요. 
+이제 사용방법을 알아보러 가볼까요?
+
+</aside>
+
+### 어떻게 사용하나요?
+
+1. App.js의 react로 부터 import 합니다.
+
+```jsx
+// App.js
+
+/* react.lazy()와 suspense를 사용해 보세요. */
+...
+// 1단계 : lazy,Suspense 를 react 로부터 import 해주겠다고 최상단에 선언해줍니다.
+import { lazy,Suspense } from 'react';
+
+```
+
+1. 새로운 임의의 컴포넌트가 필요하므로 생성합니다. 
+
+Home
+
+|
+
+blogComponent
+│   ├── BlogDetail.js
+│   ├── BlogList.js
+│   └── CreateBlog.js
+├── component
+│   ├── Footer.js
+│   ├── Loading.js
+│   ├── Navbar.js
+│   └── NotFound.js
+
+---
+
+<aside>
+✍🏻 ‘제가 파악하기로는' 컴포넌트들은 이렇게 파악되므로, 주석으로 감싸진 이 부분들을 
+lazy-Suspsnse 로 바꿔주겠습니다.
+
+</aside>
+
+```jsx
+// 리팩토링 전 
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+{/* 여기서부터   */}
+import Home from './Home';
+import Navbar from './component/Navbar';
+import CreateBlog from './blogComponent/CreateBlog';
+import BlogDetails from './blogComponent/BlogDetail';
+import NotFound from './component/NotFound';
+import Footer from './component/Footer';
+{/* 여기까지    */}
+
+import { useEffect, useState } from 'react';
+import { lazy,Suspense } from 'react';
+```
+
+리팩토링중 ————
+
+```jsx
+// 리팩토링 후
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+{/* 여기서부터   */}
+const Home =  lazy(() => import('./Home'));
+const Navbar =  lazy(() => import('./component/Navbar'));
+const CreateBlog =  lazy(() => import('./blogComponent/CreateBlog'));
+const BlogDetails =  lazy(() => import('./blogComponent/BlogDetail'));
+const NotFound =  lazy(() => import('./component/NotFound'));
+const Footer =  lazy(() => import('./component/Footer'));
+{/* 여기까지    */}
+
+import { useEffect, useState } from 'react';
+import { lazy,Suspense } from 'react';
+```
+
+1. 마지막으로 JSX 로 리턴되는 부분을 손봐줍니다. 
+    
+    <aside>
+    ✍🏻 * Suspense 는 fallback 이라는 prop을 받습니다.
+     뒤로 JSX  문법을 사용하여  `<Suspense fallback={<div>Loading...</div>}>` 
+    렌더링이 끝나고 유저에게 바로 다음의 컴포넌트가 보여지도록 연결시켜주는 역할입니다. 
+    
+    
+    </aside>

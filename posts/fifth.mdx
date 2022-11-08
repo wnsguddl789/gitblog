@@ -1,0 +1,120 @@
+## title: $target 과 event.tartget 의 차이점은?
+
+date: 2022-11-18
+description: `[Event](https://developer.mozilla.org/ko/docs/Web/API/Event)`
+ 인터페이스의 **`target`**
+ 속성은 이벤트가 발생한 대상 객체를 가리킵니다. 버블링과 캡처링 단계에서는 `[Event.currentTarget` (en-US)](https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget)
+과 다를 수 있습니다.
+
+### jQuery 와 Javascript
+
+<aside>
+✍🏻   제이쿼리는 웹사이트에 자바스크립트를 쉽게 활용할 수 있도록 도와주는 오픈소스 기반의 자바스크립트 라이브러리입니다. 그러나 부트스트랩이 차기버전(v5) 부터 제이쿼리에 대한 의존성을 제거하겠다고 발표하겠다고도 하고, 인기가 많이 낮아진 상태입니다. 함수형 컴포넌트가 익숙한 제게, 제이쿼리 표현식은 낯설 때가 많았습니다.
+
+</aside>
+
+---
+
+### jquery $ 의미
+
+<aside>
+✍🏻  $를 이용하면, 편하게 HTML요소를 선택하고, 특정 동작들을 설정할 수 있습니다.
+
+</aside>
+
+### $() 함수
+
+$() 함수는 선택된 HTML 요소를 제이쿼리에서 이용할 수 있는 형태로 생성해줍니다.
+
+$() 함수의 인수로는 HTML 태그 이름뿐만 아니라, CSS 선택자를 전달하여 특정 HTML 요소를 선택할 수 있습니다.
+
+이러한 $()함수를 통해 생성된 요소를 제이쿼리 객체(jQuery Object)라고 합니다.
+
+제이쿼리는 이렇게 생성된 제이쿼리 객체의 메소드를 사용하여 여러 동작을 설정할 수 있습니다.
+
+```
+사용 예시 :  $(선택자).동작함수();
+
+료
+```
+
+```jsx
+function func() {
+
+    addAttribute();  // 아이디가 "para"인 HTML 요소에 속성을 추가함.
+
+    createElement(); // 아이디가 "para"인 HTML 요소를 생성함.
+
+}
+
+function createElement() {
+
+    var criteriaNode = document.getElementById("text");
+
+    var newNode = document.createElement("p") newNode.innerHTML = "새로운 단락입니다.";
+
+    newNode.setAttribute("id", "para");
+
+    document.body.insertBefore(newNode, criteriaNode);
+
+}
+
+function addAttribute() {
+
+    document.getElementById("para").setAttribute("style", "color: red");
+
+}
+
+```
+
+---
+
+### 문법
+
+위의 예제에서 addAttribute() 함수는 아이디가 "para"인 HTML 요소에 새로운 속성을 추가하는 함수입니다.
+
+또한, createElement() 함수는 아이디가 "para"인 HTML 요소를 생성하여 추가해 주는 함수입니다.
+
+Window 객체의 onload() 메소드를 이용하여 문서가 모두 로드된 뒤에 코드가 실행되도록 설정합니다.
+
+---
+
+```jsx
+window.onload = function() {
+
+    자바스크립트 코드;
+
+};
+```
+
+마찬가지로 제이쿼리에서는 Document 객체의 ready() 메소드를 이용하여 같은 결과를 보장하고 있습니다.
+
+```jsx
+$(document).ready(function() {
+
+    제이쿼리 코드;
+
+});
+```
+
+또한, jQuery Team에서는 같은 결과를 보장하는 더욱 짧은 문법을 다음과 같이 제공하고 있습니다.
+
+```jsx
+$(function() {
+
+    제이쿼리 코드;
+
+});
+```
+
+다음 예제는 문서가 모두 로드되는 시점과 창이 모두 로드되는 시점의 차이를 보여주는 예제입니다.
+
+```jsx
+$(document).ready(function () {
+  $('#doc').text('문서가 전부 로드됐어요!');
+});
+
+$(window).load(function () {
+  $('#win').text('창이 모두 로드됐어요!');
+});
+```

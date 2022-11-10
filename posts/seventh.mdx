@@ -1,0 +1,124 @@
+---
+title: SCSS (CSS Pre-Processor 전처리기)이해
+date: 2022-11-10
+description: CSS 가 동작하기 전, 사용하는 기능으로, 우리가 알고있는 CSS 의 한계를 보완하기 위한 확장팩이라고 이해할 수 있다.
+---
+
+<aside>
+💡 CSS 가 동작하기 전, 사용하는 기능으로, 우리가 알고있는 CSS 의 한계를 보완하기 위한 확장팩이라고 이해할 수 있다.
+
+</aside>
+
+### SASS (Systactically Awesome Style Sheets)
+
+> 변수사용
+
+> 조건문/반복문
+
+> import/ Nesting/ Mixin / Extend, Inheritance
+
+- 기존 CSS와 비교해보면
+  거의 같은 문법을 통해 Sass 의 기능을 지원
+  - How to use Sass Compile
+    {' '}
+    <aside>
+      💡 웹에서 직접 동작할 수 없다. 최종 프로덕션 레벨은 표준 CSS 로 동작해야
+      하기 때문에, 전처리기 작성 후 CSS로 컴파일해야한다.
+    </aside>
+
+### 프로젝트에서 SASS 를 사용하기
+
+style.css 파일이 아닌 Sass 파일(style.scss)에서 모든 코딩을 수행해야한다.
+
+동일한 코드로 파일을 생성하는 것은 Sass다.
+
+---
+
+시작하려면, 내부에 두 개의 폴더가 있는 폴더를 만들고, CSS 그리고 이미지, 그 다음, CSS 폴더 안에 Sass 확장자를 가진 파일을 만든다. (style.scss)
+
+‘그런 다음 파일을 열면 파일이 즉시 감지된다.’ (나는 파일이 감지되지 않을까봐 많이 걱정했었다)
+
+편집기 아래 이름이 지정된 버튼이 나타난다 “Watch Sass” 이 파일을 보고 CSS 파일에서 코드 생성(컴파일) 을 시작하도록 Sass 에 지시하려면 이 파일을 클릭하기만 하면 된다. SASS 가 컴파일을 마치면, 프로젝트의 CSS 폴더에 세 개의 파일이 생성된다**. style.css**, **style.scss** 그리고, [\*\*style.css.map](http://style.css.map)\*\* 모든 변경 사항을 추적하고 CSS 코드를 생성할 준비가 되었다.
+
+작업을 킵고잉 하기 위해 돌아와서 확장자가 .scss 인 파일을 열기만 하면 된다. 그런 다음 Watch Sass for Sass를 클릭하여 CSS 파일에서 수정 사항 생성을 시작해야 한다. 그렇지 않으면 CSS 파일에 아무것도 생성되지 않는다. ……../
+
+[https://mistermarket.tistory.com/46](https://mistermarket.tistory.com/46) 블로그 참조
+
+### CSS 파일을 연결하기
+
+css 파일이 css 스타일을 HTML에 연결할 수 있도록 index.html에 연결한다.
+
+```html
+<link rel="stylesheet" href="css/style.css" />
+```
+
+### Import 로 코드를 파일로 구성하기
+
+파일을 생성할 때, Sass 에서 컴파일되는 것을 방지하기 위해, 파일 이름 뒤에 밑줄(\_)이 시작된다…!
+
+세 개의 파일을 만든다.
+
+- \_variables.scss : 변수를 추가한다
+- \_mixin.scss : 재사용할 기능을 추가한다
+- \_card.scss : 카드의 스타일을 추가한다
+
+파일들에서 생성한 변수를 복사해서 붙여넣는다.
+
+style.scss 파일에 넣고 \_variables.scss 파일 :
+
+```html
+$bcg-color: #ab33ca; $font-size: 16px; $bizbaeja-green: #da64ca $spacing: 2rem;
+```
+
+\_mixins.scss 파일에서 믹스인을 사용하여 재사용 가능한 함수를 생성가능하다.
+
+- 함수선언방법
+
+```html
+@mixin name_function { content }
+```
+
+- 매개변수가 있는 경우 선언 :
+
+```html
+@mixin name_function ($name_variable){ content }
+```
+
+- 함수호출방법 :
+
+```html
+@include name_function();
+```
+
+(예시)
+
+```html
+@mixin flex-center{ display: flex; align-items: center; justify-content :
+center; } @mixin border-radius($radius){ -webkit-border-radius: $radius;
+-moz-border-radius: $radius; border-radius : $radius; }
+```
+
+\_card.scss에 다음 코드를 추가합니다.
+
+```html
+.card{ backgorund-color: almonds; width: 20rem; overflow: hidden; margin:
+2rem;<br />
+box-shadow: 5px 5px 5px #000; @include borer-radius(0.5rem); img{ heigth:
+15rem;<br />
+background-size: cover; background-position: center center; } .card_content{
+padding:$spacing; } .card_title:{ margin: 0; color:black; } .card_description{
+margin: 0; color: $bizbaeja-green; } &_dark{ background-color: black;
+.card_title{ color: white; } } }
+```
+
+별칭의 경우 (&) 그 뒤에 변수 이름을 가져와야 한다.
+
+- 모든 파일을 style.scss 로 가져온다.
+
+```html
+@import 'variables'; @import 'mixins'; @import 'card'; body{ font-family :
+$fonts; bcg-color: $primary-color; padding: $spacing; min-height: 100vh;
+@include flex-center(); }
+```
+
+https://adalbertpungu.github.io/card_with_sass/

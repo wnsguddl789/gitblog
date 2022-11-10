@@ -23,7 +23,7 @@ const RecentPosts = ({ posts  })=>{
         children: [
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h1", {
                 className: `text-3xl font-extrabold`,
-                children: "\uCD5C\uADFC \uAC8C\uC2DC\uBB3C"
+                children: "\uAC8C\uC2DC\uBB3C"
             }),
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                 className: `flex flex-col`,

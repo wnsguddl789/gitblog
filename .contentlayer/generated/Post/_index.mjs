@@ -8,7 +8,7 @@ import ninthMdx from './ninth.mdx.json' assert { type: 'json' }
 import secondMdx from './second.mdx.json' assert { type: 'json' }
 import seventhMdx from './seventh.mdx.json' assert { type: 'json' }
 import sixthMdx from './sixth.mdx.json' assert { type: 'json' }
+import tenthMdx from './tenth.mdx.json' assert { type: 'json' }
 import thirdMdx from './third.mdx.json' assert { type: 'json' }
-import snacks__1Mdx from './snacks__1.mdx.json' assert { type: 'json' }
 
-export const allPosts = [eighthMdx, fifthMdx, firstMdx, fourthMdx, ninthMdx, secondMdx, seventhMdx, sixthMdx, thirdMdx, snacks__1Mdx]
+export const allPosts = [eighthMdx, fifthMdx, firstMdx, fourthMdx, ninthMdx, secondMdx, seventhMdx, sixthMdx, tenthMdx, thirdMdx]

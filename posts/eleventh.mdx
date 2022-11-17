@@ -1,0 +1,141 @@
+---
+title: NEXTJS 완벽가이드(라우팅)
+date: 2022-11-17
+description: NEXTJS에서의 라우팅 방법을 알아보도록 하자
+---
+
+## 파일 기반 라우팅
+
+React에는 라우터가 없으나
+
+Q. 라우팅이란?
+
+A. 사용자에게 여러 페이지가 있는 것처럼 착각하게 하는 것
+
+** 서버에 추가로 요청을 보내지 않고 URL 을 기반으로 화면에 보이는 것을 바꾸는 것 **
+
+Q. 라우터란?
+
+A. 탐색하고 다른페이지를 로딩하는 역할
+
+보통 React에서는 라우터 라이브러리를 사용해서 그 빈자리를 메꿔왔다.
+
+라우터는 URL을 감시한다.(👀 → URL 감시)
+
+URL 변경 탐지 → 백엔드 서버에 요청을 보내는 브라우저의 기본 동작을 막음
+
+대신 React를 사용하여 페이지에 다른 콘텐츠를 렌더링한다.
+
+이 과정이 바로 라우팅이다.
+
+```html
+//React 라우터 버전에 따라 다르다
+<Switch>
+	<Route path="/" exact>
+		<AllMeetUpPage />
+	<Route path="/new-meetup" >
+		<NewMeetUpPage />
+	<Route path="/favorites" >
+		<FavoritePage />
+</Switch>
+
+```
+
+React 는 추가로 코드를 작성해야 한다. 페이지 역할을 하는 컴포넌트를 별도의 폴더에 저장하고
+
+이렇게 코드에서 라우트 설정을 복제한다.
+
+### NEXTJS 에서의 변화
+
+\*\* 코드 내 라우터 정의를 없애다. (특수 페이지 폴더 ; 이름은 ‘pages’) 이 폴더를 구성하고, 페이지가 지원하는 라우트와 경로를 정의하면 된다.
+
+# 중첩경로 페이지 (useRouter)
+
+![스크린샷 2022-11-14 오후 6.29.49.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1be3515f-e796-4e0a-9b6b-d3238e851f73/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-11-14_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_6.29.49.png)
+
+my-domain/news/someting-important
+
+경로를 만들고 싶으면news 폴더의 하위폴더를 만든 후 그곳에 index.js 를 또 만들어주고 그곳에 다시 페이지를 만들어준다. 그러나 이 방법은 페이지가 단 하나일 경우에만 가능하기 때문에 동적 경로 페이지 구성 방법을 알아두도록 해야한다.
+
+[newsId].js
+
+```jsx
+import { useRouter } from 'next/router';
+// my-domain.com/news/sonmeting-detail
+function DetailPage() {
+  const router = useRouter();
+  const newsID = router.query.newsId;
+
+  //send a request to the backend API
+  //to fetch the news item with newsID
+  return <h1>The Detail Page</h1>;
+}
+
+export default DetailPage;
+```
+
+next 에서 만들어서 쓰는 훅 useRouter 를 이용하여 특정 라우팅 기능을 이용한다.
+
+이훅을 이용하여 DetailPage 에 호출한다..
+
+라우터 객체에 접근하고 그 라우터 객체에서 특정 데이터나 호출할 수 있는 특정 메소드를 얻는다.
+
+접근법 : query 속성 객체에서 대괄호 안에 썼던 식별자를 속성 이름으로 넣으면 된다. ‘newsId’사용을 통해 중첩 객체에 접근하면 된다. 그러면 이 페이지에 접속할 수 있었던 동적 세그먼트의 URL 에 있는 구체적인 값이 저장된다.
+
+## 페이지 간 연결하기 (Link)
+
+보통 우리는 상태창에 URL 을 일일히 쳐가면서 페이지 이동을 하지 않고 링크 클릭을 통해 편하게 이동을 하기 때문에, 순서 없는 리스트를 만들어주기로 한다. Fragment 를 만들어준다.
+
+> SPA 의 장점을 유지하기 위해 a 링크 사용은 지양해야 한다. 사용자가 탐색할 때마나다 브라우저가 백엔드에 새 요청을 보내고 새 HTML 페이지를 받는다는 것은 그만큼 가성비가 떨어진다는 뜻이다. Link 라는 특수 컴포넌트를 사용함으로서 React로서의 장점을 살려 대화형 UI를 구축할 수 있다.
+
+```jsx
+import { Fragment } from 'react';
+import Link from 'next/link';
+// my-domain.com/news
+function NEWSPage() {
+  return (
+    <Fragment>
+      <h1>The NEWS Page</h1>;
+      <ul>
+        <li>
+          <Link href="/news/next-js-is-cool">NEXTJS is a great Framework</Link>
+        </li>
+        <li>기타등등</li>
+      </ul>
+    </Fragment>
+  );
+}
+
+export default NEWSPage;
+```
+
+[실습](https://www.notion.so/bd468500032141178f8f9d762decccd8)
+
+## 실습
+
+## 모임목록을 만드는 페이지 만들기
+
+1. 모임 목록을 전부 보여주는 시작 페이지 - index.js
+2. 모임 추가 페이지 - new-meetup.js
+3. 모임 상세 페이지
+
+## Layout 컴포넌트,
+
+layout 폴더안의 페이지는 일반 레이아웃과 페이지를 설정할 수 있다. 다른 컴포넌트를 포함할 수 있으며 , prop.childern을 사용하여 `<Layout>` 과 사이에 있는 내용을 가져와서 해당 콘텐츠를 이 컴포넌트 안에 넣어준다.
+
+```jsx
+
+```
+
+## \_app.js 파일을 이용하여 동적 컴포넌트 연동
+
+<aside>
+📖 _app.js 는 최상위 컴포넌트같은 것. 이 특수 컴포넌트는 NEXTJS가 렌더링하는 최상위 컴포넌트처럼 작동한다. 여기서 프로퍼티를 받고 구조 분해 할당을 해서 정보를 꺼낸다. 거기서 꺼내는 정보는 Component와 pageProps다. NEXTJS 가 자동으로  이 프로퍼티를 MyApp 컴포넌트로 보낸다. ‘Component’는 렌더링 될 실제 페이지 콘텐츠를 저장하고 있는 프로퍼티다. 그래서 페이지를 전환할 때마다 변한다. ‘pageProps’ 는 페이지가 받는 특수 프로퍼티다.
+
+</aside>
+
+showDetail Btn 을 클릭하면 ‘ / ’ + MeetupList 의 id 를 push 한 URL 로 useRouter 를 이용하여 이동시키는 프로그래밍적 라우팅 구현.
+
+component/SnackPost
+
+pages/blog/tsx - import BlogPost

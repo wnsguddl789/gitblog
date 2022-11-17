@@ -1,8 +1,9 @@
-import type { NextPage } from "next";
-import BlogPost from "../components/BlogPost";
-import Container from "../components/Container";
-import { allPosts } from "contentlayer/generated";
-import { InferGetStaticPropsType } from "next";
+import type { NextPage } from 'next';
+import BlogPost from '../components/BlogPost';
+import SnackPost from 'components/SnackPost';
+import Container from '../components/Container';
+import { allPosts } from 'contentlayer/generated';
+import { InferGetStaticPropsType } from 'next';
 
 const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
@@ -10,6 +11,17 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
       <div className={`mt-10 flex flex-col`}>
         {posts.map((post) => (
           <BlogPost
+            date={post.date}
+            title={post.title}
+            des={post.description}
+            slug={post._raw.flattenedPath}
+            key={post._id}
+          />
+        ))}
+      </div>
+      <div className={`mt-10 flex flex-col`}>
+        {posts.map((post) => (
+          <SnackPost
             date={post.date}
             title={post.title}
             des={post.description}
@@ -29,8 +41,8 @@ export const getStaticProps = async () => {
 
   return {
     props: {
-      posts,
-    },
+      posts
+    }
   };
 };
 

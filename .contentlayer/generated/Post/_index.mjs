@@ -11,7 +11,8 @@ import seventhMdx from './seventh.mdx.json' assert { type: 'json' }
 import sixthMdx from './sixth.mdx.json' assert { type: 'json' }
 import tenthMdx from './tenth.mdx.json' assert { type: 'json' }
 import thirdMdx from './third.mdx.json' assert { type: 'json' }
+import thirteenthMdx from './thirteenth.mdx.json' assert { type: 'json' }
 import twelvfthMdx from './twelvfth.mdx.json' assert { type: 'json' }
 import snacks__firstMdx from './snacks__first.mdx.json' assert { type: 'json' }
 
-export const allPosts = [eighthMdx, eleventhMdx, fifthMdx, firstMdx, fourthMdx, ninthMdx, secondMdx, seventhMdx, sixthMdx, tenthMdx, thirdMdx, twelvfthMdx, snacks__firstMdx]
+export const allPosts = [eighthMdx, eleventhMdx, fifthMdx, firstMdx, fourthMdx, ninthMdx, secondMdx, seventhMdx, sixthMdx, tenthMdx, thirdMdx, thirteenthMdx, twelvfthMdx, snacks__firstMdx]

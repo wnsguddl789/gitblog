@@ -58,10 +58,6 @@ const navlinks = [
     {
         title: "Blog",
         link: "/blog"
-    },
-    {
-        title: "\uC7A1\uD559\uB2E4\uC2DD",
-        link: "/snack"
     }
 ];
 /* harmony default export */ const data_navlinks = (navlinks);

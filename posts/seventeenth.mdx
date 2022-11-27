@@ -1,0 +1,206 @@
+---
+title: CSS 기초 정리
+date: 2022-11-27
+description: CSS 개념정리
+---
+
+> CSS는 좋은 사용자 경험을 제공하기 위한 도구이다
+
+# CSS 개요
+
+```html
+//index.html 의 요소들을 시멘틱한 요소들을 사용함으로서 그 요소가 감싸고 있는
+영역이 어떤 역할을 담당하는지 개발자가 쉽게 파악할 수 있도록 도와야한다.
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modern CSS</title>
+    https://codesandbox.io/s/login2-reference-forked-vfc4eo?file=/index.html
+    <link rel="stylesheet" href="index.css" />
+
+    <!--css 파일 추가-->
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="layout.css" />
+    <!--css 파일 추가 끝-->
+  </head>
+  <body>
+    <header>This is the header.</header>
+    <div class="container">
+      <nav>
+        <h4>This is the navigation section.</h4>
+        <ul>
+          <li>Home</li>
+          <li>Mac</li>
+          <li>iPhone</li>
+          <li>iPad</li>
+        </ul>
+      </nav>
+      <main>
+        <h1>This is the main content.</h1>
+        <p>...</p>
+      </main>
+      <aside>
+        <h4>This is an aside section.</h4>
+        <p>...</p>
+      </aside>
+    </div>
+    <footer>
+      <ul>
+        <li>개인정보 처리방침</li>
+        <li>이용 약관</li>
+        <li>법적 고지</li>
+      </ul>
+    </footer>
+  </body>
+</html>
+```
+
+```html
+body { margin: 0; padding: 0; background: #fff; color: #4a4a4a; } header, footer
+{ font-size: large; text-align: center; padding: 0.3em 0; background-color:
+#4a4a4a; color: #f9f9f9; } nav { background: #eee; } main { background: #f9f9f9;
+} aside { background: #eee; }
+```
+
+[코드] index.css파일
+
+```
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.container {
+  display: flex;
+  flex: 1;
+}
+main {
+  flex: 1;
+  padding: 0 20px;
+}
+nav {
+  flex: 0 0 180px;
+  padding: 0 10px;
+}
+aside {
+  flex: 0 0 130px;
+  padding: 0 10px;
+}
+```
+
+[코드] layout.css
+
+# 텍스트 꾸미기
+
+## 색상 `color`
+
+- .blue 클래스의 속성에 #00FFFF 값을 할당한다.
+- .wapper 클래스에 배경색과, 글자색을 동시에 적용할 수 있다.
+
+```html
+.blue{ color: #00FFFF; } .wrapper{ box-sizing: border-box; position: relative;
+color: #CA7575; background-color: #F5F5DB; }
+```
+
+## 글꼴 `font-family`
+
+- “”따옴표 안에 글꼴 이름을 붙여서 사용.
+- HTML 의 `link` 태그를 이용하여 간단하게 embed 할 수 있다.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Fonts</title>
+    <!--글꼴 임베드 시작-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <!--글꼴 임베드 끝-->
+  </head>
+  <body>
+    <p class="regular">Montserrat Regular 400</p>
+    <p class="medium">Montserrat Medium 500</p>
+    <p class="bold">Montserrat Bold 700</p>
+  </body>
+</html>
+```
+
+```html
+.inputtext{ font-family :"IBM Plex Sans KR", "Roboto"; }
+```
+
+## 크기 `font-size`
+
+- 글자의 크기를 변경할 수 있다. (보통 4나 8배수를 이용한다고 한다)
+
+```html
+.h1{ font-size: 24px; }
+```
+
+## 기타 스타일링
+
+- 굵기: `font-weight`
+- 밑줄, 가로줄: `text-decoration`
+- 자간: `letter-spacing`
+- 행간: `line-height`
+
+[https://codesandbox.io/s/login2-reference-forked-vfc4eo?file=/index.html](https://codesandbox.io/s/login2-reference-forked-vfc4eo?file=/index.html)
+
+# 박스모델
+
+#margin #padding # border #content
+
+border를 기준으로 padding 과 margin 이 있다.
+
+## border / margin / padding content
+
+### border(테두리)
+
+- 각 영역이 차지하는 크기를 파악하기 위해, 레이아웃을 만들면서 그 크기를 시각적으로 확인할 수 있도록 만든다.
+- 각각의 값은 테두리 두께(`border-width`), 테두리 스타일( `border-style`), 테두리 색( `boder-color`) 이다. 이외에도 `border-radius`(둥글게 만들기) 도 있다.
+
+```html
+div{ border: 1px solid blue; }
+```
+
+[코드] div 요소에 1px의 파란색 실선을 추가합니다.
+
+### margin(바깥 여백)
+
+- 각각의 값은 top ,right, bottom, left 로 시계방향이다
+
+```html
+div{ margin: 10px 20px 30px 40px; }
+```
+
+```html
+div{ margin: 10px 20px; }
+```
+
+- 코드의 위아래에 각각 여백이 추가된다
+
+```html
+div{ margin: 10px; }
+```
+
+- 모든 방향의 바깥 여백에 적용된다.
+
+### padding (안쪽 여백)
+
+margin 과 동일한 규칙이 적용된다. 배경색이나 border 를 적용시키면 안쪽 여백을 더욱 선명하게 확인할 수 있다.
+
+## 박스를 벗어나는 콘텐츠 해결
+
+overflow: auto 를 적용시키면 박스보다 큰 콘텐츠에는 스크롤을 표시한다
+
+x 축과 y 축을 지정해 가로 방향이나 세로 방향을 지정할 수 있다.
+
+### 박스 크기 측정
+
+\*`{box-sizing : border-box};`를 전체 속성에 추가해야 박스에 적용할 여백을 포함하여 계산이 된다. (여백과 테두리 포함해서 박스크기계산하게 만드는 속성)

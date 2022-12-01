@@ -1,0 +1,61 @@
+---
+title: 디자인 패턴, MVP, MVVM
+date: 2022-12-01
+description:소프트웨어 개발에서 일반적으로 발생하는 문제들에 대한 해결 방법을 정리한 패턴을 뜻합니다.
+---
+
+# MVP
+
+<aside>
+💡 페이지 조절과 전시가 뷰에 의해서 이루어진다. 뷰를 대신하여 프레젠터는 모든 UI 이벤트를 알려줘야 할 책임을 가지고 있다. 프레젠터는 사용자로부터 받는 모든 입력값을 수집하며 이것들을 모델에 바로바로 보내고, 결과를 뷰로 전달한다.
+
+</aside>
+
+Model + View + Presenter
+
+- Model : 어플리케이션에서 사용되는 데이터와 그 데이터를 처리하는 부분
+- View : 사용자에게 보여지는 UI
+- Controller : 사용자의 입력 (Action) 을 받고 처리하는 부분
+- Presenter : View 에서 요청한 정보로 Model 을 가공하여 View 에 전달해주는 부분
+
+### 동작
+
+사용자의 Action 들은 View 를 통해 들어온다
+
+View 는 데이터를 Presenter 에게 요청한다.
+
+Presenter 는 Model 에게 데이터를 요청한다
+
+Model은 Presenter 에게 요청받은 데이터를 응답한다
+
+Presenter는 View 에게 데이터를 응답한다.
+
+View 는 Presenter 가 응답한 데이터를 이용하여 화면을 나타낸다.
+
+### 특징 : presenter는 view 와 model의 인스턴스를 가지고 있어 둘을 연결하는 접착제 역할을 한다. presenter 와 view 는 1:1 관계이다.
+
+### 장점 : View 와 Model 의 의존성이 없다.
+
+- 어플리케이션의 디버깅을 더 쉽게 만든다. MVP는 세 가지의 다른 계층의 추상화를 소개하기 때문이다.
+- 코드 재사용성이 높아진다. 뷰를 컨트롤 하기 위해 여러개의 프레젠터를 가질 수 있다.
+- 더 나은 관심사 분리를 실행할 수 있다. 비즈니스 로직과 영속성 로직을 Activity와 Fragment 클래스에서 분리할 수 있다.
+
+단점 : 어플리케이션이 복잡해질수록 View 와 Presenter 의 의존도가 복잡해진다
+
+# MVVM
+
+Model + View + View Model
+
+- View Model : View 를 표현하기 위해 만든 뷰를 위한 모델이다. 뷰를 나타내주기 위한 모델이자 뷰를 나타내기 위한 데이터 처리를 하는 부분이다.
+
+사용자의 Action 들은 View 를 통해 들어온다
+
+View 에 Action이 들어오면 Command 패턴으로 View Model 에 Action 을 전달한다
+
+View Model 은 Model 에 데이터를 요청한다
+
+Model은 View Model 에게 요청받은 데이터를 응답한다
+
+View Model은 응답받은 데이터를 가공하여 저장한다
+
+View s는 View Model 과 Data Binding 하여 화면을 나타낸다

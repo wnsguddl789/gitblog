@@ -4,95 +4,58 @@ date: 2022-03-15
 description: 이것이 왜 유용한가?
 ---
 
-- react.lazy() 와 suspense 를 사용하여 컴포넌트를 리팩토링합니다.
-
-### 이것이 왜 유용한가?
+# MVP
 
 <aside>
-✍🏻 리액트 프로젝트 파일은 크고 아름답습니다. 
-그 의미는 프로그램이 돌아가는데 많은 연산 비용이 들어간다는 의미를 내표합니다. 
-이것을 ‘프로그램이 무겁다' 라고 표현하기도 하며, 많은 개발자들은 이 현상을 기피합니다. 
-왜냐하면,  한번 로딩하는데 쓸데없이 모든 파일을 불러오느라 시간을 많이 소모하기도 하는 등, 말 그대로 쓸데없이 반복되는 일을 하는 것은 개발자들의 발작버튼이기 때문이죠.
-
-이 현상을 제거하기 위해 만들어진 것이 바로 Lazy와 Suspense 입니다.
-이 두가지는 언제나 같이 움직이죠 , 마치 async 와 await 처럼요.
-이제 사용방법을 알아보러 가볼까요?
+💡 페이지 조절과 전시가 뷰에 의해서 이루어진다. 뷰를 대신하여 프레젠터는 모든 UI 이벤트를 알려줘야 할 책임을 가지고 있다. 프레젠터는 사용자로부터 받는 모든 입력값을 수집하며 이것들을 모델에 바로바로 보내고, 결과를 뷰로 전달한다.
 
 </aside>
 
-### 어떻게 사용하나요?
+Model + View + Presenter
 
-1. App.js의 react로 부터 import 합니다.
+- Model : 어플리케이션에서 사용되는 데이터와 그 데이터를 처리하는 부분
+- View : 사용자에게 보여지는 UI
+- Controller : 사용자의 입력 (Action) 을 받고 처리하는 부분
+- Presenter : View 에서 요청한 정보로 Model 을 가공하여 View 에 전달해주는 부분
 
-```jsx
-// App.js
+### 동작
 
-/* react.lazy()와 suspense를 사용해 보세요. */
-...
-// 1단계 : lazy,Suspense 를 react 로부터 import 해주겠다고 최상단에 선언해줍니다.
-import { lazy,Suspense } from 'react';
+사용자의 Action 들은 View 를 통해 들어온다
 
-```
+View 는 데이터를 Presenter 에게 요청한다.
 
-1. 새로운 임의의 컴포넌트가 필요하므로 생성합니다.
+Presenter 는 Model 에게 데이터를 요청한다
 
-<aside>
-✍🏻 ‘제가 파악하기로는' 컴포넌트들은 이렇게 파악되므로, 주석으로 감싸진 이 부분들을 
-lazy-Suspsnse 로 바꿔주겠습니다.
+Model은 Presenter 에게 요청받은 데이터를 응답한다
 
-</aside>
+Presenter는 View 에게 데이터를 응답한다.
 
-```jsx
-// 리팩토링 전
+View 는 Presenter 가 응답한 데이터를 이용하여 화면을 나타낸다.
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+### 특징 : presenter는 view 와 model의 인스턴스를 가지고 있어 둘을 연결하는 접착제 역할을 한다. presenter 와 view 는 1:1 관계이다.
 
-{
-  /* 여기서부터   */
-}
-import Home from './Home';
-import Navbar from './component/Navbar';
-import CreateBlog from './blogComponent/CreateBlog';
-import BlogDetails from './blogComponent/BlogDetail';
-import NotFound from './component/NotFound';
-import Footer from './component/Footer';
-{
-  /* 여기까지    */
-}
+### 장점 : View 와 Model 의 의존성이 없다.
 
-import { useEffect, useState } from 'react';
-import { lazy, Suspense } from 'react';
-```
+- 어플리케이션의 디버깅을 더 쉽게 만든다. MVP는 세 가지의 다른 계층의 추상화를 소개하기 때문이다.
+- 코드 재사용성이 높아진다. 뷰를 컨트롤 하기 위해 여러개의 프레젠터를 가질 수 있다.
+- 더 나은 관심사 분리를 실행할 수 있다. 비즈니스 로직과 영속성 로직을 Activity와 Fragment 클래스에서 분리할 수 있다.
 
-리팩토링중 ————
+단점 : 어플리케이션이 복잡해질수록 View 와 Presenter 의 의존도가 복잡해진다
 
-```jsx
-// 리팩토링 후
+# MVVM
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+Model + View + View Model
 
-{
-  /* 여기서부터   */
-}
-const Home = lazy(() => import('./Home'));
-const Navbar = lazy(() => import('./component/Navbar'));
-const CreateBlog = lazy(() => import('./blogComponent/CreateBlog'));
-const BlogDetails = lazy(() => import('./blogComponent/BlogDetail'));
-const NotFound = lazy(() => import('./component/NotFound'));
-const Footer = lazy(() => import('./component/Footer'));
-{
-  /* 여기까지    */
-}
+- View Model : View 를 표현하기 위해 만든 뷰를 위한 모델이다. 뷰를 나타내주기 위한 모델이자 뷰를 나타내기 위한 데이터 처리를 하는 부분이다.
 
-import { useEffect, useState } from 'react';
-import { lazy, Suspense } from 'react';
-```
+사용자의 Action 들은 View 를 통해 들어온다
 
-1. 마지막으로 JSX 로 리턴되는 부분을 손봐줍니다.
+View 에 Action이 들어오면 Command 패턴으로 View Model 에 Action 을 전달한다
 
-  <aside>
-✍🏻 * Suspense 는 fallback 이라는 prop을 받습니다.
- 뒤로 JSX  문법을 사용하여  `<Suspense fallback={<div>Loading...</div>}>` 
-렌더링이 끝나고 유저에게 바로 다음의 컴포넌트가 보여지도록 연결시켜주는 역할입니다.
+View Model 은 Model 에 데이터를 요청한다
 
-  </aside>
+Model은 View Model 에게 요청받은 데이터를 응답한다
+
+View Model은 응답받은 데이터를 가공하여 저장한다
+
+View s는 View Model 과 Data Binding 하여 화면을 나타낸다

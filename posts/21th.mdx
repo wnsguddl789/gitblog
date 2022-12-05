@@ -1,0 +1,96 @@
+---
+title: TypeScript
+date: 2022-12-04
+description: interface는 object를 설명해준다
+---
+
+# interface는 object를 설명해준다
+
+<aside>
+💡 object 가 어떤 식으로 보일지 설명해준다
+⇒ 어디서든 sayHello function 을 사용할 수 있다.
+⇒ 멋진 자동완성 기능을 제공한다.
+⇒ 코드를 보호해준다.
+
+</aside>
+
+```tsx
+interface PlayerShape {
+  name: string;
+  age: number;
+}
+const sayHello = (palyerObj: PlayerShape) =>
+  `Hello ${playerObj.name} you are ${playerObj.age}old.`;
+
+sayHello({ name: 'baeja', age: 20 });
+sayHello({ name: 'Yijin', age: 22, who: 2 }); // 이렇게 하면 who 아래에 빨간줄이 그어진다.
+```
+
+# default Props & optional Props
+
+<aside>
+💡 어떤 동그라미는 border-color 를 가지지만 어떤 동그라미는 가지지 않는 옵션을 주고 싶다면? 어떻게 해야할까?
+
+</aside>
+
+[App.tsx]
+
+```tsx
+import Circle from './Circle';
+
+function App() {
+  return (
+    <div>
+      <Circle bgColor="teal" />
+      <Circle bgColor="tomato" />
+    </div>
+  );
+}
+
+export default App;
+```
+
+[Index.tsx]
+
+```tsx
+import styled from 'styled-components';
+
+interface ContainerProps {
+  bgColor: string;
+}
+const Container = styled.div<ContainerProps>`
+  width: 200px;
+  height: 200px;
+  background-color: ${(props) => props.bgColor};
+  border-radius: 100px;
+  //(4) required 상태로 만들어주기 위해 여기에 border-color 속성을 추가해준다
+  border-color: 1px solid ${(props) => props.borderColor};
+`;
+
+interface CircleProps {
+  bgColor: string;
+  //(1)보더컬러 추가하자마자 app.tsx 에서는 에러가 뜬다. 보더컬러를보내는 것을 잊어버렸기 때문에
+  //(2)?를 추가해준다.
+  borderColor?: string;
+}
+//(3)borderColor 를  styled -component 인 Container 로 props 에 전달해준다.
+function Circle({ bgColor, borderColor }: CircleProps) {
+  return <Container bgColor={bgColor} borderColor={borderColor} />;
+}
+
+export default Circle;
+```
+
+# state 에서의 type 지정
+
+<aside>
+💡 state는 처음의 초기값을 지정하면 그대로 계속 가는 경우가 대부분이기 때문에 , 초기값의 타입을 명시해주면 된다
+
+</aside>
+
+```tsx
+const [value, setValue] = useState<number | stiring>(0);
+setValue('안녕들하십니까');
+setValue(3);
+setValue(true); //error
+```

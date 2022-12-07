@@ -1,0 +1,96 @@
+---
+title: TypeScript Theme👻
+date: 2022-12-06
+description: 타입스크립트를 이용한 테마 적용하기
+---
+
+# 타입스크립트를 이용한 테마 적용하기
+
+<aside>
+💡 선수작업 : CRA (create-react-app 을 이용한 앱 만들기가 되어있어야 한다 —TS 버전)
+
+`npx create-react-app my-app --template typescript`
+파일 생성 위치 : /src/styled.d.ts, /src/theme.d.ts
+
+</aside>
+
+# `styled.d.ts` 파일 생성
+
+```tsx
+import 'styled-components';
+
+declare module 'styled-components' {
+  export interface DefaultTheme {
+    textColor: string;
+    bgColor: string;
+    btnColor: string;
+  }
+}
+```
+
+[styled.d.ts 파일]
+
+# `theme. d ts` 파일 생성
+
+```tsx
+import { DefaultTheme } from 'styled-components';
+
+export const ligthTheme: DefaulTheme = {
+  bgColor: '#111',
+  textColor: 'teal',
+  btnColor: 'tomato'
+};
+export const darkTheme: DefaulTheme = {
+  bgColor: '#000',
+  textColor: 'whitesmoke',
+  btnColor: 'teal'
+};
+```
+
+[theme.d.ts 파일]
+
+---
+
+# Circle.tsx 파일 작성 되어있어야 함 . (인터페이스 파일역할)
+
+```tsx
+// import { useState } from "react";
+import styled from 'styled-components';
+//interface 란 object shape 을 TS 에 설명해주는 TS의 개념
+//const x = (a:number, b:number) => a+b TS 에게 변수 ab의 타입을 설명해줬었다면,
+//interface NameProps{ attrs: type; } 이런식으로 설명해준다
+interface ContainerProps {
+  bgColor: string;
+  borderColor?: string;
+}
+const Container = styled.div<ContainerProps>`
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 20px;
+
+  background-color: ${(props) => props.bgColor};
+  border-radius: 100px;
+  border-color: 10px solid ${(props) => props.borderColor};
+`;
+
+interface CircleProps {
+  bgColor: string;
+  borderColor?: string;
+  text?: string;
+}
+//bgcolor 가 CircleProps 임을 선언해준다.
+function Circle({ bgColor, borderColor, text = '기본 값' }: CircleProps) {
+  // useState 의 초기값 타입이 될 수 있는 것을  아래와 같이 지정해준다.
+  // const [counter, setCounter] = useState<number | string>(0);
+  // setCounter("안녕하십니까 하하");
+  return (
+    <Container bgColor={bgColor} borderColor={borderColor ?? bgColor}>
+      {text}
+    </Container>
+  );
+} //cba
+
+export default Circle;
+```
+
+# index.tsx 파일 작성 (ThemeProvider 와, darkTheme, ligthTheme 추가)

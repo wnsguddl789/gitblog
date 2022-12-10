@@ -1,0 +1,252 @@
+---
+title: ES6 Router BrowserRouter
+date: 2022-12-09
+description: 타입스크립트에서 URL의 파라미터를 이용하기
+---
+
+[Styled-components(2) global 스타일 세팅하기](https://devbirdfeet.tistory.com/175)
+
+길고 길었던 여정 ….
+
+어려웠던 이유 : ES6 강의와 ES5 강의의 싱크나 설명이 맞지 않아서 두개 동시에 보면서 맞춰서 이해해야 했음.. 덕분에 공부는 더 열심히 했던것 같읍니다.
+
+global style 적용에 필수적인 것.
+
+> d.ts 파일이란: 전역 객체선언파일 (타입지 존재하지 않는 js파일에 타입을 선언해준다)
+> `export { declare global {`
+> `interfacre Window}` 글로벌일경우 external 모듈이어야하기 때문에 export 를 사용하여 에러가 안나도록 한다.
+> import \*as : import 하자마자 export 한다는 뜻
+
+# global-style setting
+
+### src/styled.d.ts
+
+- styled.d. ts : **global** 에 원하는 CSS 를 작성하기 전에 type을 선언한다.
+  ```css
+  import "styled-components";
+  import { theme } from "./theme";
+  **type Theme = typeof theme;**
+  declare module "styled-components" {
+    export interface DefaultTheme {
+      textColor: string;
+      bgColor: string;
+      accentColor: string;
+    }
+  }
+  ```
+
+### src/theme.ts
+
+- theme.ts : 그리고 theme 이라는 CSS 컴포넌트를 만들어준다. 여기서 필요한 속성을 꺼내 사용하면 된다.
+  ```css
+  import { DefaultTheme } from "styled-components";
+
+  export const theme: DefaultTheme = {
+    bgColor: "#2f3640",
+    textColor: "#f5f6fa",
+    accentColor: "#4cd137",
+  };
+  ```
+
+### src/global.ts
+
+- global.ts : 위에서 선언해준 theme 안에서 원하는 속성을 골라서 넣어준다.
+  ```css
+  import { createGlobalStyle, css } from "styled-components"; // 글로벌스타일을 정의해impo주자
+
+  export default createGlobalStyle` // 다른 컴포넌트에서도 공통으로 사용하도록 export 해주자
+  ${({ theme }) => css`
+    @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap");
+    html,
+    body,
+    div,
+    span,
+    applet,
+    object,
+    iframe,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    pre,
+    a,
+    abbr,
+    acronym,
+    address,
+    big,
+    cite,
+    code,
+    del,
+    dfn,
+    em,
+    img,
+    ins,
+    kbd,
+    q,
+    s,
+    samp,
+    small,
+    strike,
+    strong,
+    sub,
+    sup,
+    tt,
+    var,
+    b,
+    u,
+    i,
+    center,
+    dl,
+    dt,
+    dd,
+    menu,
+    ol,
+    ul,
+    li,
+    fieldset,
+    form,
+    label,
+    legend,
+    table,
+    caption,
+    tbody,
+    tfoot,
+    thead,
+    tr,
+    th,
+    td,
+    article,
+    aside,
+    canvas,
+    details,
+    embed,
+    figure,
+    figcaption,
+    footer,
+    header,
+    hgroup,
+    main,
+    menu,
+    nav,
+    output,
+    ruby,
+    section,
+    summary,
+    time,
+    mark,
+    audio,
+    video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article,
+    aside,
+    details,
+    figcaption,
+    figure,
+    footer,
+    header,
+    hgroup,
+    main,
+    menu,
+    nav,
+    section {
+      display: block;
+    }
+    /* HTML5 hidden-attribute fix for newer browsers */
+    *[hidden] {
+      display: none;
+    }
+    body {
+      line-height: 1;
+    }
+    menu,
+    ol,
+    ul {
+      list-style: none;
+    }
+    blockquote,
+    q {
+      quotes: none;
+    }
+    blockquote:before,
+    blockquote:after,
+    q:before,
+    q:after {
+      content: "";
+      content: none;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Source Sans Pro", sans-serif;
+      background-color: ${(props) => props.theme.bgColor};
+      color: ${(props) => props.theme.textColor};
+    }
+    a {
+      text-decoration: none;
+    }
+  `}
+  `;
+  ```
+- Router.tsx
+  ```css
+  import { BrowserRouter, Routes, Route } from "react-router-dom";
+  import Header from "./component/Header";
+  import Coin from "./screens/Coin";
+  import Coins from "./screens/Coins";
+  function Router() {
+    return (
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Coin />}></Route>
+          <Route path="/coins" element={<Coins />}></Route>
+        </Routes>
+      </BrowserRouter>
+    );
+  }
+  export default Router;
+  ```
+
+### src/index.tsx
+
+- index.tsx
+  ```css
+  import React from "react";
+  import ReactDOM from "react-dom/client";
+  import App from "./App";
+  //커스텀한 CSS 컴포넌트 import 해오기
+  import { ThemeProvider } from "styled-components";
+  // css 컴포넌트 임포트 해오기
+  import { theme } from "./theme";
+  import GlobalStyles from "./global";
+  const root = ReactDOM.createRoot(
+    document.getElementById("root") as HTMLElement
+  );
+
+  root.render(
+  //themeprovider 안에 theme 적용
+    <ThemeProvider theme={theme}>
+  // 적용하고자 하는 컴포넌트의 형제요소로 GlobalStyles 컴포넌트를 위치시킨다.
+      <GlobalStyles />
+      <React.StrictMode>
+        <App></App>
+      </React.StrictMode>
+    </ThemeProvider>
+  );
+  ```

@@ -4,6 +4,7 @@ date: 2022-12-09
 description: 타입스크립트에서 URL의 파라미터를 이용하기
 ---
 
+(블로그 참고)
 [Styled-components(2) global 스타일 세팅하기](https://devbirdfeet.tistory.com/175)
 
 길고 길었던 여정 ….
@@ -13,8 +14,7 @@ description: 타입스크립트에서 URL의 파라미터를 이용하기
 global style 적용에 필수적인 것.
 
 > d.ts 파일이란: 전역 객체선언파일 (타입지 존재하지 않는 js파일에 타입을 선언해준다)
-> `export { declare global {`
-> `interfacre Window}` 글로벌일경우 external 모듈이어야하기 때문에 export 를 사용하여 에러가 안나도록 한다.
+> `export { declare global {` > `interfacre Window}` 글로벌일경우 external 모듈이어야하기 때문에 export 를 사용하여 에러가 안나도록 한다.
 > import \*as : import 하자마자 export 한다는 뜻
 
 # global-style setting
@@ -38,6 +38,7 @@ global style 적용에 필수적인 것.
 ### src/theme.ts
 
 - theme.ts : 그리고 theme 이라는 CSS 컴포넌트를 만들어준다. 여기서 필요한 속성을 꺼내 사용하면 된다.
+
   ```css
   import { DefaultTheme } from "styled-components";
 
@@ -51,6 +52,7 @@ global style 적용에 필수적인 것.
 ### src/global.ts
 
 - global.ts : 위에서 선언해준 theme 안에서 원하는 속성을 골라서 넣어준다.
+
   ```css
   import { createGlobalStyle, css } from "styled-components"; // 글로벌스타일을 정의해impo주자
 
@@ -203,6 +205,7 @@ global style 적용에 필수적인 것.
   `}
   `;
   ```
+
 - Router.tsx
   ```css
   import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -226,6 +229,7 @@ global style 적용에 필수적인 것.
 ### src/index.tsx
 
 - index.tsx
+
   ```css
   import React from "react";
   import ReactDOM from "react-dom/client";

@@ -1,0 +1,65 @@
+---
+title: React-query
+date: 2022-12-13
+description: TIL
+---
+
+```tsx
+index.tsx;
+import { QueryClient, QueryClientProvider } from 'react-query';
+const queryClient = new QueryClient();
+
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+
+root.render(
+  <QueryClientProvider client={queryClient}>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <React.StrictMode>
+        <App></App>
+      </React.StrictMode>
+    </ThemeProvider>
+  </QueryClientProvider>
+);
+```
+
+- 역할 : 우리 스스로 실행하고 있었던 로직들을 축약해준다.
+
+1. fetcher 함수 만들기 (api.tsx 파일을 만들어 그 안에 넣는다) fetcher 함수는 꼭 fetch promiser return 해줘야한다.
+
+```tsx
+export function fetchCoins() {
+  return fetch('https://api.coinpaprika.com/vi/com').then((response) =>
+    response.json()
+  );
+}
+```
+
+1. fetch then reponse 를 가져와서 response.json 을 return 해준다. fetcher 함수 fetchCoin은 URL 을 부르고 그 URL 로부타 json 을 return 한다.
+
+coin.tsx
+
+첫번째 인자 allCoins 는 고유식별자 두번째 인자는 fetcher function (api.tsx 의 fetchCoins)
+
+useQuery 는 isLoadiing 이라는 boolean 값을 return 한다.
+
+```tsx
+
+unction Coins() {
+  useQuery("allCoins",fetchCoins)
+  // const [coins, setCoins] = useState<CoinInterface[]>([]);
+  // const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const response = await fetch("https://api.coinpaprika.com/v1/coins");
+  //     const json = await response.json();
+  //     setCoins(json.slice(1, 100));
+  //     setLoading(false);
+  //     console.log(coins);
+  //   })();
+  // }, []);
+  return (
+```

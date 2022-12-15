@@ -1,0 +1,123 @@
+---
+title: SCSS
+date: 2022-12-15
+description: TIL
+---
+
+# Variable and Nesting
+
+- gulpfile → 특정 파일인 style.scss 를 관찰하고 있다.
+- src 주소 파일에서 일어나는 모든 일은 css 로 compile 된다.
+
+<aside>
+💡 🤔dest ⇒ dist 로 바꿨을 때 바꿔야 하는 모든 것
+
+</aside>
+
+1. gulpfile의 routes 의 css 의 dest 가 dist 임을 명시해줘야함
+2. gulpfile 의 const clean = async () => await deleteSync(["dist/"]);
+3. dest 의 파일명
+4. index.html 의 href 파일 경로명
+
+---
+
+- variable : 가장 중요한 styles 을 저장하고 싶을을 때 쓴다. scss 폴더에서
+
+_variavbles.scss 파일을 만든다 (\_밑줄) 이 있는 파일은 css 로 변하지 않았으면 하는 것을 의미한다. === scss 만을 위한 파일임을 정의 $을 넣어서 정의해준다._
+
+그다음 styles.scss 에 import 해준다 `@import "_variables";`
+
+---
+
+- Nesting :내가 타겟하는 element 를 더 정확하게 해준다.
+
+내가 원하는 것 ⇒ style.scss
+
+```css
+@import '_variables';
+
+h2 {
+  color: $bg;
+}
+.box {
+  margin-top: 20px;
+  &:hover {
+    background-color: green;
+  }
+  h2 {
+    color: blue;
+    &:hover {
+      color: red;
+    }
+  }
+  button {
+    color: red;
+  }
+}
+```
+
+[화면 기록 2022-12-14 오전 12.23.51.mov](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6dc12806-296b-4b0f-b1d2-001404b28868/%E1%84%92%E1%85%AA%E1%84%86%E1%85%A7%E1%86%AB_%E1%84%80%E1%85%B5%E1%84%85%E1%85%A9%E1%86%A8_2022-12-14_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_12.23.51.mov)
+
+---
+
+# Mixins
+
+\_mixins :scss functiionality 를 재사용하게 해준다
+
+어떤 종류의 argument 를 mixin에 보내야 할 때, \_mixin에 작성한 코드는 Css의 결과값을 바꿀 것이다.
+
+srx/\_mixin.scss 파일을 만든 뒤 , `@mixin name { }`; 형식으로 써준다.
+
+styles.scss 에 `@import "_mixins";` 을 해준다.
+
+@include 를 이용하여 sexyTilte 을 넣어준다.
+
+만약 링크가 여러개인데 조금씩 다른 스타일링을 주고싶은 경우라면
+
+```css
+<a href="#">Google</a>
+   <a href="#">Google</a>
+   <a href="#">Google</a>
+   <a href="#">Google</a>
+   <a href="#">Google</a>
+```
+
+index.html
+
+```css
+@import '_variables';
+@import '_mixins';
+h1 {
+  @include link();
+}
+```
+
+styles.scss
+
+```css
+@mixin link($color) {
+  text-decoration: none;
+  display: block;
+  color: $color;
+}
+```
+
+\_mixins.scss
+
+```css
+@import '_variables';
+@import '_mixins';
+a {
+  margin-bottom: 10pxx;
+  &:nth-child(odd) {
+    @include link(blue);
+  }
+  &:nth-child(even) {
+    @include link(red);
+  }
+}
+```
+
+---
+
+심지어 if else 도 구현가능하다

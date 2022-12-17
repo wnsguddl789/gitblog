@@ -10,6 +10,7 @@ import _26thMdx from './_26th.mdx.json' assert { type: 'json' }
 import _27thMdx from './_27th.mdx.json' assert { type: 'json' }
 import _28thMdx from './_28th.mdx.json' assert { type: 'json' }
 import _29thMdx from './_29th.mdx.json' assert { type: 'json' }
+import _30thMdx from './_30th.mdx.json' assert { type: 'json' }
 import eighteenthMdx from './eighteenth.mdx.json' assert { type: 'json' }
 import eighthMdx from './eighth.mdx.json' assert { type: 'json' }
 import eleventhMdx from './eleventh.mdx.json' assert { type: 'json' }
@@ -28,6 +29,5 @@ import tenthMdx from './tenth.mdx.json' assert { type: 'json' }
 import thirdMdx from './third.mdx.json' assert { type: 'json' }
 import thirteenthMdx from './thirteenth.mdx.json' assert { type: 'json' }
 import twelvfthMdx from './twelvfth.mdx.json' assert { type: 'json' }
-import snacks__firstMdx from './snacks__first.mdx.json' assert { type: 'json' }
 
-export const allPosts = [_20thMdx, _21thMdx, _22thMdx, _23thMdx, _24thMdx, _25thMdx, _26thMdx, _27thMdx, _28thMdx, _29thMdx, eighteenthMdx, eighthMdx, eleventhMdx, fifteenthMdx, fifthMdx, firstMdx, fourteenthMdx, fourthMdx, ninthMdx, secondMdx, seventeenthMdx, seventhMdx, sixteenthMdx, sixthMdx, tenthMdx, thirdMdx, thirteenthMdx, twelvfthMdx, snacks__firstMdx]
+export const allPosts = [_20thMdx, _21thMdx, _22thMdx, _23thMdx, _24thMdx, _25thMdx, _26thMdx, _27thMdx, _28thMdx, _29thMdx, _30thMdx, eighteenthMdx, eighthMdx, eleventhMdx, fifteenthMdx, fifthMdx, firstMdx, fourteenthMdx, fourthMdx, ninthMdx, secondMdx, seventeenthMdx, seventhMdx, sixteenthMdx, sixthMdx, tenthMdx, thirdMdx, thirteenthMdx, twelvfthMdx]

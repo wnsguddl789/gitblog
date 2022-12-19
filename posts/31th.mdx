@@ -1,0 +1,223 @@
+---
+title: ContentLayer 설정 및 사용법
+date: 2022-12-18
+description: NextJS / ContentLayer 사용법
+---
+
+### Contentlayer 란?
+
+| 콘텐츠를 데이터로 변환하여 앱에서 MD(X) 및 CMS 콘텐츠를 매우 쉽게 가져올 수 있음
+
+---
+
+### 자동 설정
+
+- CRA 로 생성시
+
+```css
+npx create-next-app --example with-contentlayer with-contentlayer-app
+# or
+yarn create next-app --example with-contentlayer with-contentlayer-app
+```
+
+### 수동설정
+
+- 이미 앱이 만들어져 있을 경우
+
+```css
+npm install contentlayer next-contentlayer
+# or
+yarn add contentlayer next-contentlayer
+```
+
+---
+
+### config 추가하기
+
+- `contentlayer.config.js` 다음 코드를 사용하요 프로젝트의 루트에 파일을 만든다.
+
+```css
+[contentlayer.config.js]
+
+import { defineDocumentType, makeSource } from "contentlayer/source-files";
+
+const Post = defineDocumentType(() => ({
+  name: "Post",
+  filePathPattern: `**/*.md`,
+  contentType: "markdown",
+  fields: {
+    title: { type: "string", required: true },
+    date: { type: "string", required: true },
+  },
+  computedFields: {
+    slug: {
+      type: "string",
+      resolve: (doc) => doc._raw.sourceFileName.replace(/\.md/, ""),
+    },
+  },
+}));
+
+export default makeSource({
+  contentDirPath: "posts",
+  documentTypes: [Post],
+});
+
+```
+
+---
+
+\*플러그인 :
+
+어떤 특정한 하나의 문제를 해결하기 위한 컴포넌트.
+
+### Next.js 플러그인 설정
+
+- `next.config.js` (선택사항 : 라이브 리로드 및 빌드 설정 활성화)
+
+```css
+const { withContentlayer } = require("next-contentlayer");
+
+module.exports = withContentlayer({
+  // Your Next.js config...
+});
+```
+
+---
+
+### `jsconfig.json` 파일 추가
+
+```css
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "contentlayer/generated": ["./.contentlayer/generated"]
+    }
+  },
+  "include": [".contentlayer/generated"]
+}
+```
+
+---
+
+- 프로젝트에서 TypeScript 를 사용하는 경우 `**tsconfig.json` 는 이미 추가되어 있다.\*\*
+
+```css
+[tsconfig.json] {
+  'compileroptions': {
+    'baseurl': '.',
+    'paths': {
+      // These option allow you to configure module aliases.
+      // So you will import contentlayer generated content from "contentlayer/generated" instead of "./.contentlayer/generated"
+      +"contentlayer/generated": [ './.contentlayer/generated' ];
+    }
+  }
+  ,"include": [ 'next-env.d.ts', '**/*.ts', '**/*.tsx', +'.contentlayer/generated'
+      ];
+}
+```
+
+---
+
+## Post 추가하기
+
+1. 앱의 루트에 `post` 폴더를 추가(콘텐츠가 있는 위치)한다.
+2. pre-rendering.`mdx`파일을 추가한다.
+3. 원하는 내용을 추가하면 된다.
+
+---
+
+```css
+[posts/pre-rendering.md]
+---
+title: "Two Forms of Pre-rendering"
+date: "2020-01-01"
+---
+
+Next.js has two forms of pre-rendering: **Static Generation** and **Server-side Rendering**. The difference is in **when** it generates the HTML for a page.
+
+- **Static Generation** is the pre-rendering method that generates the HTML at **build time**. The pre-rendered HTML is then _reused_ on each request.
+- **Server-side Rendering** is the pre-rendering method that generates the HTML on **each request**.
+
+Importantly, Next.js lets you **choose** which pre-rendering form to use for each page. You can create a "hybrid" Next.js app by using Static Generation for most pages and using Server-side Rendering for others.
+```
+
+---
+
+## 게시물 Fetch & display 하기
+
+```css
+[pages/index.js]
+import Link from "next/link";
+import { allPosts } from "contentlayer/generated";
+import { pick } from "@contentlayer/client";
+
+export default function Home({ posts }) {
+  return (
+    <section>
+      <ul>
+        {posts.map(({ slug, date, title }) => (
+          <li key={slug}>
+            <Link href={`/posts/${slug}`}>
+              <a>{title}</a>
+            </Link>
+            <br />
+            <small>{date}</small>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+// Statically fetch all posts
+export async function getStaticProps() {
+  const posts = allPosts.map((post) => pick(post, ["title", "date", "slug"]));
+
+  return { props: { posts } };
+}
+
+```
+
+---
+
+## 동적 경로 게시물 생성하기
+
+- **`posts/[slug].js`**내부 **`pages`**폴더 를 추가하십시오 .
+
+```css
+[pages/posts/[slug].js]
+
+import { allPosts } from 'contentlayer/generated'
+
+export default function Post({ post }) {
+  return (
+    <article>
+      <h1>{post.title}</h1>
+      <div>{post.date}</div>
+
+      <div dangerouslySetInnerHTML={{ __html: post.body.html }} />
+    </article>
+  )
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: allPosts.map((p) => ({ params: { slug: p.slug } })),
+    fallback: false,
+  }
+}
+
+// Statically fetch post by slug
+export async function getStaticProps({ params }) {
+  const post = allPosts.find((post) => post.slug === params?.slug)
+
+  return { props: { post } }
+}
+```
+
+[How to setup Contentlayer in your Next.js app? - Imad Atyat-Allah](https://www.imadatyat.me/guides/how-to-setup-contentlayer-in-nextjs#set-up-nextjs-plugin-in-nextconfigjs-optional-enables-live-reload-and-build-setup)
+
+번역
+
+[How to create a Blog with Contentlayer and NextJs](https://www.sandromaglione.com/techblog/contentlayer-blog-template-with-nextjs)

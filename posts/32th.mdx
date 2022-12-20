@@ -1,0 +1,82 @@
+---
+title: Mixins and Conclusions
+date: 2022-12-19
+---
+
+### @content 키워드
+
+---
+
+```scss
+[style.scss] @import '_mixins' a {
+  @include responsive {
+    text-decoration: none;
+  }
+}
+```
+
+```scss
+[_mixins.scss] @mixin responsive {
+  @content;
+}
+```
+
+`@content` 가 `text-decoration:none;` 이 된다
+
+---
+
+### 응용하기
+
+---
+
+```scss
+[_mixins.scss]
+$minIphone: 500px;
+$maxIphone: 690px;
+$maxTablet: 1120px;
+$minTablet: $maxIphone + 1;
+
+@mixin responsive($device) {
+  @if $device == "iphone" {
+    @media screen and (min-width: $minIphone) and (max-width: $maxIphone) {
+      @content;
+    }
+  } @else if $device == "tablet" {
+    @media screen and (min-width: $minTablet) and (max-width: $maxTablet) {
+      @content;
+    }
+  } @else if $device == "iphone-l" {
+    @media screen and (max-width: $minIphone) and (max-width: $maxIphone) and (orientation: landscape) {
+      @content;
+    }
+  } @else if $device == "ipad-l" {
+    @media screen and (max-width: $minTablet) and (max-width: $maxTablet) and (orientation: landscape) {
+      @content;
+    }
+  }
+}
+```
+
+\*\* and 다음에 띄어쓰기를 잘 하지 않으면 오류가 난다.
+
+```scss
+[style.scss]
+@import "_variables";
+@import "_mixins";
+@import "_buttons";
+h1 {
+  color: red;
+  @include responsive("iphone") {
+    color: peru;
+  }
+  @include responsive("iphone-l") {
+    font-size: 60px;
+  }
+}
+```
+
+이렇게 하면, iphone 크기보다 큰 크기에서는 h1 이 빨간색으로 보이고
+
+iphone 보다 작고 iphone-l 보다 큰 화면에서는 h1 이 peru 색으로 보이고
+
+화면의 너비가 iphone-l 보다 작으면 font-size 는 60px;에 red 로 보이게 된다.

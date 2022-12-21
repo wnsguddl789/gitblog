@@ -1,0 +1,38 @@
+---
+title: The Rules of Native
+date: 2022-12-19
+description: TIL / React Native
+---
+
+# 1. React Native 는 HTML이 아니다
+
+웹사이트가 아니다.그래서 div는 쓸 수 없다 . 대신에 **View** 가 있다
+
+항상 import 해야한다.
+
+# 2. React Native 의 모든 text 는 ‘text component ‘ 안에 있어야 한다.
+
+# 3. View 에는 style이 있다.
+
+그러나 우리가 알던 일부 style 은 사용할 수 있다. border 같은.
+
+- `StyleSheet.create`({}) 는 object 를 생성하는데 사용된다.
+
+스타일을 분리할 수 있다
+
+좋은 자동완성기능을 제공함 .
+
+```css
+<Text
+        style={styles.text}
+      >...
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+});
+```

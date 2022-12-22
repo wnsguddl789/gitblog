@@ -1,0 +1,158 @@
+---
+title:How to use Atom with Recoil
+date: 2022-12-21
+description: TIL / TypeScript
+---
+
+### 요구사항
+
+---
+
+1. key : 유일해야한다
+2. default :
+
+---
+
+```tsx
+import { atom } from 'recoil';
+
+export const isDarkAtom = atom({
+  key: 'isDark',
+  default: false
+});
+```
+
+[screen/atom.ts]
+
+### App(연결하고자 하는 컴포넌트) 와 Chart 를 atom 과 연결하기
+
+---
+
+- app으로 와서 useRecoilValue 라는 function 을 사용한다.
+
+```tsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyles from './global';
+import { darkTheme, lightTheme } from './theme';
+import { RecoilRoot } from 'recoil';
+import isDark from './App';
+import { isDarkAtom } from './screens/atoms';
+
+const queryClient = new QueryClient();
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+
+root.render(
+  <React.StrictMode>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={isDark(isDarkAtom) ? darkTheme : lightTheme}>
+          <GlobalStyles />
+          <App></App>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </RecoilRoot>
+  </React.StrictMode>
+);
+```
+
+### atom.ts 생성
+
+---
+
+```tsx
+import { atom } from 'recoil';
+
+export const isDarkAtom = atom({
+  key: 'isDark',
+  default: true
+});
+```
+
+### 연결할 컴포넌트에 직접 연결
+
+---
+
+```tsx
+import { useQuery } from '@tanstack/react-query';
+import { fetchCoinHistory } from '../api';
+import ApexChart from 'react-apexcharts';
+import { useOutletContext } from 'react-router';
+import { useRecoilValue } from 'recoil';
+import { isDarkAtom } from './atoms';
+
+interface IHistorical {
+  time_open: number;
+  time_close: number;
+  open: string;
+  high: string;
+  low: string;
+  close: string;
+  volume: string;
+  market_cap: number;
+}
+interface ChartProps {
+  coinId: string;
+}
+function Chart() {
+  const { coinId } = useOutletContext<ChartProps>();
+  const { isLoading, data } = useQuery<IHistorical[]>(['ohlcv', coinId], () =>
+    fetchCoinHistory(coinId)
+  );
+  const isDark = useRecoilValue(isDarkAtom);
+  var ChartOptions = {
+    chart: {
+      type: 'line',
+      height: 300,
+      width: 500,
+      toolbar: {
+        show: false
+      },
+      background: 'transparent'
+    },
+    series: [
+      {
+        name: 'price',
+        data: data?.map((price) => Number(price.close)) as number[]
+      }
+    ],
+    grid: { show: false },
+    stroke: {
+      curve: 'smooth',
+      width: 3
+    },
+    yaxis: {
+      show: false
+    },
+    xaxis: {
+      axisBorder: { show: false },
+      axisTicks: { show: false },
+      labels: { show: false },
+      type: 'datetime',
+      categories: data?.map((price) => price.time_close * 1000) as number[]
+    },
+    fill: {
+      type: 'gradient',
+      gradient: { gradientToColors: ['#42f5ad'], stops: [0, 100] }
+    },
+    colors: ['#f3ffad']
+  };
+
+  return (
+    <div>
+      {isLoading ? (
+        'Loading chart...'
+      ) : (
+        <ApexChart chart={ChartOptions.chart} series={ChartOptions.series} />
+      )}
+    </div>
+  );
+}
+export default Chart;
+```

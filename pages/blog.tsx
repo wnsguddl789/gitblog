@@ -19,17 +19,6 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
           />
         ))}
       </div>
-      <div className={`mt-10 flex flex-col`}>
-        {posts.map((post) => (
-          <SnackPost
-            date={post.date}
-            title={post.title}
-            des={post.description}
-            slug={post._raw.flattenedPath}
-            key={post._id}
-          />
-        ))}
-      </div>
     </Container>
   );
 };

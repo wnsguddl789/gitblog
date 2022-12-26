@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-const SnackPost = ({ date, title, des, slug }) => {
+const SnackPost = ({ date, title, des, snack }) => {
   return (
-    <Link href={`/snack/${slug}`} passHref>
+    <Link href={`/snack/${snack}`} passHref>
       <a className="w-full my-7 hover:-translate-x-1.5">
         <div className="font-medium text-xs text-gray-400">{date}</div>
         <div className={`font-extrabold text-2xl mt-2`}>{title}</div>

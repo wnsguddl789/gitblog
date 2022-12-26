@@ -1,0 +1,149 @@
+---
+title: Reac-Query 와 상태관리(우아한테크코스)1부
+date: 2022-12-17
+description: 강의정리 / React Query 를 상태관리로 사용하게 된 배경
+---
+
+# 상태란?
+
+주어진 시간에 대해 시스템을 나타내는 것으로 **언제든지 변경될 수 있음**
+
+즉 문자열, 배열, 객체 등의 형태로 응용 프로그램에 **저장된 데이터**
+
+---
+
+⇒ “개발자 입장에선 관리해야하는 데이터들”
+
+UI/UX의 개수,프로덕트의 크기, 복잡도 와 상태 관리의 복잡도는 비례한다.
+
+### react 단방향 바인딩 props drilling 이슈 존재
+
+<aside>
+💡 *단방향 바인딩 : state관리를 할 때,props 를 통해서 부모에서 자식 컴포넌트로의 단방향 (하향식) 데이터 흐름이 일어난다. 그로인해 데이터의 흐름을 명확히 알 수 있고 예측이 가능하다. 보통prop 전달이 3~5 개 일 때는  문제가 되지 않지만 10 ~15개 이상이 된다면 코드를 읽을 때 해당 prop 을 추적하기 힘들어지는 문제가 생긴다.
+
+</aside>
+
+### 어떻게 해결하는가?
+
+(1)**전역 상태관리 라이브러리 사용**
+
+- redux
+- MobX
+- recoil
+
+등을 사용하여 해당 값이 필요한 컴포넌트에서 직접 불러서 사용할 수 있다.
+
+(2)**Store 와 연결되어 있는 부분을 따로 뺀다 ( childern 사용)**
+
+<aside>
+💡 부모 컴포넌트가 합성하고 싶은 엘리먼트들을 감싸면서 , 자신의 props로서 감쌌던 자식 엘리먼트들을 childern 이라는 prop으로 받아서 객체로서 사용하는 것이다.
+
+</aside>
+
+---
+
+# 서버에서 받아야하는 상태들의 특성
+
+1. client 에서 제어하거나 소유되지 않은 원격의 공간에서 관리되고 유지됨
+2. Fetching 이나 Updating 에 비동기 API가 필요함
+3. 다른 사람들과 공유되는 것으로 사용자가 모르는 사이에 변경될 수 있음
+4. 신경 쓰지 않는다면 잠재정으로 “out of date” 가 될 가능성을 지민
+
+==⇒ 사실상 FE 에서 이 값들이 저장되어있는 state들은 일종의 캐시
+
+---
+
+### React Query 캐치프레이즈
+
+> fetch, catche and update data in your react and React Native appplications all without touching any “global state”
+
+Overview
+
+서버 스테이트 / 데이터 가져오기, 캐시, 동기화, 데이터 업데이트 전부 캐리,
+
+zero-config 로 즉시사용가능한데 원하면 즉시 config 설정도 가능하다.
+
+---
+
+### React 에서 쓰려면 QueryClientProvider 필수다
+
+```css
+import {QueryClient, QueryClientProvider} from 'react-query'
+
+const queryClient = new QueryClient()
+
+function App() {
+
+ return <QueryClientProvider client={queryClient}>...</QueryClientProvider>}}
+
+```
+
+### 세가지 core 컨셉
+
+1. **Queries** : 쿼리는 데이터 Fetching 용! CRUD 중 Reading 에서만 사용
+
+```css
+import { useQuery } from 'react-query'
+
+function App(){
+	 const info = useQuery('**todos**', **fetchTodoList**)
+}
+
+```
+
+- todos : query key (리액트 쿼리는 쿼리 키에 따라 쿼리 캐싱을 관리한다)
+
+‘string’ 형태와 ‘array’ 형태로 나뉜다.
+
+- fetchTodoList : Query Function (Promise 를 반환한는 함수 → data resolve 하거나 error 를 throw )
+- useQuery 가 반환하는 것 :
+
+data : 마지막으로 성공한 resolve 된 데이터 (response)
+
+error: 에러가 발생했을 때 반환되는 객체
+
+isFetching : request 가 in -flight 중일 때 true
+
+status,isLoading,isSuccess : 모두 현재의 query 상태
+
+refetch : 해당 querly refetch 하는 함수 제공
+
+remove : 해단 query cache에서 지우는 함수 제공
+
+etc
+
+- option 에 들어가는 것
+
+onSucess, onError , onSettled: query fetching 성공,실패 완료시 실행할 side effect 정의
+
+enabled. : 자동으로 query 를 실행시킬지 말지 여부
+
+retry ; query 동작 실패시 자동으로 retry 할지 결정하는 옵션
+
+select : 성공시 가져온 data를 가공해서 전달
+
+keepPreviousData : 새롭게 fetching 시 이전 데이터 유지 여부
+
+refetchingInterval : 주기적으로 refetch 할지 결정하는 옵션
+
+---
+
+2. Mutations : 데이터 생성/수정/삭제시 사용함. CRUD 중 Create,Update,Delete 모두 사용
+
+```css
+const mutation = useMutation(newTodo => {
+
+return axios.post ('/todos, newTodo)}
+```
+
+- 반환값
+
+mutate: mutation 을 실행하는 함수
+
+mutateAsync : mutate 와 비슷, 그러나 Promise 반환
+
+reset : mutation 내부 상태 clean
+
+onMutate: 본격적인 Mutation 동작 전에 먼저 동작하는 함수
+
+3. Query Invalidation

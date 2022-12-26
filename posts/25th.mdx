@@ -1,0 +1,49 @@
+---
+title: (에러해결)reactdom.render is no longer supported in react 18. use createroot instead. until you switch to the new api, your app will behave as if it's running react 17.
+date: 2022-12-11
+description: 더이상 ReactDOM.render 를 사용할 수 없게 되었습니다
+---
+
+<aside>
+💡 더이상 ReactDOM.render 를 사용할 수 없게 되었습니다 (저는 왜 17버전이 더 편리한지 모르겠습니다 하하) 위와 같은 에러가 날 시 18버전처럼 고쳐서 사용해주어야 합니다.
+
+</aside>
+# 리액트18 버전 (ReactDOM.createRoot…)
+
+```tsx
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { ThemeProvider } from "styled-components";
+import GlobalStyles from "../src/global";
+import { theme } from "../src/theme";
+**const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+
+root.render**(
+  <ThemeProvider theme={theme}>
+    <GlobalStyles />
+    <App></App>
+  </ThemeProvider>
+);
+```
+
+# 리액트 17버전( ReactDOM.render)
+
+```tsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ThemeProvider } from 'styled-components';
+import App from './App';
+import { theme } from '../../my-coin-app/src/theme';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+```

@@ -1,0 +1,154 @@
+---
+title: Styled-Componentd💅
+date: 2022-12-03
+description: Styled-Componentd💅
+---
+
+# Props 를 통한 상속
+
+우리가 width, height 가 100px background-color 가 각각 teal, tomato 인 div element 를 생성하고자 할 때, 아래의 코드와 같이 쓸 수 있다. 그러나 아래처럼 쓰게되면 반복적인 코드가 쓰게 되어 비효율적이게 된다.
+
+그래서 props 속성을 통해서 반복을 줄여주는 방법을 이용하도록 한다.
+
+```html
+import styled from "styled-components"; const Father = styled.div` display:
+flex; `; const BoxOne = styled.div` background-color: teal; width: 100px;
+height: 100px; `; const BoxTwo = styled.div` background-color: tomato; width:
+100px; height: 100px; `; function App() { return (
+<Father>
+  <BoxOne />
+  <BoxTwo /> />
+</Father>
+); }
+```
+
+먼저 BoxOne 과 BoxTwo 에 bgColor 에 원하는 색 속성을 부여해준다
+
+```html
+function App() { return (
+<Father>
+  <BoxOne bgColor="teal" />
+  <BoxTwo bgColor="tomato" /> />
+</Father>
+); }
+```
+
+그 다음에 불필요하게 중복된 One 과 Two 를 제거하고 Box 컴포넌트하나로 합쳐준다.
+
+```html
+import styled from "styled-components"; const Father = styled.div` display:
+flex; `; const Box = styled.div` background-color: teal; width: 100px; height:
+100px; `; function App() { return (
+<Father>
+  <Box bgColor="teal" />
+  <Box bgColor="tomato" /> />
+</Father>
+); }
+```
+
+Box의 background-color 속성에 props 를 부여해준다.
+
+```html
+const Box = styled.div` background-color: ${(props)=> props.bgColor}; width:
+100px; height: 100px; `;
+```
+
+# 확장하기
+
+<aside>
+💡 이번에는 컴포넌트의 공통된 속성을 갖고있는 컴포넌트를 상속할 때는 어떻게 확장시키는 지에 대해 알아보자
+
+</aside>
+
+```html
+import styled from "styled-components"; const Father = styled.div` display:
+flex; `; const Box = styled.div` background-color: ${(props) => props.bgColor};
+width: 100px; height: 100px; `; const Circle = styled.div` width:100px;
+height:100px; border-radius: 50px; `; function App() { return (
+<Father>
+  <Box bgColor="teal" />
+  <Circle bgColor="whitesmoke" />
+</Father>
+); } export default App;
+```
+
+이런 경우에는 컴포넌트를 styled.div 에서 div의 자리에 컴포넌트 이름을 대체하면 된다. 코드로 보게 되면
+
+```html
+import styled from "styled-components"; const Father = styled.div` display:
+flex; `; const Box = styled.div` background-color: ${(props) => props.bgColor};
+width: 100px; height: 100px; `; const Circle = styled(Box)` border-radius: 50px;
+`; function App() { return (
+<Father>
+  <Box bgColor="teal" />
+  <Circle bgColor="whitesmoke" />
+</Father>
+); } export default App;
+```
+
+아래의 코드와 위의 코드는 동일한 효과를 나타낸다. 훨씬 효율적인 코드를 작성할 수 있게 된다.
+
+## crazy trick
+
+```html
+//as import styled from "styled-components"; const Father = styled.div` display:
+flex; `; const Btn = styled.button` color: white; background-color: tomato;
+border: 0; border-radius: 15px; `; function App() { return (
+<Father as="header">
+  <Btn as="a" href="/"> Log in </Btn>
+  <Btn as="a" href="/"> Logout </Btn>
+</Father>
+); } export default App;
+```
+
+```html
+//attrs import styled from "styled-components"; const Father = styled.div`
+display: flex; `; const Input = styled.input.attrs({ required: true })`
+background-color: tomato; `; function App() { return (
+<Father as="header">
+  <input />
+  <input />
+  <input />
+  <input />
+  {/* 전부 Required 가 할당되어있다. */}
+</Father>
+); } export default App;
+```
+
+## 개체를 가운데로 옮기고 싶을 때
+
+wrapper 컴포넌트
+
+```html
+const Wrapper = styled.div` display: flex; height: 100vh; width: 100vh;
+justify-content: center; align-items: center; `;
+```
+
+box 컴포넌트
+
+```html
+const Box = styled.div` height: 200px; width: 200px; background-color: tomato;
+display: flex; justify-content: center; align-items: center; animation:
+${rotationAnimation} 1s linear infinite; span { font-size: 36px; &:hover {
+font-size: 40px; } &:active { opacity: 0; } } `;
+```
+
+전체코드
+
+```html
+import styled, { keyframes } from "styled-components"; const rotationAnimation =
+keyframes` 0%{ transform: rotate(0deg); border-radius: 0; } 50% { transform:
+rotate(360deg); border-radius: 100px; } 100% { transform: rotate(0deg);
+border-radius: 0; } `; const Wrapper = styled.div` display: flex; height: 100vh;
+width: 100vh; justify-content: center; align-items: center; `; const Box =
+styled.div` height: 200px; width: 200px; background-color: tomato; display:
+flex; justify-content: center; align-items: center; animation:
+${rotationAnimation} 1s linear infinite; span { font-size: 36px; &:hover {
+font-size: 40px; } &:active { opacity: 0; } } `; function App() { return (
+<Wrapper>
+  <Box>
+    <span>😃</span>
+  </Box>
+</Wrapper>
+); } export default App;
+```

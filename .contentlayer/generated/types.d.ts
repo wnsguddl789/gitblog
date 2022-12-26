@@ -16,7 +16,7 @@ export type Post = {
   type: 'Post'
   title: string
   date: string
-  description: string
+  description?: string | undefined
   /** MDX file body */
   body: MDX
 

@@ -1,0 +1,55 @@
+---
+title: TIL gird-template-area
+date: 2022-12-12
+description: TIL
+---
+
+```css
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>SCSS Master Class</title>
+  </head>
+  <div class="grid">
+    <div class="header">1</div>
+    <div class="content">2</div>
+    <div class="nav">3</div>
+    <div class="footer">4</div>
+  </div>
+</html>
+```
+
+```css
+.grid {
+  display: grid;
+  /*auto는 가능한 크게 */
+  /*repeat(횟수, 크기)는 원하는 핏이 있을 때,  */
+  grid-template-columns: auto 200px;
+  grid-template-rows: 100px repeat(2, 200px) 100px;
+  grid-template-areas:
+    'header header header header'
+    'content content content nav'
+    'content content content nav'
+    'footer footer footer footer';
+}
+.header {
+  background-color: #2ecc71;
+  grid-area: header;
+}
+.content {
+  background-color: #3498db;
+  grid-area: content;
+}
+.nav {
+  background-color: #8e44ad;
+  grid-area: nav;
+}
+.footer {
+  background-color: #f39c12;
+  grid-area: footer;
+}
+```

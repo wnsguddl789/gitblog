@@ -1,0 +1,67 @@
+---
+title: Touchables
+date: 2022-12-22
+description: TIL / React Native
+---
+
+## TouchableOpacity
+
+누르는 이벤트를 Listen 할 준비가 된 View ( 누른 요소를 약간 투명해지게 만든다던지)
+
+---
+
+```jsx
+import { TouchableOpacity } from 'react-native'
+
+<View style={styles.header}>
+
+	<TouchableOpacity activeOpacity={0}>
+	          <Text style={styles.btnText}>**Work**</Text>
+	</TouchableOpacity>
+...
+```
+
+- 최상단에 `import { TouchableOpacity } from 'react-native'` 선언
+- **‘Work’** 라는 글자의 투명도를 `activeOpacity` 라는 속성을 주어 조절할 수 있다.
+
+## TouchableHighlight
+
+---
+
+요소를 클릭했을 때, 배경색이 바뀌도록 해준다.
+
+```jsx
+import { TouchableHighlight } from 'react-native';
+
+<TouchableHighlight
+  underlayColor="#DDDDDD"
+  activeOpacity={0.5}
+  onPress={() => console.log('pressed')}
+>
+  <Text style={styles.btnText}>Travel</Text>
+</TouchableHighlight>;
+```
+
+- 최상단에 `import { TouchableHighlight } from 'react-native'` 을 선언
+- activeOpacity : 요소를 클릭했을 때, 텍스트의 투명도 조절
+- underlayColor : 요소를 클릭했을 때, 텍스트의 바탕색
+- onPress : 요소를 클릭했을 때, 발생하는 이벤트 설정
+
+## TouchableWithoutFeedback
+
+---
+
+```jsx
+import { TouchableWithoutFeedback } from 'react-native';
+
+<TouchableWithoutFeedback
+  underlayColor="#DDDDDD"
+  activeOpacity={0.5}
+  onPress={() => console.log('pressed')}
+>
+  <Text style={styles.btnText}>Travel</Text>
+</TouchableWithoutFeedback>;
+```
+
+- 최상단에 `import {TouchableWithoutFeedback} from ‘react-native’` 을 선언
+- 태그는 존재하나 애니메이션이 작동하지 않는다.

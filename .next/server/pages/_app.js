@@ -17,8 +17,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /*eslint-disable*/ 
 function MyApp({ Component , pageProps  }) {
-    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(Component, {
-        ...pageProps
+    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(Component, {
+            ...pageProps
+        })
     });
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MyApp);

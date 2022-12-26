@@ -1,0 +1,208 @@
+---
+title: Persist
+date: 2022-12-23
+description: TIL / React Native
+---
+
+## 저장
+
+persist:지속하다
+
+ToDo 의 목록은 todo 에서만
+
+work 의 목록은 work 에서만 보이고 싶다면?
+
+우리가 렌더링하는 Todo가 working true 혹은 false , 즉 불리언 값을 갖고 있다면 그것을 모드와 비교한다.
+
+```jsx
+{Object.keys(toDos).map((key) =>
+          toDos[key].working === working ? (
+            <View style={styles.toDo} key={key}>
+              <Text style={styles.toDoText}>{toDos[key].text}</Text>
+            </View>
+```
+
+```jsx
+const addToDo = () => {
+  if (text === '') {
+    return;
+  }
+  //save to do
+  const newToDos = { ...toDos, [Date.now()]: { text, working } };
+  setTodos(newToDos);
+  setText('');
+};
+```
+
+## 읽기
+
+`expo install @react-native-async-storage/async-storage`
+
+\*expo install 은 기본적으로 npm install 을 실행시킨다. 그러나 이것을 사용하면 현재 사용중인 expo 버전과 같은 버전의 모듈을 설치한다.
+
+### Storing string value
+
+```jsx
+const storeData = async (value) => {
+  try {
+    await AsyncStroage.setItem('@storage_key', value);
+  } catch (e) {
+    // saving error
+  }
+};
+```
+
+### Storing object value
+
+```jsx
+const storeDatea = aync(value) {
+try {
+const jsonValue = JSON.stringify(value)
+await AsyncStorage.setItem('@storage_key', value)
+}catch(e)
+//saving error
+}
+```
+
+async await 을 사용해야한다.
+
+Object 를 String 으로 바꿔주어야 한다. 마치 브라우저의 local storage 처럼 작동한다.
+
+---
+
+### Reading Data
+
+`getItem` returns a promise that either sesolves to stored value when data is found for given key, or returns, `null` otherwise.
+
+- 주어진 키에 대한 데이터가 발견되면 저장된 값으로 확인하거나 그렇지 않으면 promise 를 반환하거나 `null` 을 반환한다.
+
+### Reading string value
+
+```jsx
+const getData = async () => {
+  try {
+    const value = await AsyncStorage.getItem('storage_Key');
+    if (value !== null) {
+      //value previously sored
+    }
+  } catch (e) {
+    //error reading value
+  }
+};
+```
+
+### Reading object value
+
+```jsx
+const getData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@storage_Key');
+    return jsonValue !== null ? JSON.parse(jsonValue) : null;
+  } catch (e) {
+    //error reading value
+  }
+};
+```
+
+---
+
+### saveTodos function 만들기
+
+- JSON.stringify : object 를 string 으로 바꿔줌
+
+→ input에 텍스트 입력(toDos)
+
+→ 현재 있는 toDos를 stiring 으로 바꿔주고,
+
+→ await AsyncStorage.setItem 을 해줌.
+
+→ toSave 형태의 toDos 를 받음
+
+→ addToDo 안에서 새로운 object 를 만들기 때문에, newToDos에 saveToDos(newToDos)를 추가
+
+→ newToDos를 state 에 넣어주고 , 또 그 새로운 object 를 saveToDos 함수에 보냄
+
+```jsx
+const [**toDos**, setTodos] = useState({});
+const STORAGE_KEY = “@toDos”;
+ (1)const saveToDos = async(toSave) => {
+(3)await AsyncStorage.setItem("@toDos",JSON.stringify("toSave"))
+//setItem은 promise 를 리턴할것임
+}
+
+const addToDo = async () => {
+    if (text === "") {
+      return;
+    }
+    //save to do
+    const newToDos = { ...toDos, [Date.now()]: { text, working } };
+    **setToDos(newToDos);**
+  (2)  **saveToDos**(**newToDos**);
+    await saveToDos(newToDos);
+    setText("");
+  };
+```
+
+(1) addToDo function 안에서 새로운 object 를 만들기 때문에,
+
+(2) **newToDos를** state 에 넣어주고 , 또 그 새로운 object 를 saveToDos 함수에 보냄
+
+(3) 에서 saveToDos 는 key 인 “@toDos” 와 함께 AsyncStorage 에 저장하고있고,
+
+저장할 toDos 를 stringify 해주고 있다.(같은 키를 나중에 사용할 것이기 때문에 변수화시킨다)
+
+`const STORAGE_KEY = “@toDos”;`
+
+```jsx
+const [**toDos**, setTodos] = useState({});
+const STORAGE_KEY = “@toDos”;
+const saveToDos = async(toSave) => {
+await AsyncStorage.setItem(STORAGE_KEY,JSON.stringify("toSave"))
+
+}
+
+const addToDo = async () => {
+    if (text === "") {
+      return;
+    }
+    //save to do
+    const newToDos = { ...toDos, [Date.now()]: { text, working } };
+    **setToDos(newToDos);**
+    **saveToDos**(**newToDos**);
+    await saveToDos(newToDos);
+    setText("");
+  };
+```
+
+---
+
+### loadToDos function 만들기
+
+```jsx
+const [**toDos**, setTodos] = useState({});
+const STORAGE_KEY = “@toDos”;
+const saveToDos = async(toSave) => {
+await AsyncStorage.setItem(STORAGE_KEY,JSON.stringify("toSave"))
+}
+const loadingToDos = async()=> {
+ const s = await AsyncStorage.getItem(STORAGE_KEY)
+ JSON.parse(s);
+}
+
+(1)useEffect(()=>{loadToDos()},[])
+const addToDo = async () => {
+    if (text === "") {
+      return;
+    }
+    //save to do
+    const newToDos = { ...toDos, [Date.now()]: { text, working } };
+    **setToDos(newToDos);**
+    **saveToDos**(**newToDos**);
+    await saveToDos(newToDos);
+    setText("");
+  };
+```
+
+(1) component 가 mount 될 때, useEffect 가 실행된다.
+
+(2) s 를 string 으로 만들기 위해 `JSON.parse(s)` 한다.

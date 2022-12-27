@@ -1,0 +1,49 @@
+---
+title: React-hook-form
+date: 2022-12-25
+description: React
+---
+
+### Download
+
+`npm install react-hook-form`
+
+### import
+
+`import {useForm} from "react-hook-form";`
+
+### use ‘register funtion’
+
+register handler 를 사용하면 onChange 이벤트 핸들러가 필요없다.
+
+input 다음에 오는 props 들도 필요없다 state 들도 필요없다.
+
+```jsx
+function ToDoList() {
+const {register, watch}=useForm();
+console.log(watch);
+console.log(register("toDo"));
+  return (
+<div>
+      <form>
+        <input *{...regisger("toDo"*)}placeholder="Write ato do " />
+        <button>Add</button>
+      </form>
+    </div>
+  );
+}
+export default ToDoList;
+```
+
+![스크린샷 2022-12-25 오전 11.35.39.png](/todo.png)
+
+이런 객체를 생성한다.
+
+register()함수에 어떤 문자열을 보내주면 이러한 객체를 생성하는데. input 에 잇을만한 속성들이다
+
+- onBlur : input 의 바깥을 클릭하면 blur 다
+- _`{...regisger("toDo"_)` 이렇게 input 안에 삽입함으로 register 함수가 반환하는 객체를 가져다가 input 에 props 로 주는 것이다.
+
+### watch
+
+form의 입력값들의 변화를 관찰할 수 있게 해주는 함수

@@ -5,9 +5,9 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/7Fxvge0GQaPPN13wAJa8b/_buildManifest.js",
-    "static/7Fxvge0GQaPPN13wAJa8b/_ssgManifest.js",
-    "static/7Fxvge0GQaPPN13wAJa8b/_middlewareManifest.js"
+    "static/ubUi1wMd3WyILvzRHiAaV/_buildManifest.js",
+    "static/ubUi1wMd3WyILvzRHiAaV/_ssgManifest.js",
+    "static/ubUi1wMd3WyILvzRHiAaV/_middlewareManifest.js"
   ],
   "pages": {
     "/": [
@@ -15,13 +15,13 @@
       "static/chunks/framework-5f4595e5518b5600.js",
       "static/chunks/main-164920eac96bc1c7.js",
       "static/chunks/247-fc9df32bb962ad35.js",
-      "static/chunks/pages/index-c02038b597c0aedd.js"
+      "static/chunks/pages/index-5946fc184b8ec231.js"
     ],
     "/_app": [
       "static/chunks/webpack-69bfa6990bb9e155.js",
       "static/chunks/framework-5f4595e5518b5600.js",
       "static/chunks/main-164920eac96bc1c7.js",
-      "static/css/ee2bbee7cc3fb557.css",
+      "static/css/8bc99b6f84641c27.css",
       "static/chunks/pages/_app-f6e1d36fb7693025.js"
     ],
     "/_error": [
@@ -35,14 +35,28 @@
       "static/chunks/framework-5f4595e5518b5600.js",
       "static/chunks/main-164920eac96bc1c7.js",
       "static/chunks/247-fc9df32bb962ad35.js",
-      "static/chunks/pages/blog-b9ec6aca03c628df.js"
+      "static/chunks/pages/blog-cd7df2d049be38b2.js"
     ],
     "/blog/[slug]": [
       "static/chunks/webpack-69bfa6990bb9e155.js",
       "static/chunks/framework-5f4595e5518b5600.js",
       "static/chunks/main-164920eac96bc1c7.js",
       "static/chunks/247-fc9df32bb962ad35.js",
-      "static/chunks/pages/blog/[slug]-9ecafb1dec7e84c7.js"
+      "static/chunks/pages/blog/[slug]-9e079fadb1cb3b18.js"
+    ],
+    "/snack": [
+      "static/chunks/webpack-69bfa6990bb9e155.js",
+      "static/chunks/framework-5f4595e5518b5600.js",
+      "static/chunks/main-164920eac96bc1c7.js",
+      "static/chunks/247-fc9df32bb962ad35.js",
+      "static/chunks/pages/snack-2d5a7a1c7f2f7aa7.js"
+    ],
+    "/snack/[snack]": [
+      "static/chunks/webpack-69bfa6990bb9e155.js",
+      "static/chunks/framework-5f4595e5518b5600.js",
+      "static/chunks/main-164920eac96bc1c7.js",
+      "static/chunks/247-fc9df32bb962ad35.js",
+      "static/chunks/pages/snack/[snack]-dfbf9a57a8834c75.js"
     ]
   },
   "ampFirstPages": []

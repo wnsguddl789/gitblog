@@ -17,7 +17,7 @@ exports.modules = {
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_1__);
 
 
-const RecentPosts = ({ posts  })=>{
+const RecentPosts = ({ posts: posts1  })=>{
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("section", {
         className: `mt-10`,
         children: [
@@ -27,23 +27,23 @@ const RecentPosts = ({ posts  })=>{
             }),
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                 className: `flex flex-col`,
-                children: posts.slice(0, 10).map((post)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_1___default()), {
-                        href: `/blog/${post._raw.flattenedPath}`,
+                children: posts1.slice(0, 10).map((posts)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_1___default()), {
+                        href: `/blog/${posts._raw.flattenedPath}`,
                         passHref: true,
                         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("a", {
                             className: "mt-5",
                             children: [
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                     className: `font-medium text-xl`,
-                                    children: post.title
+                                    children: posts.title
                                 }),
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                     className: `font-light`,
-                                    children: post.description
+                                    children: posts.description
                                 })
                             ]
                         })
-                    }, post._id)
+                    }, posts._id)
                 )
             })
         ]

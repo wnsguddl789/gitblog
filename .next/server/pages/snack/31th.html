@@ -1,0 +1,183 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width"/><meta charSet="utf-8"/><title>ContentLayer 설정 및 사용법</title><meta content="NextJS / ContentLayer 사용법" name="description"/><meta property="og:site_name" content="Bizbaeja"/><meta name="next-head-count" content="5"/><link rel="preload" href="/_next/static/css/8bc99b6f84641c27.css" as="style"/><link rel="stylesheet" href="/_next/static/css/8bc99b6f84641c27.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-5cd94c89d3acac5f.js"></script><script src="/_next/static/chunks/webpack-69bfa6990bb9e155.js" defer=""></script><script src="/_next/static/chunks/framework-5f4595e5518b5600.js" defer=""></script><script src="/_next/static/chunks/main-164920eac96bc1c7.js" defer=""></script><script src="/_next/static/chunks/pages/_app-f6e1d36fb7693025.js" defer=""></script><script src="/_next/static/chunks/247-fc9df32bb962ad35.js" defer=""></script><script src="/_next/static/chunks/pages/snack/%5Bsnack%5D-dfbf9a57a8834c75.js" defer=""></script><script src="/_next/static/ubUi1wMd3WyILvzRHiAaV/_buildManifest.js" defer=""></script><script src="/_next/static/ubUi1wMd3WyILvzRHiAaV/_ssgManifest.js" defer=""></script><script src="/_next/static/ubUi1wMd3WyILvzRHiAaV/_middlewareManifest.js" defer=""></script></head><body><div id="__next" data-reactroot=""><div class="w-full flex flex-col items-center p-3"><header class="w-full max-w-3xl flex flex-row justify-between items-center my-1"><div class="flex flex-row items-center"><span style="box-sizing:border-box;display:inline-block;overflow:hidden;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;position:relative;max-width:100%"><span style="box-sizing:border-box;display:block;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;max-width:100%"><img style="display:block;max-width:100%;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0" alt="" aria-hidden="true" src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2740%27%20height=%2740%27/%3e"/></span><img alt="로고" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" decoding="async" data-nimg="intrinsic" class="rounded-full" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%;object-fit:cover"/><noscript><img alt="로고" srcSet="/_next/image?url=%2Fsherlock.jpeg&amp;w=48&amp;q=75 1x, /_next/image?url=%2Fsherlock.jpeg&amp;w=96&amp;q=75 2x" src="/_next/image?url=%2Fsherlock.jpeg&amp;w=96&amp;q=75" decoding="async" data-nimg="intrinsic" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%;object-fit:cover" class="rounded-full" loading="lazy"/></noscript></span><span class="mx-2 font-extralight text-lg">Bizbaeja&#x27;s Blog</span></div><nav><a class="mr-5" href="/">Home</a><a class="mr-5" href="/blog">Blog</a><a class="mr-5" href="/snack">TIL</a></nav></header><main class="w-full max-w-3xl"><div class="mt-10 prose"><h1 class="text-sky-700">ContentLayer 설정 및 사용법</h1><h3>Contentlayer 란?</h3>
+<p>| 콘텐츠를 데이터로 변환하여 앱에서 MD(X) 및 CMS 콘텐츠를 매우 쉽게 가져올 수 있음</p>
+<hr/>
+<h3>자동 설정</h3>
+<ul>
+<li>CRA 로 생성시</li>
+</ul>
+<pre><code class="language-css">npx create-next-app --example with-contentlayer with-contentlayer-app
+# or
+yarn create next-app --example with-contentlayer with-contentlayer-app
+</code></pre>
+<h3>수동설정</h3>
+<ul>
+<li>이미 앱이 만들어져 있을 경우</li>
+</ul>
+<pre><code class="language-css">npm install contentlayer next-contentlayer
+# or
+yarn add contentlayer next-contentlayer
+</code></pre>
+<hr/>
+<h3>config 추가하기</h3>
+<ul>
+<li><code>contentlayer.config.js</code> 다음 코드를 사용하요 프로젝트의 루트에 파일을 만든다.</li>
+</ul>
+<pre><code class="language-css">[contentlayer.config.js]
+
+import { defineDocumentType, makeSource } from &quot;contentlayer/source-files&quot;;
+
+const Post = defineDocumentType(() =&gt; ({
+  name: &quot;Post&quot;,
+  filePathPattern: `**/*.md`,
+  contentType: &quot;markdown&quot;,
+  fields: {
+    title: { type: &quot;string&quot;, required: true },
+    date: { type: &quot;string&quot;, required: true },
+  },
+  computedFields: {
+    slug: {
+      type: &quot;string&quot;,
+      resolve: (doc) =&gt; doc._raw.sourceFileName.replace(/\.md/, &quot;&quot;),
+    },
+  },
+}));
+
+export default makeSource({
+  contentDirPath: &quot;posts&quot;,
+  documentTypes: [Post],
+});
+
+</code></pre>
+<hr/>
+<p>*플러그인 :</p>
+<p>어떤 특정한 하나의 문제를 해결하기 위한 컴포넌트.</p>
+<h3>Next.js 플러그인 설정</h3>
+<ul>
+<li><code>next.config.js</code> (선택사항 : 라이브 리로드 및 빌드 설정 활성화)</li>
+</ul>
+<pre><code class="language-css">const { withContentlayer } = require(&quot;next-contentlayer&quot;);
+
+module.exports = withContentlayer({
+  // Your Next.js config...
+});
+</code></pre>
+<hr/>
+<h3><code>jsconfig.json</code> 파일 추가</h3>
+<pre><code class="language-css">{
+  &quot;compilerOptions&quot;: {
+    &quot;baseUrl&quot;: &quot;.&quot;,
+    &quot;paths&quot;: {
+      &quot;contentlayer/generated&quot;: [&quot;./.contentlayer/generated&quot;]
+    }
+  },
+  &quot;include&quot;: [&quot;.contentlayer/generated&quot;]
+}
+</code></pre>
+<hr/>
+<ul>
+<li>프로젝트에서 TypeScript 를 사용하는 경우 <code>**tsconfig.json</code> 는 이미 추가되어 있다.**</li>
+</ul>
+<pre><code class="language-css">[tsconfig.json] {
+  &#x27;compileroptions&#x27;: {
+    &#x27;baseurl&#x27;: &#x27;.&#x27;,
+    &#x27;paths&#x27;: {
+      // These option allow you to configure module aliases.
+      // So you will import contentlayer generated content from &quot;contentlayer/generated&quot; instead of &quot;./.contentlayer/generated&quot;
+      +&quot;contentlayer/generated&quot;: [ &#x27;./.contentlayer/generated&#x27; ];
+    }
+  }
+  ,&quot;include&quot;: [ &#x27;next-env.d.ts&#x27;, &#x27;**/*.ts&#x27;, &#x27;**/*.tsx&#x27;, +&#x27;.contentlayer/generated&#x27;
+      ];
+}
+</code></pre>
+<hr/>
+<h2>Post 추가하기</h2>
+<ol>
+<li>앱의 루트에 <code>post</code> 폴더를 추가(콘텐츠가 있는 위치)한다.</li>
+<li>pre-rendering.<code>mdx</code>파일을 추가한다.</li>
+<li>원하는 내용을 추가하면 된다.</li>
+</ol>
+<hr/>
+<pre><code class="language-css">[posts/pre-rendering.md]
+---
+title: &quot;Two Forms of Pre-rendering&quot;
+date: &quot;2020-01-01&quot;
+---
+
+Next.js has two forms of pre-rendering: **Static Generation** and **Server-side Rendering**. The difference is in **when** it generates the HTML for a page.
+
+- **Static Generation** is the pre-rendering method that generates the HTML at **build time**. The pre-rendered HTML is then _reused_ on each request.
+- **Server-side Rendering** is the pre-rendering method that generates the HTML on **each request**.
+
+Importantly, Next.js lets you **choose** which pre-rendering form to use for each page. You can create a &quot;hybrid&quot; Next.js app by using Static Generation for most pages and using Server-side Rendering for others.
+</code></pre>
+<hr/>
+<h2>게시물 Fetch &amp; display 하기</h2>
+<pre><code class="language-css">[pages/index.js]
+import Link from &quot;next/link&quot;;
+import { allPosts } from &quot;contentlayer/generated&quot;;
+import { pick } from &quot;@contentlayer/client&quot;;
+
+export default function Home({ posts }) {
+  return (
+    &lt;section&gt;
+      &lt;ul&gt;
+        {posts.map(({ slug, date, title }) =&gt; (
+          &lt;li key={slug}&gt;
+            &lt;Link href={`/posts/${slug}`}&gt;
+              &lt;a&gt;{title}&lt;/a&gt;
+            &lt;/Link&gt;
+            &lt;br /&gt;
+            &lt;small&gt;{date}&lt;/small&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/section&gt;
+  );
+}
+
+// Statically fetch all posts
+export async function getStaticProps() {
+  const posts = allPosts.map((post) =&gt; pick(post, [&quot;title&quot;, &quot;date&quot;, &quot;slug&quot;]));
+
+  return { props: { posts } };
+}
+
+</code></pre>
+<hr/>
+<h2>동적 경로 게시물 생성하기</h2>
+<ul>
+<li>**<code>posts/[slug].js</code>**내부 **<code>pages</code>**폴더 를 추가하십시오 .</li>
+</ul>
+<pre><code class="language-css">[pages/posts/[slug].js]
+
+import { allPosts } from &#x27;contentlayer/generated&#x27;
+
+export default function Post({ post }) {
+  return (
+    &lt;article&gt;
+      &lt;h1&gt;{post.title}&lt;/h1&gt;
+      &lt;div&gt;{post.date}&lt;/div&gt;
+
+      &lt;div dangerouslySetInnerHTML={{ __html: post.body.html }} /&gt;
+    &lt;/article&gt;
+  )
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: allPosts.map((p) =&gt; ({ params: { slug: p.slug } })),
+    fallback: false,
+  }
+}
+
+// Statically fetch post by slug
+export async function getStaticProps({ params }) {
+  const post = allPosts.find((post) =&gt; post.slug === params?.slug)
+
+  return { props: { post } }
+}
+</code></pre>
+<p><a href="https://www.imadatyat.me/guides/how-to-setup-contentlayer-in-nextjs#set-up-nextjs-plugin-in-nextconfigjs-optional-enables-live-reload-and-build-setup">How to setup Contentlayer in your Next.js app? - Imad Atyat-Allah</a></p>
+<p>번역</p>
+<p><a href="https://www.sandromaglione.com/techblog/contentlayer-blog-template-with-nextjs">How to create a Blog with Contentlayer and NextJs</a></p></div></main></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"snack":{"title":"ContentLayer 설정 및 사용법","date":"2022-12-18T00:00:00.000Z","description":"NextJS / ContentLayer 사용법","body":{"raw":"\n### Contentlayer 란?\n\n| 콘텐츠를 데이터로 변환하여 앱에서 MD(X) 및 CMS 콘텐츠를 매우 쉽게 가져올 수 있음\n\n---\n\n### 자동 설정\n\n- CRA 로 생성시\n\n```css\nnpx create-next-app --example with-contentlayer with-contentlayer-app\n# or\nyarn create next-app --example with-contentlayer with-contentlayer-app\n```\n\n### 수동설정\n\n- 이미 앱이 만들어져 있을 경우\n\n```css\nnpm install contentlayer next-contentlayer\n# or\nyarn add contentlayer next-contentlayer\n```\n\n---\n\n### config 추가하기\n\n- `contentlayer.config.js` 다음 코드를 사용하요 프로젝트의 루트에 파일을 만든다.\n\n```css\n[contentlayer.config.js]\n\nimport { defineDocumentType, makeSource } from \"contentlayer/source-files\";\n\nconst Post = defineDocumentType(() =\u003e ({\n  name: \"Post\",\n  filePathPattern: `**/*.md`,\n  contentType: \"markdown\",\n  fields: {\n    title: { type: \"string\", required: true },\n    date: { type: \"string\", required: true },\n  },\n  computedFields: {\n    slug: {\n      type: \"string\",\n      resolve: (doc) =\u003e doc._raw.sourceFileName.replace(/\\.md/, \"\"),\n    },\n  },\n}));\n\nexport default makeSource({\n  contentDirPath: \"posts\",\n  documentTypes: [Post],\n});\n\n```\n\n---\n\n\\*플러그인 :\n\n어떤 특정한 하나의 문제를 해결하기 위한 컴포넌트.\n\n### Next.js 플러그인 설정\n\n- `next.config.js` (선택사항 : 라이브 리로드 및 빌드 설정 활성화)\n\n```css\nconst { withContentlayer } = require(\"next-contentlayer\");\n\nmodule.exports = withContentlayer({\n  // Your Next.js config...\n});\n```\n\n---\n\n### `jsconfig.json` 파일 추가\n\n```css\n{\n  \"compilerOptions\": {\n    \"baseUrl\": \".\",\n    \"paths\": {\n      \"contentlayer/generated\": [\"./.contentlayer/generated\"]\n    }\n  },\n  \"include\": [\".contentlayer/generated\"]\n}\n```\n\n---\n\n- 프로젝트에서 TypeScript 를 사용하는 경우 `**tsconfig.json` 는 이미 추가되어 있다.\\*\\*\n\n```css\n[tsconfig.json] {\n  'compileroptions': {\n    'baseurl': '.',\n    'paths': {\n      // These option allow you to configure module aliases.\n      // So you will import contentlayer generated content from \"contentlayer/generated\" instead of \"./.contentlayer/generated\"\n      +\"contentlayer/generated\": [ './.contentlayer/generated' ];\n    }\n  }\n  ,\"include\": [ 'next-env.d.ts', '**/*.ts', '**/*.tsx', +'.contentlayer/generated'\n      ];\n}\n```\n\n---\n\n## Post 추가하기\n\n1. 앱의 루트에 `post` 폴더를 추가(콘텐츠가 있는 위치)한다.\n2. pre-rendering.`mdx`파일을 추가한다.\n3. 원하는 내용을 추가하면 된다.\n\n---\n\n```css\n[posts/pre-rendering.md]\n---\ntitle: \"Two Forms of Pre-rendering\"\ndate: \"2020-01-01\"\n---\n\nNext.js has two forms of pre-rendering: **Static Generation** and **Server-side Rendering**. The difference is in **when** it generates the HTML for a page.\n\n- **Static Generation** is the pre-rendering method that generates the HTML at **build time**. The pre-rendered HTML is then _reused_ on each request.\n- **Server-side Rendering** is the pre-rendering method that generates the HTML on **each request**.\n\nImportantly, Next.js lets you **choose** which pre-rendering form to use for each page. You can create a \"hybrid\" Next.js app by using Static Generation for most pages and using Server-side Rendering for others.\n```\n\n---\n\n## 게시물 Fetch \u0026 display 하기\n\n```css\n[pages/index.js]\nimport Link from \"next/link\";\nimport { allPosts } from \"contentlayer/generated\";\nimport { pick } from \"@contentlayer/client\";\n\nexport default function Home({ posts }) {\n  return (\n    \u003csection\u003e\n      \u003cul\u003e\n        {posts.map(({ slug, date, title }) =\u003e (\n          \u003cli key={slug}\u003e\n            \u003cLink href={`/posts/${slug}`}\u003e\n              \u003ca\u003e{title}\u003c/a\u003e\n            \u003c/Link\u003e\n            \u003cbr /\u003e\n            \u003csmall\u003e{date}\u003c/small\u003e\n          \u003c/li\u003e\n        ))}\n      \u003c/ul\u003e\n    \u003c/section\u003e\n  );\n}\n\n// Statically fetch all posts\nexport async function getStaticProps() {\n  const posts = allPosts.map((post) =\u003e pick(post, [\"title\", \"date\", \"slug\"]));\n\n  return { props: { posts } };\n}\n\n```\n\n---\n\n## 동적 경로 게시물 생성하기\n\n- **`posts/[slug].js`**내부 **`pages`**폴더 를 추가하십시오 .\n\n```css\n[pages/posts/[slug].js]\n\nimport { allPosts } from 'contentlayer/generated'\n\nexport default function Post({ post }) {\n  return (\n    \u003carticle\u003e\n      \u003ch1\u003e{post.title}\u003c/h1\u003e\n      \u003cdiv\u003e{post.date}\u003c/div\u003e\n\n      \u003cdiv dangerouslySetInnerHTML={{ __html: post.body.html }} /\u003e\n    \u003c/article\u003e\n  )\n}\n\nexport async function getStaticPaths() {\n  return {\n    paths: allPosts.map((p) =\u003e ({ params: { slug: p.slug } })),\n    fallback: false,\n  }\n}\n\n// Statically fetch post by slug\nexport async function getStaticProps({ params }) {\n  const post = allPosts.find((post) =\u003e post.slug === params?.slug)\n\n  return { props: { post } }\n}\n```\n\n[How to setup Contentlayer in your Next.js app? - Imad Atyat-Allah](https://www.imadatyat.me/guides/how-to-setup-contentlayer-in-nextjs#set-up-nextjs-plugin-in-nextconfigjs-optional-enables-live-reload-and-build-setup)\n\n번역\n\n[How to create a Blog with Contentlayer and NextJs](https://www.sandromaglione.com/techblog/contentlayer-blog-template-with-nextjs)\n","code":"var Component=(()=\u003e{var h=Object.create;var o=Object.defineProperty;var p=Object.getOwnPropertyDescriptor;var u=Object.getOwnPropertyNames;var g=Object.getPrototypeOf,m=Object.prototype.hasOwnProperty;var y=(t,n)=\u003e()=\u003e(n||t((n={exports:{}}).exports,n),n.exports),f=(t,n)=\u003e{for(var r in n)o(t,r,{get:n[r],enumerable:!0})},s=(t,n,r,a)=\u003e{if(n\u0026\u0026typeof n==\"object\"||typeof n==\"function\")for(let l of u(n))!m.call(t,l)\u0026\u0026l!==r\u0026\u0026o(t,l,{get:()=\u003en[l],enumerable:!(a=p(n,l))||a.enumerable});return t};var x=(t,n,r)=\u003e(r=t!=null?h(g(t)):{},s(n||!t||!t.__esModule?o(r,\"default\",{value:t,enumerable:!0}):r,t)),j=t=\u003es(o({},\"__esModule\",{value:!0}),t);var i=y((T,c)=\u003e{c.exports=_jsx_runtime});var P={};f(P,{default:()=\u003eS,frontmatter:()=\u003ew});var e=x(i()),w={title:\"ContentLayer \\uC124\\uC815 \\uBC0F \\uC0AC\\uC6A9\\uBC95\",date:new Date(16713216e5),description:\"NextJS / ContentLayer \\uC0AC\\uC6A9\\uBC95\"};function d(t){let n=Object.assign({h3:\"h3\",p:\"p\",hr:\"hr\",ul:\"ul\",li:\"li\",pre:\"pre\",code:\"code\",h2:\"h2\",ol:\"ol\",a:\"a\"},t.components);return(0,e.jsxs)(e.Fragment,{children:[(0,e.jsx)(n.h3,{children:\"Contentlayer \\uB780?\"}),`\n`,(0,e.jsx)(n.p,{children:\"| \\uCF58\\uD150\\uCE20\\uB97C \\uB370\\uC774\\uD130\\uB85C \\uBCC0\\uD658\\uD558\\uC5EC \\uC571\\uC5D0\\uC11C MD(X) \\uBC0F CMS \\uCF58\\uD150\\uCE20\\uB97C \\uB9E4\\uC6B0 \\uC27D\\uAC8C \\uAC00\\uC838\\uC62C \\uC218 \\uC788\\uC74C\"}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsx)(n.h3,{children:\"\\uC790\\uB3D9 \\uC124\\uC815\"}),`\n`,(0,e.jsxs)(n.ul,{children:[`\n`,(0,e.jsx)(n.li,{children:\"CRA \\uB85C \\uC0DD\\uC131\\uC2DC\"}),`\n`]}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`npx create-next-app --example with-contentlayer with-contentlayer-app\n# or\nyarn create next-app --example with-contentlayer with-contentlayer-app\n`})}),`\n`,(0,e.jsx)(n.h3,{children:\"\\uC218\\uB3D9\\uC124\\uC815\"}),`\n`,(0,e.jsxs)(n.ul,{children:[`\n`,(0,e.jsx)(n.li,{children:\"\\uC774\\uBBF8 \\uC571\\uC774 \\uB9CC\\uB4E4\\uC5B4\\uC838 \\uC788\\uC744 \\uACBD\\uC6B0\"}),`\n`]}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`npm install contentlayer next-contentlayer\n# or\nyarn add contentlayer next-contentlayer\n`})}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsx)(n.h3,{children:\"config \\uCD94\\uAC00\\uD558\\uAE30\"}),`\n`,(0,e.jsxs)(n.ul,{children:[`\n`,(0,e.jsxs)(n.li,{children:[(0,e.jsx)(n.code,{children:\"contentlayer.config.js\"}),\" \\uB2E4\\uC74C \\uCF54\\uB4DC\\uB97C \\uC0AC\\uC6A9\\uD558\\uC694 \\uD504\\uB85C\\uC81D\\uD2B8\\uC758 \\uB8E8\\uD2B8\\uC5D0 \\uD30C\\uC77C\\uC744 \\uB9CC\\uB4E0\\uB2E4.\"]}),`\n`]}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`[contentlayer.config.js]\n\nimport { defineDocumentType, makeSource } from \"contentlayer/source-files\";\n\nconst Post = defineDocumentType(() =\u003e ({\n  name: \"Post\",\n  filePathPattern: \\`**/*.md\\`,\n  contentType: \"markdown\",\n  fields: {\n    title: { type: \"string\", required: true },\n    date: { type: \"string\", required: true },\n  },\n  computedFields: {\n    slug: {\n      type: \"string\",\n      resolve: (doc) =\u003e doc._raw.sourceFileName.replace(/\\\\.md/, \"\"),\n    },\n  },\n}));\n\nexport default makeSource({\n  contentDirPath: \"posts\",\n  documentTypes: [Post],\n});\n\n`})}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsx)(n.p,{children:\"*\\uD50C\\uB7EC\\uADF8\\uC778 :\"}),`\n`,(0,e.jsx)(n.p,{children:\"\\uC5B4\\uB5A4 \\uD2B9\\uC815\\uD55C \\uD558\\uB098\\uC758 \\uBB38\\uC81C\\uB97C \\uD574\\uACB0\\uD558\\uAE30 \\uC704\\uD55C \\uCEF4\\uD3EC\\uB10C\\uD2B8.\"}),`\n`,(0,e.jsx)(n.h3,{children:\"Next.js \\uD50C\\uB7EC\\uADF8\\uC778 \\uC124\\uC815\"}),`\n`,(0,e.jsxs)(n.ul,{children:[`\n`,(0,e.jsxs)(n.li,{children:[(0,e.jsx)(n.code,{children:\"next.config.js\"}),\" (\\uC120\\uD0DD\\uC0AC\\uD56D : \\uB77C\\uC774\\uBE0C \\uB9AC\\uB85C\\uB4DC \\uBC0F \\uBE4C\\uB4DC \\uC124\\uC815 \\uD65C\\uC131\\uD654)\"]}),`\n`]}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`const { withContentlayer } = require(\"next-contentlayer\");\n\nmodule.exports = withContentlayer({\n  // Your Next.js config...\n});\n`})}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsxs)(n.h3,{children:[(0,e.jsx)(n.code,{children:\"jsconfig.json\"}),\" \\uD30C\\uC77C \\uCD94\\uAC00\"]}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`{\n  \"compilerOptions\": {\n    \"baseUrl\": \".\",\n    \"paths\": {\n      \"contentlayer/generated\": [\"./.contentlayer/generated\"]\n    }\n  },\n  \"include\": [\".contentlayer/generated\"]\n}\n`})}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsxs)(n.ul,{children:[`\n`,(0,e.jsxs)(n.li,{children:[\"\\uD504\\uB85C\\uC81D\\uD2B8\\uC5D0\\uC11C TypeScript \\uB97C \\uC0AC\\uC6A9\\uD558\\uB294 \\uACBD\\uC6B0 \",(0,e.jsx)(n.code,{children:\"**tsconfig.json\"}),\" \\uB294 \\uC774\\uBBF8 \\uCD94\\uAC00\\uB418\\uC5B4 \\uC788\\uB2E4.**\"]}),`\n`]}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`[tsconfig.json] {\n  'compileroptions': {\n    'baseurl': '.',\n    'paths': {\n      // These option allow you to configure module aliases.\n      // So you will import contentlayer generated content from \"contentlayer/generated\" instead of \"./.contentlayer/generated\"\n      +\"contentlayer/generated\": [ './.contentlayer/generated' ];\n    }\n  }\n  ,\"include\": [ 'next-env.d.ts', '**/*.ts', '**/*.tsx', +'.contentlayer/generated'\n      ];\n}\n`})}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsx)(n.h2,{children:\"Post \\uCD94\\uAC00\\uD558\\uAE30\"}),`\n`,(0,e.jsxs)(n.ol,{children:[`\n`,(0,e.jsxs)(n.li,{children:[\"\\uC571\\uC758 \\uB8E8\\uD2B8\\uC5D0 \",(0,e.jsx)(n.code,{children:\"post\"}),\" \\uD3F4\\uB354\\uB97C \\uCD94\\uAC00(\\uCF58\\uD150\\uCE20\\uAC00 \\uC788\\uB294 \\uC704\\uCE58)\\uD55C\\uB2E4.\"]}),`\n`,(0,e.jsxs)(n.li,{children:[\"pre-rendering.\",(0,e.jsx)(n.code,{children:\"mdx\"}),\"\\uD30C\\uC77C\\uC744 \\uCD94\\uAC00\\uD55C\\uB2E4.\"]}),`\n`,(0,e.jsx)(n.li,{children:\"\\uC6D0\\uD558\\uB294 \\uB0B4\\uC6A9\\uC744 \\uCD94\\uAC00\\uD558\\uBA74 \\uB41C\\uB2E4.\"}),`\n`]}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`[posts/pre-rendering.md]\n---\ntitle: \"Two Forms of Pre-rendering\"\ndate: \"2020-01-01\"\n---\n\nNext.js has two forms of pre-rendering: **Static Generation** and **Server-side Rendering**. The difference is in **when** it generates the HTML for a page.\n\n- **Static Generation** is the pre-rendering method that generates the HTML at **build time**. The pre-rendered HTML is then _reused_ on each request.\n- **Server-side Rendering** is the pre-rendering method that generates the HTML on **each request**.\n\nImportantly, Next.js lets you **choose** which pre-rendering form to use for each page. You can create a \"hybrid\" Next.js app by using Static Generation for most pages and using Server-side Rendering for others.\n`})}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsx)(n.h2,{children:\"\\uAC8C\\uC2DC\\uBB3C Fetch \u0026 display \\uD558\\uAE30\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`[pages/index.js]\nimport Link from \"next/link\";\nimport { allPosts } from \"contentlayer/generated\";\nimport { pick } from \"@contentlayer/client\";\n\nexport default function Home({ posts }) {\n  return (\n    \u003csection\u003e\n      \u003cul\u003e\n        {posts.map(({ slug, date, title }) =\u003e (\n          \u003cli key={slug}\u003e\n            \u003cLink href={\\`/posts/\\${slug}\\`}\u003e\n              \u003ca\u003e{title}\u003c/a\u003e\n            \u003c/Link\u003e\n            \u003cbr /\u003e\n            \u003csmall\u003e{date}\u003c/small\u003e\n          \u003c/li\u003e\n        ))}\n      \u003c/ul\u003e\n    \u003c/section\u003e\n  );\n}\n\n// Statically fetch all posts\nexport async function getStaticProps() {\n  const posts = allPosts.map((post) =\u003e pick(post, [\"title\", \"date\", \"slug\"]));\n\n  return { props: { posts } };\n}\n\n`})}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsx)(n.h2,{children:\"\\uB3D9\\uC801 \\uACBD\\uB85C \\uAC8C\\uC2DC\\uBB3C \\uC0DD\\uC131\\uD558\\uAE30\"}),`\n`,(0,e.jsxs)(n.ul,{children:[`\n`,(0,e.jsxs)(n.li,{children:[\"**\",(0,e.jsx)(n.code,{children:\"posts/[slug].js\"}),\"**\\uB0B4\\uBD80\\xA0**\",(0,e.jsx)(n.code,{children:\"pages\"}),\"**\\uD3F4\\uB354 \\uB97C\\xA0\\uCD94\\uAC00\\uD558\\uC2ED\\uC2DC\\uC624 .\"]}),`\n`]}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`[pages/posts/[slug].js]\n\nimport { allPosts } from 'contentlayer/generated'\n\nexport default function Post({ post }) {\n  return (\n    \u003carticle\u003e\n      \u003ch1\u003e{post.title}\u003c/h1\u003e\n      \u003cdiv\u003e{post.date}\u003c/div\u003e\n\n      \u003cdiv dangerouslySetInnerHTML={{ __html: post.body.html }} /\u003e\n    \u003c/article\u003e\n  )\n}\n\nexport async function getStaticPaths() {\n  return {\n    paths: allPosts.map((p) =\u003e ({ params: { slug: p.slug } })),\n    fallback: false,\n  }\n}\n\n// Statically fetch post by slug\nexport async function getStaticProps({ params }) {\n  const post = allPosts.find((post) =\u003e post.slug === params?.slug)\n\n  return { props: { post } }\n}\n`})}),`\n`,(0,e.jsx)(n.p,{children:(0,e.jsx)(n.a,{href:\"https://www.imadatyat.me/guides/how-to-setup-contentlayer-in-nextjs#set-up-nextjs-plugin-in-nextconfigjs-optional-enables-live-reload-and-build-setup\",children:\"How to setup Contentlayer in your Next.js app? - Imad Atyat-Allah\"})}),`\n`,(0,e.jsx)(n.p,{children:\"\\uBC88\\uC5ED\"}),`\n`,(0,e.jsx)(n.p,{children:(0,e.jsx)(n.a,{href:\"https://www.sandromaglione.com/techblog/contentlayer-blog-template-with-nextjs\",children:\"How to create a Blog with Contentlayer and NextJs\"})})]})}function N(t={}){let{wrapper:n}=t.components||{};return n?(0,e.jsx)(n,Object.assign({},t,{children:(0,e.jsx)(d,t)})):d(t)}var S=N;return j(P);})();\n;return Component;"},"_id":"31th.mdx","_raw":{"sourceFilePath":"31th.mdx","sourceFileName":"31th.mdx","sourceFileDir":".","contentType":"mdx","flattenedPath":"31th"},"type":"Post"}},"__N_SSG":true},"page":"/snack/[snack]","query":{"snack":"31th"},"buildId":"ubUi1wMd3WyILvzRHiAaV","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

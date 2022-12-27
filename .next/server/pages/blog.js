@@ -45,46 +45,6 @@ const BlogPost = ({ date , title , des , slug  })=>{
 
 /***/ }),
 
-/***/ 9012:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1664);
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_1__);
-
-
-const SnackPost = ({ date , title , des , slug  })=>{
-    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_1___default()), {
-        href: `/snack/${slug}`,
-        passHref: true,
-        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("a", {
-            className: "w-full my-7 hover:-translate-x-1.5",
-            children: [
-                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                    className: "font-medium text-xs text-gray-400",
-                    children: date
-                }),
-                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                    className: `font-extrabold text-2xl mt-2`,
-                    children: title
-                }),
-                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                    className: `font-medium text-gray-600 text-xl mt-1`,
-                    children: des
-                })
-            ]
-        })
-    });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SnackPost);
-
-
-/***/ }),
-
 /***/ 6531:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -97,44 +57,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_BlogPost__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5371);
-/* harmony import */ var components_SnackPost__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9012);
-/* harmony import */ var _components_Container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3098);
-/* harmony import */ var contentlayer_generated__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4427);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([contentlayer_generated__WEBPACK_IMPORTED_MODULE_4__]);
-contentlayer_generated__WEBPACK_IMPORTED_MODULE_4__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
-
+/* harmony import */ var _components_Container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3098);
+/* harmony import */ var contentlayer_generated__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4427);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([contentlayer_generated__WEBPACK_IMPORTED_MODULE_3__]);
+contentlayer_generated__WEBPACK_IMPORTED_MODULE_3__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 
 
 
 const Blog = ({ posts  })=>{
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_Container__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
-        children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                className: `mt-10 flex flex-col`,
-                children: posts.map((post)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_BlogPost__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z, {
-                        date: post.date,
-                        title: post.title,
-                        des: post.description,
-                        slug: post._raw.flattenedPath
-                    }, post._id)
-                )
-            }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                className: `mt-10 flex flex-col`,
-                children: posts.map((post)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(components_SnackPost__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
-                        date: post.date,
-                        title: post.title,
-                        des: post.description,
-                        slug: post._raw.flattenedPath
-                    }, post._id)
-                )
-            })
-        ]
+    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_Container__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
+        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+            className: `mt-10 flex flex-col`,
+            children: posts.map((post)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_BlogPost__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z, {
+                    date: post.date,
+                    title: post.title,
+                    des: post.description,
+                    slug: post._raw.flattenedPath
+                }, post._id)
+            )
+        })
     });
 };
 const getStaticProps = async ()=>{
-    const posts = contentlayer_generated__WEBPACK_IMPORTED_MODULE_4__/* .allPosts.sort */ .fd.sort((a, b)=>Number(new Date(b.date)) - Number(new Date(a.date))
+    const posts = contentlayer_generated__WEBPACK_IMPORTED_MODULE_3__/* .allPosts.sort */ .fd.sort((a, b)=>Number(new Date(b.date)) - Number(new Date(a.date))
     );
     return {
         props: {

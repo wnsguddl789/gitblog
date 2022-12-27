@@ -1,0 +1,139 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width"/><meta charSet="utf-8"/><title>React 기본 개념정리</title><meta content="예제" name="description"/><meta property="og:site_name" content="Bizbaeja"/><meta name="next-head-count" content="5"/><link rel="preload" href="/_next/static/css/2c8c11e9ea4d5e4b.css" as="style"/><link rel="stylesheet" href="/_next/static/css/2c8c11e9ea4d5e4b.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-5cd94c89d3acac5f.js"></script><script src="/_next/static/chunks/webpack-69bfa6990bb9e155.js" defer=""></script><script src="/_next/static/chunks/framework-5f4595e5518b5600.js" defer=""></script><script src="/_next/static/chunks/main-164920eac96bc1c7.js" defer=""></script><script src="/_next/static/chunks/pages/_app-f6e1d36fb7693025.js" defer=""></script><script src="/_next/static/chunks/247-fc9df32bb962ad35.js" defer=""></script><script src="/_next/static/chunks/pages/snack/%5Bsnack%5D-dfbf9a57a8834c75.js" defer=""></script><script src="/_next/static/wACR2BUbsN6XqbV7_uMII/_buildManifest.js" defer=""></script><script src="/_next/static/wACR2BUbsN6XqbV7_uMII/_ssgManifest.js" defer=""></script><script src="/_next/static/wACR2BUbsN6XqbV7_uMII/_middlewareManifest.js" defer=""></script></head><body><div id="__next" data-reactroot=""><div class="w-full flex flex-col items-center p-3"><header class="w-full max-w-3xl flex flex-row justify-between items-center my-1"><div class="flex flex-row items-center"><span style="box-sizing:border-box;display:inline-block;overflow:hidden;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;position:relative;max-width:100%"><span style="box-sizing:border-box;display:block;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;max-width:100%"><img style="display:block;max-width:100%;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0" alt="" aria-hidden="true" src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2740%27%20height=%2740%27/%3e"/></span><img alt="로고" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" decoding="async" data-nimg="intrinsic" class="rounded-full" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%;object-fit:cover"/><noscript><img alt="로고" srcSet="/_next/image?url=%2Fsherlock.jpeg&amp;w=48&amp;q=75 1x, /_next/image?url=%2Fsherlock.jpeg&amp;w=96&amp;q=75 2x" src="/_next/image?url=%2Fsherlock.jpeg&amp;w=96&amp;q=75" decoding="async" data-nimg="intrinsic" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%;object-fit:cover" class="rounded-full" loading="lazy"/></noscript></span><span class="mx-2 font-extralight text-lg">Bizbaeja&#x27;s Blog</span></div><nav><a class="mr-5" href="/">Home</a><a class="mr-5" href="/blog">Blog</a><a class="mr-5" href="/snack">TIL</a></nav></header><main class="w-full max-w-3xl"><div class="mt-10 prose"><h1 class="text-sky-700">React 기본 개념정리</h1><h1>클래스 이해하기</h1>
+<pre><code class="language-jsx">class Person {
+  //가장 간단한 프로퍼티의 형태는 생성자 함수를 추가하는 것이다.
+  //메소드는 메소드의 이름 다음에 중괄호를 넣어서 만든다
+  //그리고 this 키워드로 프로퍼티를 설정할 수 있다.
+  constructor() {
+    this.name = &#x27;자현&#x27;;
+  }
+  printMyName() {
+    console.log(this.name);
+  }
+}
+//만들어놓은 클래스를 new Person() 메소드를 사용해서 상수 person 에 저장한다.
+const person = new Person();
+
+person.printMyMame();
+
+//&gt;&gt;&gt; &#x27;자현&#x27; 이 출력된다.
+</code></pre>
+<h2>클래스의 상속</h2>
+<pre><code class="language-jsx">class Human {
+	constructor() {
+	this.gender = &#x27;female&#x27;;
+ }
+	printGender(){
+	console.log(this.gender);
+	}
+}
+//Person class 는 extend 키워드를 사용하여 human 클래스를 상속받아 확장할 수 있다.
+class Person extends Human {
+		//super 메소드를 추가해야 작동한다.
+	 super();
+   construtor(){
+	this.name = &#x27;자현&#x27;;
+	}
+   printMyName(){
+	console.log(this.name);
+	}
+}
+const person = new Person();
+person.printMyName();
+person.printGender();
+</code></pre>
+<h2>클래스의 속성 및 메서드</h2>
+<pre><code class="language-jsx">class Human {
+  gender = &#x27;female&#x27;;
+
+  printGender = () =&gt; {
+    console.log(this.gender);
+  };
+}
+
+class Person extends Human {
+  name = &#x27;자현&#x27;;
+  gender = &#x27;female&#x27;;
+
+  printMyName = () =&gt; {
+    console.log(this.name);
+  };
+}
+
+const person = new Person();
+person.printMyName();
+person.printGender();
+</code></pre>
+<h1>스프레드 연산자</h1>
+<pre><code class="language-jsx">const numbers = [1, 2, 3];
+const newNumbers = [...numbers, 4];
+
+console.log(newNumbers);
+//&gt;&gt;&gt; [1,2,3,4]
+</code></pre>
+<pre><code class="language-jsx">const person = { name: &#x27;자현&#x27; };
+const newPerson = { ...person, age: 28 };
+
+console.log(newPerson);
+//&gt;&gt;&gt; [object object] { age:28, name:&quot;자현&quot;}
+</code></pre>
+<h2>레스트 연산자</h2>
+<pre><code class="language-jsx">const filter = (...args) =&gt; {
+  //배열 메소드를 fliter() 처럼 사용할 수 있고, filter 는 배열에서 전달되는 모든 원소들에 대해 함수실 힐행한다. 그래서 원소를 전달하고 화살표 함수를 하용해서 원소가 1과 같은지 아닌지를 true 나 false 로 반환한다.
+  return args.filter((el) =&gt; el === 1);
+};
+console.log(filter(1, 2, 3));
+//&gt;&gt;&gt; [1]
+</code></pre>
+<h2>구조분해할당</h2>
+<ul>
+<li>배열의 원소나 객체의 프로퍼티를 추출해서 변수에 저장할 수 있도록 해주는 것.<!-- -->
+<pre><code class="language-jsx">const numbers = [1, 2, 3];
+[num1, num2] = numbers;
+console.log(num1, num2);
+//&gt;&gt;&gt; 1
+//&gt;&gt;&gt; 2
+
+const numbers = [1, 2, 3];
+[num1, , num3] = numbers;
+console.log(num1, num3);
+//&gt;&gt;&gt; 1
+//&gt;&gt;&gt; 3
+</code></pre>
+</li>
+</ul>
+<h2>배열 함수</h2>
+<ul>
+<li>(1) map _ 예전 값을 새 값으로 반환한다.<!-- -->
+<pre><code class="language-jsx">//모든 원소의 값들이 두배가 되는 배열을 만들고 싶다
+const numbers = [1, 2, 3];
+
+const doubleNumArray = nubmers.map((num) =&gt; {
+  return num * 2;
+});
+
+console.log(numbers);
+console.log(doubleNumArray);
+//&gt;[1,2,3]
+//&gt;[2,4,6]
+</code></pre>
+</li>
+<li>(2) reduce _ (배열에 있는 모든 요소의 합계를 구할 때..)콜백 함수를 배열의 모든 값을 순서대로 실행하고 이전 요소에 대한 계산 값을 반환한다. 리듀서를 실행한 최종 결과는 단일 값이다. 콜백이 처음 실행될 때, ‘이전 계산의 반환 값’ 이 없다 제공된 경우 초기 값을 대신 사용할 수 있다. 그렇지 않으면 인덱스 0의 배열요소가 초기값으로 사용된다.<!-- -->
+<pre><code class="language-jsx">const arr = [1,2,3,4];
+const initialValue = 0;
+//accumulator : 콜백함수의 반환값을 누적한다
+//currentValeu : 배열의 현재 요소
+
+const sumWithInitial = arr.reduce
+((accumulator , currentValue)
+ =&gt; accumulator + currentValue,
+ initialValue);
+
+// accumulator = 0 , currentValue =1, currenIndex = 0, result = 1
+// accumulator = 1 , currentValue =2, currentIndex =1, result = 3
+// accumulator = 3 , currentValue =3, currentIndex =2, result = 6
+// accumulator = 6 , currentValue =4, currentIndex =4, result = 10
+
+//&gt;&gt;&gt; 10
+</code></pre>
+</li>
+</ul></div></main></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"snack":{"title":"React 기본 개념정리","date":"2022-11-25T00:00:00.000Z","description":"예제","body":{"raw":"\n# 클래스 이해하기\n\n```jsx\nclass Person {\n  //가장 간단한 프로퍼티의 형태는 생성자 함수를 추가하는 것이다.\n  //메소드는 메소드의 이름 다음에 중괄호를 넣어서 만든다\n  //그리고 this 키워드로 프로퍼티를 설정할 수 있다.\n  constructor() {\n    this.name = '자현';\n  }\n  printMyName() {\n    console.log(this.name);\n  }\n}\n//만들어놓은 클래스를 new Person() 메소드를 사용해서 상수 person 에 저장한다.\nconst person = new Person();\n\nperson.printMyMame();\n\n//\u003e\u003e\u003e '자현' 이 출력된다.\n```\n\n## 클래스의 상속\n\n```jsx\nclass Human {\n\tconstructor() {\n\tthis.gender = 'female';\n }\n\tprintGender(){\n\tconsole.log(this.gender);\n\t}\n}\n//Person class 는 extend 키워드를 사용하여 human 클래스를 상속받아 확장할 수 있다.\nclass Person extends Human {\n\t\t//super 메소드를 추가해야 작동한다.\n\t super();\n   construtor(){\n\tthis.name = '자현';\n\t}\n   printMyName(){\n\tconsole.log(this.name);\n\t}\n}\nconst person = new Person();\nperson.printMyName();\nperson.printGender();\n```\n\n## 클래스의 속성 및 메서드\n\n```jsx\nclass Human {\n  gender = 'female';\n\n  printGender = () =\u003e {\n    console.log(this.gender);\n  };\n}\n\nclass Person extends Human {\n  name = '자현';\n  gender = 'female';\n\n  printMyName = () =\u003e {\n    console.log(this.name);\n  };\n}\n\nconst person = new Person();\nperson.printMyName();\nperson.printGender();\n```\n\n# 스프레드 연산자\n\n```jsx\nconst numbers = [1, 2, 3];\nconst newNumbers = [...numbers, 4];\n\nconsole.log(newNumbers);\n//\u003e\u003e\u003e [1,2,3,4]\n```\n\n```jsx\nconst person = { name: '자현' };\nconst newPerson = { ...person, age: 28 };\n\nconsole.log(newPerson);\n//\u003e\u003e\u003e [object object] { age:28, name:\"자현\"}\n```\n\n## 레스트 연산자\n\n```jsx\nconst filter = (...args) =\u003e {\n  //배열 메소드를 fliter() 처럼 사용할 수 있고, filter 는 배열에서 전달되는 모든 원소들에 대해 함수실 힐행한다. 그래서 원소를 전달하고 화살표 함수를 하용해서 원소가 1과 같은지 아닌지를 true 나 false 로 반환한다.\n  return args.filter((el) =\u003e el === 1);\n};\nconsole.log(filter(1, 2, 3));\n//\u003e\u003e\u003e [1]\n```\n\n## 구조분해할당\n\n- 배열의 원소나 객체의 프로퍼티를 추출해서 변수에 저장할 수 있도록 해주는 것.\n  ```jsx\n  const numbers = [1, 2, 3];\n  [num1, num2] = numbers;\n  console.log(num1, num2);\n  //\u003e\u003e\u003e 1\n  //\u003e\u003e\u003e 2\n\n  const numbers = [1, 2, 3];\n  [num1, , num3] = numbers;\n  console.log(num1, num3);\n  //\u003e\u003e\u003e 1\n  //\u003e\u003e\u003e 3\n  ```\n\n## 배열 함수\n\n- (1) map \\_ 예전 값을 새 값으로 반환한다.\n  ```jsx\n  //모든 원소의 값들이 두배가 되는 배열을 만들고 싶다\n  const numbers = [1, 2, 3];\n\n  const doubleNumArray = nubmers.map((num) =\u003e {\n    return num * 2;\n  });\n\n  console.log(numbers);\n  console.log(doubleNumArray);\n  //\u003e[1,2,3]\n  //\u003e[2,4,6]\n  ```\n- (2) reduce \\_ (배열에 있는 모든 요소의 합계를 구할 때..)콜백 함수를 배열의 모든 값을 순서대로 실행하고 이전 요소에 대한 계산 값을 반환한다. 리듀서를 실행한 최종 결과는 단일 값이다. 콜백이 처음 실행될 때, ‘이전 계산의 반환 값’ 이 없다 제공된 경우 초기 값을 대신 사용할 수 있다. 그렇지 않으면 인덱스 0의 배열요소가 초기값으로 사용된다.\n  ```jsx\n  const arr = [1,2,3,4];\n  const initialValue = 0;\n  //accumulator : 콜백함수의 반환값을 누적한다\n  //currentValeu : 배열의 현재 요소\n\n  const sumWithInitial = arr.reduce\n  ((accumulator , currentValue)\n   =\u003e accumulator + currentValue,\n   initialValue);\n\n  // accumulator = 0 , currentValue =1, currenIndex = 0, result = 1\n  // accumulator = 1 , currentValue =2, currentIndex =1, result = 3\n  // accumulator = 3 , currentValue =3, currentIndex =2, result = 6\n  // accumulator = 6 , currentValue =4, currentIndex =4, result = 10\n\n  //\u003e\u003e\u003e 10\n  ```\n","code":"var Component=(()=\u003e{var m=Object.create;var l=Object.defineProperty;var d=Object.getOwnPropertyDescriptor;var h=Object.getOwnPropertyNames;var g=Object.getPrototypeOf,p=Object.prototype.hasOwnProperty;var x=(r,n)=\u003e()=\u003e(n||r((n={exports:{}}).exports,n),n.exports),j=(r,n)=\u003e{for(var s in n)l(r,s,{get:n[s],enumerable:!0})},o=(r,n,s,t)=\u003e{if(n\u0026\u0026typeof n==\"object\"||typeof n==\"function\")for(let c of h(n))!p.call(r,c)\u0026\u0026c!==s\u0026\u0026l(r,c,{get:()=\u003en[c],enumerable:!(t=d(n,c))||t.enumerable});return r};var N=(r,n,s)=\u003e(s=r!=null?m(g(r)):{},o(n||!r||!r.__esModule?l(s,\"default\",{value:r,enumerable:!0}):s,r)),b=r=\u003eo(l({},\"__esModule\",{value:!0}),r);var u=x((V,a)=\u003e{a.exports=_jsx_runtime});var P={};j(P,{default:()=\u003eM,frontmatter:()=\u003ef});var e=N(u()),f={title:\"React \\uAE30\\uBCF8 \\uAC1C\\uB150\\uC815\\uB9AC\",date:new Date(16693344e5),description:\"\\uC608\\uC81C\"};function i(r){let n=Object.assign({h1:\"h1\",pre:\"pre\",code:\"code\",h2:\"h2\",ul:\"ul\",li:\"li\"},r.components);return(0,e.jsxs)(e.Fragment,{children:[(0,e.jsx)(n.h1,{children:\"\\uD074\\uB798\\uC2A4 \\uC774\\uD574\\uD558\\uAE30\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`class Person {\n  //\\uAC00\\uC7A5 \\uAC04\\uB2E8\\uD55C \\uD504\\uB85C\\uD37C\\uD2F0\\uC758 \\uD615\\uD0DC\\uB294 \\uC0DD\\uC131\\uC790 \\uD568\\uC218\\uB97C \\uCD94\\uAC00\\uD558\\uB294 \\uAC83\\uC774\\uB2E4.\n  //\\uBA54\\uC18C\\uB4DC\\uB294 \\uBA54\\uC18C\\uB4DC\\uC758 \\uC774\\uB984 \\uB2E4\\uC74C\\uC5D0 \\uC911\\uAD04\\uD638\\uB97C \\uB123\\uC5B4\\uC11C \\uB9CC\\uB4E0\\uB2E4\n  //\\uADF8\\uB9AC\\uACE0 this \\uD0A4\\uC6CC\\uB4DC\\uB85C \\uD504\\uB85C\\uD37C\\uD2F0\\uB97C \\uC124\\uC815\\uD560 \\uC218 \\uC788\\uB2E4.\n  constructor() {\n    this.name = '\\uC790\\uD604';\n  }\n  printMyName() {\n    console.log(this.name);\n  }\n}\n//\\uB9CC\\uB4E4\\uC5B4\\uB193\\uC740 \\uD074\\uB798\\uC2A4\\uB97C new Person() \\uBA54\\uC18C\\uB4DC\\uB97C \\uC0AC\\uC6A9\\uD574\\uC11C \\uC0C1\\uC218 person \\uC5D0 \\uC800\\uC7A5\\uD55C\\uB2E4.\nconst person = new Person();\n\nperson.printMyMame();\n\n//\u003e\u003e\u003e '\\uC790\\uD604' \\uC774 \\uCD9C\\uB825\\uB41C\\uB2E4.\n`})}),`\n`,(0,e.jsx)(n.h2,{children:\"\\uD074\\uB798\\uC2A4\\uC758 \\uC0C1\\uC18D\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`class Human {\n\tconstructor() {\n\tthis.gender = 'female';\n }\n\tprintGender(){\n\tconsole.log(this.gender);\n\t}\n}\n//Person class \\uB294 extend \\uD0A4\\uC6CC\\uB4DC\\uB97C \\uC0AC\\uC6A9\\uD558\\uC5EC human \\uD074\\uB798\\uC2A4\\uB97C \\uC0C1\\uC18D\\uBC1B\\uC544 \\uD655\\uC7A5\\uD560 \\uC218 \\uC788\\uB2E4.\nclass Person extends Human {\n\t\t//super \\uBA54\\uC18C\\uB4DC\\uB97C \\uCD94\\uAC00\\uD574\\uC57C \\uC791\\uB3D9\\uD55C\\uB2E4.\n\t super();\n   construtor(){\n\tthis.name = '\\uC790\\uD604';\n\t}\n   printMyName(){\n\tconsole.log(this.name);\n\t}\n}\nconst person = new Person();\nperson.printMyName();\nperson.printGender();\n`})}),`\n`,(0,e.jsx)(n.h2,{children:\"\\uD074\\uB798\\uC2A4\\uC758 \\uC18D\\uC131 \\uBC0F \\uBA54\\uC11C\\uB4DC\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`class Human {\n  gender = 'female';\n\n  printGender = () =\u003e {\n    console.log(this.gender);\n  };\n}\n\nclass Person extends Human {\n  name = '\\uC790\\uD604';\n  gender = 'female';\n\n  printMyName = () =\u003e {\n    console.log(this.name);\n  };\n}\n\nconst person = new Person();\nperson.printMyName();\nperson.printGender();\n`})}),`\n`,(0,e.jsx)(n.h1,{children:\"\\uC2A4\\uD504\\uB808\\uB4DC \\uC5F0\\uC0B0\\uC790\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`const numbers = [1, 2, 3];\nconst newNumbers = [...numbers, 4];\n\nconsole.log(newNumbers);\n//\u003e\u003e\u003e [1,2,3,4]\n`})}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`const person = { name: '\\uC790\\uD604' };\nconst newPerson = { ...person, age: 28 };\n\nconsole.log(newPerson);\n//\u003e\u003e\u003e [object object] { age:28, name:\"\\uC790\\uD604\"}\n`})}),`\n`,(0,e.jsx)(n.h2,{children:\"\\uB808\\uC2A4\\uD2B8 \\uC5F0\\uC0B0\\uC790\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`const filter = (...args) =\u003e {\n  //\\uBC30\\uC5F4 \\uBA54\\uC18C\\uB4DC\\uB97C fliter() \\uCC98\\uB7FC \\uC0AC\\uC6A9\\uD560 \\uC218 \\uC788\\uACE0, filter \\uB294 \\uBC30\\uC5F4\\uC5D0\\uC11C \\uC804\\uB2EC\\uB418\\uB294 \\uBAA8\\uB4E0 \\uC6D0\\uC18C\\uB4E4\\uC5D0 \\uB300\\uD574 \\uD568\\uC218\\uC2E4 \\uD790\\uD589\\uD55C\\uB2E4. \\uADF8\\uB798\\uC11C \\uC6D0\\uC18C\\uB97C \\uC804\\uB2EC\\uD558\\uACE0 \\uD654\\uC0B4\\uD45C \\uD568\\uC218\\uB97C \\uD558\\uC6A9\\uD574\\uC11C \\uC6D0\\uC18C\\uAC00 1\\uACFC \\uAC19\\uC740\\uC9C0 \\uC544\\uB2CC\\uC9C0\\uB97C true \\uB098 false \\uB85C \\uBC18\\uD658\\uD55C\\uB2E4.\n  return args.filter((el) =\u003e el === 1);\n};\nconsole.log(filter(1, 2, 3));\n//\u003e\u003e\u003e [1]\n`})}),`\n`,(0,e.jsx)(n.h2,{children:\"\\uAD6C\\uC870\\uBD84\\uD574\\uD560\\uB2F9\"}),`\n`,(0,e.jsxs)(n.ul,{children:[`\n`,(0,e.jsxs)(n.li,{children:[\"\\uBC30\\uC5F4\\uC758 \\uC6D0\\uC18C\\uB098 \\uAC1D\\uCCB4\\uC758 \\uD504\\uB85C\\uD37C\\uD2F0\\uB97C \\uCD94\\uCD9C\\uD574\\uC11C \\uBCC0\\uC218\\uC5D0 \\uC800\\uC7A5\\uD560 \\uC218 \\uC788\\uB3C4\\uB85D \\uD574\\uC8FC\\uB294 \\uAC83.\",`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`const numbers = [1, 2, 3];\n[num1, num2] = numbers;\nconsole.log(num1, num2);\n//\u003e\u003e\u003e 1\n//\u003e\u003e\u003e 2\n\nconst numbers = [1, 2, 3];\n[num1, , num3] = numbers;\nconsole.log(num1, num3);\n//\u003e\u003e\u003e 1\n//\u003e\u003e\u003e 3\n`})}),`\n`]}),`\n`]}),`\n`,(0,e.jsx)(n.h2,{children:\"\\uBC30\\uC5F4 \\uD568\\uC218\"}),`\n`,(0,e.jsxs)(n.ul,{children:[`\n`,(0,e.jsxs)(n.li,{children:[\"(1) map _ \\uC608\\uC804 \\uAC12\\uC744 \\uC0C8 \\uAC12\\uC73C\\uB85C \\uBC18\\uD658\\uD55C\\uB2E4.\",`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`//\\uBAA8\\uB4E0 \\uC6D0\\uC18C\\uC758 \\uAC12\\uB4E4\\uC774 \\uB450\\uBC30\\uAC00 \\uB418\\uB294 \\uBC30\\uC5F4\\uC744 \\uB9CC\\uB4E4\\uACE0 \\uC2F6\\uB2E4\nconst numbers = [1, 2, 3];\n\nconst doubleNumArray = nubmers.map((num) =\u003e {\n  return num * 2;\n});\n\nconsole.log(numbers);\nconsole.log(doubleNumArray);\n//\u003e[1,2,3]\n//\u003e[2,4,6]\n`})}),`\n`]}),`\n`,(0,e.jsxs)(n.li,{children:[\"(2) reduce _ (\\uBC30\\uC5F4\\uC5D0 \\uC788\\uB294 \\uBAA8\\uB4E0 \\uC694\\uC18C\\uC758 \\uD569\\uACC4\\uB97C \\uAD6C\\uD560 \\uB54C..)\\uCF5C\\uBC31 \\uD568\\uC218\\uB97C \\uBC30\\uC5F4\\uC758 \\uBAA8\\uB4E0 \\uAC12\\uC744 \\uC21C\\uC11C\\uB300\\uB85C \\uC2E4\\uD589\\uD558\\uACE0 \\uC774\\uC804 \\uC694\\uC18C\\uC5D0 \\uB300\\uD55C \\uACC4\\uC0B0 \\uAC12\\uC744 \\uBC18\\uD658\\uD55C\\uB2E4. \\uB9AC\\uB4C0\\uC11C\\uB97C \\uC2E4\\uD589\\uD55C \\uCD5C\\uC885 \\uACB0\\uACFC\\uB294 \\uB2E8\\uC77C \\uAC12\\uC774\\uB2E4. \\uCF5C\\uBC31\\uC774 \\uCC98\\uC74C \\uC2E4\\uD589\\uB420 \\uB54C, \\u2018\\uC774\\uC804 \\uACC4\\uC0B0\\uC758 \\uBC18\\uD658 \\uAC12\\u2019 \\uC774 \\uC5C6\\uB2E4 \\uC81C\\uACF5\\uB41C \\uACBD\\uC6B0 \\uCD08\\uAE30 \\uAC12\\uC744 \\uB300\\uC2E0 \\uC0AC\\uC6A9\\uD560 \\uC218 \\uC788\\uB2E4. \\uADF8\\uB807\\uC9C0 \\uC54A\\uC73C\\uBA74 \\uC778\\uB371\\uC2A4 0\\uC758 \\uBC30\\uC5F4\\uC694\\uC18C\\uAC00 \\uCD08\\uAE30\\uAC12\\uC73C\\uB85C \\uC0AC\\uC6A9\\uB41C\\uB2E4.\",`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`const arr = [1,2,3,4];\nconst initialValue = 0;\n//accumulator : \\uCF5C\\uBC31\\uD568\\uC218\\uC758 \\uBC18\\uD658\\uAC12\\uC744 \\uB204\\uC801\\uD55C\\uB2E4\n//currentValeu : \\uBC30\\uC5F4\\uC758 \\uD604\\uC7AC \\uC694\\uC18C\n\nconst sumWithInitial = arr.reduce\n((accumulator , currentValue)\n =\u003e accumulator + currentValue,\n initialValue);\n\n// accumulator = 0 , currentValue =1, currenIndex = 0, result = 1\n// accumulator = 1 , currentValue =2, currentIndex =1, result = 3\n// accumulator = 3 , currentValue =3, currentIndex =2, result = 6\n// accumulator = 6 , currentValue =4, currentIndex =4, result = 10\n\n//\u003e\u003e\u003e 10\n`})}),`\n`]}),`\n`]})]})}function w(r={}){let{wrapper:n}=r.components||{};return n?(0,e.jsx)(n,Object.assign({},r,{children:(0,e.jsx)(i,r)})):i(r)}var M=w;return b(P);})();\n;return Component;"},"_id":"fifteenth.mdx","_raw":{"sourceFilePath":"fifteenth.mdx","sourceFileName":"fifteenth.mdx","sourceFileDir":".","contentType":"mdx","flattenedPath":"fifteenth"},"type":"Post"}},"__N_SSG":true},"page":"/snack/[snack]","query":{"snack":"fifteenth"},"buildId":"wACR2BUbsN6XqbV7_uMII","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

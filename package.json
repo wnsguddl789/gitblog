@@ -24,6 +24,7 @@
     "globby": "^12.0.2",
     "next": "12.1.5",
     "next-contentlayer": "0.2.5",
+    "next-mdx-remote": "^4.2.0",
     "next-seo": "^5.2.0",
     "nextjs-prismic-blog-starter": "^1.1.4",
     "react": "17.0.2",

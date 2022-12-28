@@ -1,0 +1,77 @@
+---
+title: (오류해결)you should not upload the .next directory.
+date: 2022-12-26
+description: 오류해결
+---
+
+### 깃블로그 배포과정 중 오류
+
+yarn build 시 생긴 오류이다
+
+![오류](/38/오류1.png)
+
+### 검색어 : You should not upload the `.next` directory.
+
+~~보통 검색어는 오류가 난 그대로 긁어서 구글링하면 스택오버플로우 답변의 도움을 받곤 한다.~~
+
+이 방법은 추천하지 않는다.
+
+공식문서를 보면서 해답을 찾아가는것이 정석이다.
+
+---
+
+## 해결방법
+
+---
+
+### 1. yarn.lock 파일 제거
+
+### 2. yarn 명령어 입력
+
+### 3. yarn build 재실행
+
+참고자료 [https://stackoverflow.com/questions/50947389/nextjs-cannot-find-a-valid-build-in-the-next-directory/60439958#60439958](https://stackoverflow.com/questions/50947389/nextjs-cannot-find-a-valid-build-in-the-next-directory/60439958#60439958)
+
+## 정석적인 해결방법
+
+---
+
+에러 로그가 시키는 대로 하면 된다
+
+![로그](/38/log.png)
+
+[Yarn](https://classic.yarnpkg.com/en/docs/cli/install)
+
+에러로그가 이끄는 곳은 yarn install 이었다.
+
+이 뜻은 제대로 yarn 을 다시 설치하라는 뜻…!
+
+그래서 위의 해결 방법이 나온 듯하다.
+
+---
+
+<aside>
+💡
+
+### **`yarn install`**
+
+`package.json`로컬 `node_modules`폴더 에 나열된 모든 종속성을 설치 합니다.
+
+`yarn.lock`파일은 다음과 같이 활용됩니다 .
+
+- `yarn.lockpackage.jsonyarn.lockyarn.lock`
+  가 있고 에 나열된 모든 종속성을 충족하기에 충분하면 에 기록
+  된 정확한 버전
+  이 설치되고
+  변경되지 않습니다. Yarn은 최신 버전을 확인하지 않습니다.
+- `yarn.lock`_하지 않은_`package.jsonpackage.jsonpackage.jsonyarn.lock`
+  가 없거나 에 나열된 모든 종속성을 충족하기에 충분
+  경우
+  (예: 에 종속성을 수동으로 추가하는 경우
+  ) Yarn은 의 제약 조건을 충족하는 사용 가능한 최신 버전을 찾습니다
+  . 결과는 에 기록됩니다
+  .
+
+`yarn.lock`가 업데이트되지 않도록 하려면 를 사용 `--frozen-lockfile`하십시오.
+
+</aside>

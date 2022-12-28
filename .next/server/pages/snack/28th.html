@@ -1,0 +1,88 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width"/><meta charSet="utf-8"/><title>SCSS</title><meta content="TIL" name="description"/><meta property="og:site_name" content="Bizbaeja"/><meta name="next-head-count" content="5"/><link rel="preload" href="/_next/static/css/2c8c11e9ea4d5e4b.css" as="style"/><link rel="stylesheet" href="/_next/static/css/2c8c11e9ea4d5e4b.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-5cd94c89d3acac5f.js"></script><script src="/_next/static/chunks/webpack-69bfa6990bb9e155.js" defer=""></script><script src="/_next/static/chunks/framework-5f4595e5518b5600.js" defer=""></script><script src="/_next/static/chunks/main-164920eac96bc1c7.js" defer=""></script><script src="/_next/static/chunks/pages/_app-f6e1d36fb7693025.js" defer=""></script><script src="/_next/static/chunks/247-fc9df32bb962ad35.js" defer=""></script><script src="/_next/static/chunks/pages/snack/%5Bsnack%5D-dfbf9a57a8834c75.js" defer=""></script><script src="/_next/static/D8RBXRC87pCr1StuzvAzH/_buildManifest.js" defer=""></script><script src="/_next/static/D8RBXRC87pCr1StuzvAzH/_ssgManifest.js" defer=""></script><script src="/_next/static/D8RBXRC87pCr1StuzvAzH/_middlewareManifest.js" defer=""></script></head><body><div id="__next" data-reactroot=""><div class="w-full flex flex-col items-center p-3"><header class="w-full max-w-3xl flex flex-row justify-between items-center my-1"><div class="flex flex-row items-center"><span style="box-sizing:border-box;display:inline-block;overflow:hidden;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;position:relative;max-width:100%"><span style="box-sizing:border-box;display:block;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;max-width:100%"><img style="display:block;max-width:100%;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0" alt="" aria-hidden="true" src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2740%27%20height=%2740%27/%3e"/></span><img alt="로고" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" decoding="async" data-nimg="intrinsic" class="rounded-full" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%;object-fit:cover"/><noscript><img alt="로고" srcSet="/_next/image?url=%2Fsherlock.jpeg&amp;w=48&amp;q=75 1x, /_next/image?url=%2Fsherlock.jpeg&amp;w=96&amp;q=75 2x" src="/_next/image?url=%2Fsherlock.jpeg&amp;w=96&amp;q=75" decoding="async" data-nimg="intrinsic" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%;object-fit:cover" class="rounded-full" loading="lazy"/></noscript></span><span class="mx-2 font-extralight text-lg">Bizbaeja&#x27;s Blog</span></div><nav><a class="mr-5" href="/">Home</a><a class="mr-5" href="/blog">Blog</a><a class="mr-5" href="/snack">TIL</a></nav></header><main class="w-full max-w-3xl"><div class="mt-10 prose"><h1 class="text-sky-700">SCSS</h1><h1>Variable and Nesting</h1>
+<ul>
+<li>gulpfile → 특정 파일인 style.scss 를 관찰하고 있다.</li>
+<li>src 주소 파일에서 일어나는 모든 일은 css 로 compile 된다.</li>
+</ul>
+<aside><p>💡 🤔dest ⇒ dist 로 바꿨을 때 바꿔야 하는 모든 것</p></aside>
+<ol>
+<li>gulpfile의 routes 의 css 의 dest 가 dist 임을 명시해줘야함</li>
+<li>gulpfile 의 const clean = async () =&gt; await deleteSync([&quot;dist/&quot;]);</li>
+<li>dest 의 파일명</li>
+<li>index.html 의 href 파일 경로명</li>
+</ol>
+<hr/>
+<ul>
+<li>variable : 가장 중요한 styles 을 저장하고 싶을을 때 쓴다. scss 폴더에서</li>
+</ul>
+<p><em>variavbles.scss 파일을 만든다 (_밑줄) 이 있는 파일은 css 로 변하지 않았으면 하는 것을 의미한다. === scss 만을 위한 파일임을 정의 $을 넣어서 정의해준다.</em></p>
+<p>그다음 styles.scss 에 import 해준다 <code>@import &quot;_variables&quot;;</code></p>
+<hr/>
+<ul>
+<li>Nesting :내가 타겟하는 element 를 더 정확하게 해준다.</li>
+</ul>
+<p>내가 원하는 것 ⇒ style.scss</p>
+<pre><code class="language-css">@import &#x27;_variables&#x27;;
+
+h2 {
+  color: $bg;
+}
+.box {
+  margin-top: 20px;
+  &amp;:hover {
+    background-color: green;
+  }
+  h2 {
+    color: blue;
+    &amp;:hover {
+      color: red;
+    }
+  }
+  button {
+    color: red;
+  }
+}
+</code></pre>
+<p><a href="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6dc12806-296b-4b0f-b1d2-001404b28868/%E1%84%92%E1%85%AA%E1%84%86%E1%85%A7%E1%86%AB_%E1%84%80%E1%85%B5%E1%84%85%E1%85%A9%E1%86%A8_2022-12-14_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_12.23.51.mov">화면 기록 2022-12-14 오전 12.23.51.mov</a></p>
+<hr/>
+<h1>Mixins</h1>
+<p>_mixins :scss functiionality 를 재사용하게 해준다</p>
+<p>어떤 종류의 argument 를 mixin에 보내야 할 때, _mixin에 작성한 코드는 Css의 결과값을 바꿀 것이다.</p>
+<p>srx/_mixin.scss 파일을 만든 뒤 , <code>@mixin name { }</code>; 형식으로 써준다.</p>
+<p>styles.scss 에 <code>@import &quot;_mixins&quot;;</code> 을 해준다.</p>
+<p>@include 를 이용하여 sexyTilte 을 넣어준다.</p>
+<p>만약 링크가 여러개인데 조금씩 다른 스타일링을 주고싶은 경우라면</p>
+<pre><code class="language-css">&lt;a href=&quot;#&quot;&gt;Google&lt;/a&gt;
+   &lt;a href=&quot;#&quot;&gt;Google&lt;/a&gt;
+   &lt;a href=&quot;#&quot;&gt;Google&lt;/a&gt;
+   &lt;a href=&quot;#&quot;&gt;Google&lt;/a&gt;
+   &lt;a href=&quot;#&quot;&gt;Google&lt;/a&gt;
+</code></pre>
+<p>index.html</p>
+<pre><code class="language-css">@import &#x27;_variables&#x27;;
+@import &#x27;_mixins&#x27;;
+h1 {
+  @include link();
+}
+</code></pre>
+<p>styles.scss</p>
+<pre><code class="language-css">@mixin link($color) {
+  text-decoration: none;
+  display: block;
+  color: $color;
+}
+</code></pre>
+<p>_mixins.scss</p>
+<pre><code class="language-css">@import &#x27;_variables&#x27;;
+@import &#x27;_mixins&#x27;;
+a {
+  margin-bottom: 10pxx;
+  &amp;:nth-child(odd) {
+    @include link(blue);
+  }
+  &amp;:nth-child(even) {
+    @include link(red);
+  }
+}
+</code></pre>
+<hr/>
+<p>심지어 if else 도 구현가능하다</p></div></main></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"snack":{"title":"SCSS","date":"2022-12-15T00:00:00.000Z","description":"TIL","body":{"raw":"\n# Variable and Nesting\n\n- gulpfile → 특정 파일인 style.scss 를 관찰하고 있다.\n- src 주소 파일에서 일어나는 모든 일은 css 로 compile 된다.\n\n\u003caside\u003e\n💡 🤔dest ⇒ dist 로 바꿨을 때 바꿔야 하는 모든 것\n\n\u003c/aside\u003e\n\n1. gulpfile의 routes 의 css 의 dest 가 dist 임을 명시해줘야함\n2. gulpfile 의 const clean = async () =\u003e await deleteSync([\"dist/\"]);\n3. dest 의 파일명\n4. index.html 의 href 파일 경로명\n\n---\n\n- variable : 가장 중요한 styles 을 저장하고 싶을을 때 쓴다. scss 폴더에서\n\n_variavbles.scss 파일을 만든다 (\\_밑줄) 이 있는 파일은 css 로 변하지 않았으면 하는 것을 의미한다. === scss 만을 위한 파일임을 정의 $을 넣어서 정의해준다._\n\n그다음 styles.scss 에 import 해준다 `@import \"_variables\";`\n\n---\n\n- Nesting :내가 타겟하는 element 를 더 정확하게 해준다.\n\n내가 원하는 것 ⇒ style.scss\n\n```css\n@import '_variables';\n\nh2 {\n  color: $bg;\n}\n.box {\n  margin-top: 20px;\n  \u0026:hover {\n    background-color: green;\n  }\n  h2 {\n    color: blue;\n    \u0026:hover {\n      color: red;\n    }\n  }\n  button {\n    color: red;\n  }\n}\n```\n\n[화면 기록 2022-12-14 오전 12.23.51.mov](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6dc12806-296b-4b0f-b1d2-001404b28868/%E1%84%92%E1%85%AA%E1%84%86%E1%85%A7%E1%86%AB_%E1%84%80%E1%85%B5%E1%84%85%E1%85%A9%E1%86%A8_2022-12-14_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_12.23.51.mov)\n\n---\n\n# Mixins\n\n\\_mixins :scss functiionality 를 재사용하게 해준다\n\n어떤 종류의 argument 를 mixin에 보내야 할 때, \\_mixin에 작성한 코드는 Css의 결과값을 바꿀 것이다.\n\nsrx/\\_mixin.scss 파일을 만든 뒤 , `@mixin name { }`; 형식으로 써준다.\n\nstyles.scss 에 `@import \"_mixins\";` 을 해준다.\n\n@include 를 이용하여 sexyTilte 을 넣어준다.\n\n만약 링크가 여러개인데 조금씩 다른 스타일링을 주고싶은 경우라면\n\n```css\n\u003ca href=\"#\"\u003eGoogle\u003c/a\u003e\n   \u003ca href=\"#\"\u003eGoogle\u003c/a\u003e\n   \u003ca href=\"#\"\u003eGoogle\u003c/a\u003e\n   \u003ca href=\"#\"\u003eGoogle\u003c/a\u003e\n   \u003ca href=\"#\"\u003eGoogle\u003c/a\u003e\n```\n\nindex.html\n\n```css\n@import '_variables';\n@import '_mixins';\nh1 {\n  @include link();\n}\n```\n\nstyles.scss\n\n```css\n@mixin link($color) {\n  text-decoration: none;\n  display: block;\n  color: $color;\n}\n```\n\n\\_mixins.scss\n\n```css\n@import '_variables';\n@import '_mixins';\na {\n  margin-bottom: 10pxx;\n  \u0026:nth-child(odd) {\n    @include link(blue);\n  }\n  \u0026:nth-child(even) {\n    @include link(red);\n  }\n}\n```\n\n---\n\n심지어 if else 도 구현가능하다\n","code":"var Component=(()=\u003e{var h=Object.create;var c=Object.defineProperty;var m=Object.getOwnPropertyDescriptor;var p=Object.getOwnPropertyNames;var u=Object.getPrototypeOf,g=Object.prototype.hasOwnProperty;var x=(i,n)=\u003e()=\u003e(n||i((n={exports:{}}).exports,n),n.exports),_=(i,n)=\u003e{for(var l in n)c(i,l,{get:n[l],enumerable:!0})},o=(i,n,l,r)=\u003e{if(n\u0026\u0026typeof n==\"object\"||typeof n==\"function\")for(let s of p(n))!g.call(i,s)\u0026\u0026s!==l\u0026\u0026c(i,s,{get:()=\u003en[s],enumerable:!(r=m(n,s))||r.enumerable});return i};var b=(i,n,l)=\u003e(l=i!=null?h(u(i)):{},o(n||!i||!i.__esModule?c(l,\"default\",{value:i,enumerable:!0}):l,i)),f=i=\u003eo(c({},\"__esModule\",{value:!0}),i);var t=x((N,d)=\u003e{d.exports=_jsx_runtime});var A={};_(A,{default:()=\u003ey,frontmatter:()=\u003eE});var e=b(t()),E={title:\"SCSS\",date:new Date(16710624e5),description:\"TIL\"};function a(i){let n=Object.assign({h1:\"h1\",ul:\"ul\",li:\"li\",p:\"p\",ol:\"ol\",hr:\"hr\",em:\"em\",code:\"code\",pre:\"pre\",a:\"a\"},i.components);return(0,e.jsxs)(e.Fragment,{children:[(0,e.jsx)(n.h1,{children:\"Variable and Nesting\"}),`\n`,(0,e.jsxs)(n.ul,{children:[`\n`,(0,e.jsx)(n.li,{children:\"gulpfile \\u2192 \\uD2B9\\uC815 \\uD30C\\uC77C\\uC778 style.scss \\uB97C \\uAD00\\uCC30\\uD558\\uACE0 \\uC788\\uB2E4.\"}),`\n`,(0,e.jsx)(n.li,{children:\"src \\uC8FC\\uC18C \\uD30C\\uC77C\\uC5D0\\uC11C \\uC77C\\uC5B4\\uB098\\uB294 \\uBAA8\\uB4E0 \\uC77C\\uC740 css \\uB85C compile \\uB41C\\uB2E4.\"}),`\n`]}),`\n`,(0,e.jsx)(\"aside\",{children:(0,e.jsx)(n.p,{children:\"\\u{1F4A1} \\u{1F914}dest \\u21D2 dist \\uB85C \\uBC14\\uAFE8\\uC744 \\uB54C \\uBC14\\uAFD4\\uC57C \\uD558\\uB294 \\uBAA8\\uB4E0 \\uAC83\"})}),`\n`,(0,e.jsxs)(n.ol,{children:[`\n`,(0,e.jsx)(n.li,{children:\"gulpfile\\uC758 routes \\uC758 css \\uC758 dest \\uAC00 dist \\uC784\\uC744 \\uBA85\\uC2DC\\uD574\\uC918\\uC57C\\uD568\"}),`\n`,(0,e.jsx)(n.li,{children:'gulpfile \\uC758 const clean = async () =\u003e await deleteSync([\"dist/\"]);'}),`\n`,(0,e.jsx)(n.li,{children:\"dest \\uC758 \\uD30C\\uC77C\\uBA85\"}),`\n`,(0,e.jsx)(n.li,{children:\"index.html \\uC758 href \\uD30C\\uC77C \\uACBD\\uB85C\\uBA85\"}),`\n`]}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsxs)(n.ul,{children:[`\n`,(0,e.jsx)(n.li,{children:\"variable : \\uAC00\\uC7A5 \\uC911\\uC694\\uD55C styles \\uC744 \\uC800\\uC7A5\\uD558\\uACE0 \\uC2F6\\uC744\\uC744 \\uB54C \\uC4F4\\uB2E4. scss \\uD3F4\\uB354\\uC5D0\\uC11C\"}),`\n`]}),`\n`,(0,e.jsx)(n.p,{children:(0,e.jsx)(n.em,{children:\"variavbles.scss \\uD30C\\uC77C\\uC744 \\uB9CC\\uB4E0\\uB2E4 (_\\uBC11\\uC904) \\uC774 \\uC788\\uB294 \\uD30C\\uC77C\\uC740 css \\uB85C \\uBCC0\\uD558\\uC9C0 \\uC54A\\uC558\\uC73C\\uBA74 \\uD558\\uB294 \\uAC83\\uC744 \\uC758\\uBBF8\\uD55C\\uB2E4. === scss \\uB9CC\\uC744 \\uC704\\uD55C \\uD30C\\uC77C\\uC784\\uC744 \\uC815\\uC758 $\\uC744 \\uB123\\uC5B4\\uC11C \\uC815\\uC758\\uD574\\uC900\\uB2E4.\"})}),`\n`,(0,e.jsxs)(n.p,{children:[\"\\uADF8\\uB2E4\\uC74C styles.scss \\uC5D0 import \\uD574\\uC900\\uB2E4 \",(0,e.jsx)(n.code,{children:'@import \"_variables\";'})]}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsxs)(n.ul,{children:[`\n`,(0,e.jsx)(n.li,{children:\"Nesting :\\uB0B4\\uAC00 \\uD0C0\\uAC9F\\uD558\\uB294 element \\uB97C \\uB354 \\uC815\\uD655\\uD558\\uAC8C \\uD574\\uC900\\uB2E4.\"}),`\n`]}),`\n`,(0,e.jsx)(n.p,{children:\"\\uB0B4\\uAC00 \\uC6D0\\uD558\\uB294 \\uAC83 \\u21D2 style.scss\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`@import '_variables';\n\nh2 {\n  color: $bg;\n}\n.box {\n  margin-top: 20px;\n  \u0026:hover {\n    background-color: green;\n  }\n  h2 {\n    color: blue;\n    \u0026:hover {\n      color: red;\n    }\n  }\n  button {\n    color: red;\n  }\n}\n`})}),`\n`,(0,e.jsx)(n.p,{children:(0,e.jsx)(n.a,{href:\"https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6dc12806-296b-4b0f-b1d2-001404b28868/%E1%84%92%E1%85%AA%E1%84%86%E1%85%A7%E1%86%AB_%E1%84%80%E1%85%B5%E1%84%85%E1%85%A9%E1%86%A8_2022-12-14_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_12.23.51.mov\",children:\"\\u1112\\u116A\\u1106\\u1167\\u11AB \\u1100\\u1175\\u1105\\u1169\\u11A8 2022-12-14 \\u110B\\u1169\\u110C\\u1165\\u11AB 12.23.51.mov\"})}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsx)(n.h1,{children:\"Mixins\"}),`\n`,(0,e.jsx)(n.p,{children:\"_mixins :scss functiionality \\uB97C \\uC7AC\\uC0AC\\uC6A9\\uD558\\uAC8C \\uD574\\uC900\\uB2E4\"}),`\n`,(0,e.jsx)(n.p,{children:\"\\uC5B4\\uB5A4 \\uC885\\uB958\\uC758 argument \\uB97C mixin\\uC5D0 \\uBCF4\\uB0B4\\uC57C \\uD560 \\uB54C, _mixin\\uC5D0 \\uC791\\uC131\\uD55C \\uCF54\\uB4DC\\uB294 Css\\uC758 \\uACB0\\uACFC\\uAC12\\uC744 \\uBC14\\uAFC0 \\uAC83\\uC774\\uB2E4.\"}),`\n`,(0,e.jsxs)(n.p,{children:[\"srx/_mixin.scss \\uD30C\\uC77C\\uC744 \\uB9CC\\uB4E0 \\uB4A4 , \",(0,e.jsx)(n.code,{children:\"@mixin name { }\"}),\"; \\uD615\\uC2DD\\uC73C\\uB85C \\uC368\\uC900\\uB2E4.\"]}),`\n`,(0,e.jsxs)(n.p,{children:[\"styles.scss \\uC5D0 \",(0,e.jsx)(n.code,{children:'@import \"_mixins\";'}),\" \\uC744 \\uD574\\uC900\\uB2E4.\"]}),`\n`,(0,e.jsx)(n.p,{children:\"@include \\uB97C \\uC774\\uC6A9\\uD558\\uC5EC sexyTilte \\uC744 \\uB123\\uC5B4\\uC900\\uB2E4.\"}),`\n`,(0,e.jsx)(n.p,{children:\"\\uB9CC\\uC57D \\uB9C1\\uD06C\\uAC00 \\uC5EC\\uB7EC\\uAC1C\\uC778\\uB370 \\uC870\\uAE08\\uC529 \\uB2E4\\uB978 \\uC2A4\\uD0C0\\uC77C\\uB9C1\\uC744 \\uC8FC\\uACE0\\uC2F6\\uC740 \\uACBD\\uC6B0\\uB77C\\uBA74\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`\u003ca href=\"#\"\u003eGoogle\u003c/a\u003e\n   \u003ca href=\"#\"\u003eGoogle\u003c/a\u003e\n   \u003ca href=\"#\"\u003eGoogle\u003c/a\u003e\n   \u003ca href=\"#\"\u003eGoogle\u003c/a\u003e\n   \u003ca href=\"#\"\u003eGoogle\u003c/a\u003e\n`})}),`\n`,(0,e.jsx)(n.p,{children:\"index.html\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`@import '_variables';\n@import '_mixins';\nh1 {\n  @include link();\n}\n`})}),`\n`,(0,e.jsx)(n.p,{children:\"styles.scss\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`@mixin link($color) {\n  text-decoration: none;\n  display: block;\n  color: $color;\n}\n`})}),`\n`,(0,e.jsx)(n.p,{children:\"_mixins.scss\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-css\",children:`@import '_variables';\n@import '_mixins';\na {\n  margin-bottom: 10pxx;\n  \u0026:nth-child(odd) {\n    @include link(blue);\n  }\n  \u0026:nth-child(even) {\n    @include link(red);\n  }\n}\n`})}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsx)(n.p,{children:\"\\uC2EC\\uC9C0\\uC5B4 if else \\uB3C4 \\uAD6C\\uD604\\uAC00\\uB2A5\\uD558\\uB2E4\"})]})}function v(i={}){let{wrapper:n}=i.components||{};return n?(0,e.jsx)(n,Object.assign({},i,{children:(0,e.jsx)(a,i)})):a(i)}var y=v;return f(A);})();\n;return Component;"},"_id":"28th.mdx","_raw":{"sourceFilePath":"28th.mdx","sourceFileName":"28th.mdx","sourceFileDir":".","contentType":"mdx","flattenedPath":"28th"},"type":"Post"}},"__N_SSG":true},"page":"/snack/[snack]","query":{"snack":"28th"},"buildId":"D8RBXRC87pCr1StuzvAzH","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

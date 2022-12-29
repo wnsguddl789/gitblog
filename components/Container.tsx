@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Head from 'next/head';
 import metadata from '../data/metadata';
 import Nav from './Nav';
-
+import SideBar from './SideBar';
 const Container = (props) => {
   const meta = {
     title: metadata.title,
@@ -35,8 +35,10 @@ const Container = (props) => {
           </span>
         </div>
         <Nav />
+        {/* <SideBar /> */}
       </header>
       <main className={`w-full max-w-3xl`}>{props.children}</main>
+      <footer className={`w p-3`}>만든이 : 배자현</footer>
     </div>
   );
 };

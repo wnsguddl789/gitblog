@@ -1,0 +1,41 @@
+---
+title: selector
+date: 2022-12-29
+description: TIL / React TS
+---
+
+atom의 output 을 변형시키는 도구
+
+atom 은 그냥 배열임
+
+selector 은 state를 가져다가 뭔가를 return 할 것임
+
+[atom.tsx]
+
+```jsx
+import { atom, selector } from 'recoil';
+
+export const toDoSelector = selector({
+  key: 'toDoSelector',
+  get: ({ get }) => {
+    return 'hello';
+  }
+});
+```
+
+[ToDoList.tsx]
+
+```jsx
+function ToDoList() {
+  const toDos = useRecoilValue(toDoState);
+  **const selectorOutput = useRecoilValue(toDoSelector);
+  console.log(selectorOutput);**
+```
+
+![hello.png](/39/hello.png)
+
+selector 의 요점은 atom 을 가져다가 output 을 변형할 수 있다는 점이다.
+
+`get: ({ get }) => { return "hello"; },`
+
+get function 이 있어야 atom 을 받을 수 있다.

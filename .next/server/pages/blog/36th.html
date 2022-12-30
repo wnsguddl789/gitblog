@@ -1,0 +1,153 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width"/><meta charSet="utf-8"/><title>Persist</title><meta content="TIL / React Native" name="description"/><meta property="og:site_name" content="Bizbaeja"/><meta name="next-head-count" content="5"/><link rel="preload" href="/_next/static/css/90f5bc7ed5481af4.css" as="style"/><link rel="stylesheet" href="/_next/static/css/90f5bc7ed5481af4.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-5cd94c89d3acac5f.js"></script><script src="/_next/static/chunks/webpack-69bfa6990bb9e155.js" defer=""></script><script src="/_next/static/chunks/framework-5f4595e5518b5600.js" defer=""></script><script src="/_next/static/chunks/main-164920eac96bc1c7.js" defer=""></script><script src="/_next/static/chunks/pages/_app-f6e1d36fb7693025.js" defer=""></script><script src="/_next/static/chunks/247-fc9df32bb962ad35.js" defer=""></script><script src="/_next/static/chunks/pages/blog/%5Bslug%5D-e0f7f7d774079ee3.js" defer=""></script><script src="/_next/static/xLDZNyWmzn6o3OpXpUoeC/_buildManifest.js" defer=""></script><script src="/_next/static/xLDZNyWmzn6o3OpXpUoeC/_ssgManifest.js" defer=""></script><script src="/_next/static/xLDZNyWmzn6o3OpXpUoeC/_middlewareManifest.js" defer=""></script></head><body><div id="__next" data-reactroot=""><div class="w-full flex flex-col items-center p-3"><header class="w-full max-w-3xl flex flex-row justify-between items-center my-1"><div class="flex flex-row items-center"><span style="box-sizing:border-box;display:inline-block;overflow:hidden;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;position:relative;max-width:100%"><span style="box-sizing:border-box;display:block;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;max-width:100%"><img style="display:block;max-width:100%;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0" alt="" aria-hidden="true" src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2740%27%20height=%2740%27/%3e"/></span><img alt="로고" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" decoding="async" data-nimg="intrinsic" class="rounded-full" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%;object-fit:cover"/><noscript><img alt="로고" srcSet="/_next/image?url=%2Fsherlock.jpeg&amp;w=48&amp;q=75 1x, /_next/image?url=%2Fsherlock.jpeg&amp;w=96&amp;q=75 2x" src="/_next/image?url=%2Fsherlock.jpeg&amp;w=96&amp;q=75" decoding="async" data-nimg="intrinsic" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%;object-fit:cover" class="rounded-full" loading="lazy"/></noscript></span><span class="mx-2 font-extralight text-lg">Bizbaeja&#x27;s Blog</span></div><nav><a class="mr-5 " href="/">Home</a><a class="mr-5 " href="/blog">Blog</a><a class="mr-5 " href="/snack">TIL</a></nav></header><main class="w-full max-w-3xl"><div class="mt-10 prose"><h1 class="text-sky-700">Persist</h1><h2>저장</h2>
+<p>persist:지속하다</p>
+<p>ToDo 의 목록은 todo 에서만</p>
+<p>work 의 목록은 work 에서만 보이고 싶다면?</p>
+<p>우리가 렌더링하는 Todo가 working true 혹은 false , 즉 불리언 값을 갖고 있다면 그것을 모드와 비교한다.</p>
+<pre><code class="language-jsx">{Object.keys(toDos).map((key) =&gt;
+          toDos[key].working === working ? (
+            &lt;View style={styles.toDo} key={key}&gt;
+              &lt;Text style={styles.toDoText}&gt;{toDos[key].text}&lt;/Text&gt;
+            &lt;/View&gt;
+</code></pre>
+<pre><code class="language-jsx">const addToDo = () =&gt; {
+  if (text === &#x27;&#x27;) {
+    return;
+  }
+  //save to do
+  const newToDos = { ...toDos, [Date.now()]: { text, working } };
+  setTodos(newToDos);
+  setText(&#x27;&#x27;);
+};
+</code></pre>
+<h2>읽기</h2>
+<p><code>expo install @react-native-async-storage/async-storage</code></p>
+<p>*expo install 은 기본적으로 npm install 을 실행시킨다. 그러나 이것을 사용하면 현재 사용중인 expo 버전과 같은 버전의 모듈을 설치한다.</p>
+<h3>Storing string value</h3>
+<pre><code class="language-jsx">const storeData = async (value) =&gt; {
+  try {
+    await AsyncStroage.setItem(&#x27;@storage_key&#x27;, value);
+  } catch (e) {
+    // saving error
+  }
+};
+</code></pre>
+<h3>Storing object value</h3>
+<pre><code class="language-jsx">const storeDatea = aync(value) {
+try {
+const jsonValue = JSON.stringify(value)
+await AsyncStorage.setItem(&#x27;@storage_key&#x27;, value)
+}catch(e)
+//saving error
+}
+</code></pre>
+<p>async await 을 사용해야한다.</p>
+<p>Object 를 String 으로 바꿔주어야 한다. 마치 브라우저의 local storage 처럼 작동한다.</p>
+<hr/>
+<h3>Reading Data</h3>
+<p><code>getItem</code> returns a promise that either sesolves to stored value when data is found for given key, or returns, <code>null</code> otherwise.</p>
+<ul>
+<li>주어진 키에 대한 데이터가 발견되면 저장된 값으로 확인하거나 그렇지 않으면 promise 를 반환하거나 <code>null</code> 을 반환한다.</li>
+</ul>
+<h3>Reading string value</h3>
+<pre><code class="language-jsx">const getData = async () =&gt; {
+  try {
+    const value = await AsyncStorage.getItem(&#x27;storage_Key&#x27;);
+    if (value !== null) {
+      //value previously sored
+    }
+  } catch (e) {
+    //error reading value
+  }
+};
+</code></pre>
+<h3>Reading object value</h3>
+<pre><code class="language-jsx">const getData = async () =&gt; {
+  try {
+    const jsonValue = await AsyncStorage.getItem(&#x27;@storage_Key&#x27;);
+    return jsonValue !== null ? JSON.parse(jsonValue) : null;
+  } catch (e) {
+    //error reading value
+  }
+};
+</code></pre>
+<hr/>
+<h3>saveTodos function 만들기</h3>
+<ul>
+<li>JSON.stringify : object 를 string 으로 바꿔줌</li>
+</ul>
+<p>→ input에 텍스트 입력(toDos)</p>
+<p>→ 현재 있는 toDos를 stiring 으로 바꿔주고,</p>
+<p>→ await AsyncStorage.setItem 을 해줌.</p>
+<p>→ toSave 형태의 toDos 를 받음</p>
+<p>→ addToDo 안에서 새로운 object 를 만들기 때문에, newToDos에 saveToDos(newToDos)를 추가</p>
+<p>→ newToDos를 state 에 넣어주고 , 또 그 새로운 object 를 saveToDos 함수에 보냄</p>
+<pre><code class="language-jsx">const [**toDos**, setTodos] = useState({});
+const STORAGE_KEY = “@toDos”;
+ (1)const saveToDos = async(toSave) =&gt; {
+(3)await AsyncStorage.setItem(&quot;@toDos&quot;,JSON.stringify(&quot;toSave&quot;))
+//setItem은 promise 를 리턴할것임
+}
+
+const addToDo = async () =&gt; {
+    if (text === &quot;&quot;) {
+      return;
+    }
+    //save to do
+    const newToDos = { ...toDos, [Date.now()]: { text, working } };
+    **setToDos(newToDos);**
+  (2)  **saveToDos**(**newToDos**);
+    await saveToDos(newToDos);
+    setText(&quot;&quot;);
+  };
+</code></pre>
+<p>(1) addToDo function 안에서 새로운 object 를 만들기 때문에,</p>
+<p>(2) <strong>newToDos를</strong> state 에 넣어주고 , 또 그 새로운 object 를 saveToDos 함수에 보냄</p>
+<p>(3) 에서 saveToDos 는 key 인 “@toDos” 와 함께 AsyncStorage 에 저장하고있고,</p>
+<p>저장할 toDos 를 stringify 해주고 있다.(같은 키를 나중에 사용할 것이기 때문에 변수화시킨다)</p>
+<p><code>const STORAGE_KEY = “@toDos”;</code></p>
+<pre><code class="language-jsx">const [**toDos**, setTodos] = useState({});
+const STORAGE_KEY = “@toDos”;
+const saveToDos = async(toSave) =&gt; {
+await AsyncStorage.setItem(STORAGE_KEY,JSON.stringify(&quot;toSave&quot;))
+
+}
+
+const addToDo = async () =&gt; {
+    if (text === &quot;&quot;) {
+      return;
+    }
+    //save to do
+    const newToDos = { ...toDos, [Date.now()]: { text, working } };
+    **setToDos(newToDos);**
+    **saveToDos**(**newToDos**);
+    await saveToDos(newToDos);
+    setText(&quot;&quot;);
+  };
+</code></pre>
+<hr/>
+<h3>loadToDos function 만들기</h3>
+<pre><code class="language-jsx">const [**toDos**, setTodos] = useState({});
+const STORAGE_KEY = “@toDos”;
+const saveToDos = async(toSave) =&gt; {
+await AsyncStorage.setItem(STORAGE_KEY,JSON.stringify(&quot;toSave&quot;))
+}
+const loadingToDos = async()=&gt; {
+ const s = await AsyncStorage.getItem(STORAGE_KEY)
+ JSON.parse(s);
+}
+
+(1)useEffect(()=&gt;{loadToDos()},[])
+const addToDo = async () =&gt; {
+    if (text === &quot;&quot;) {
+      return;
+    }
+    //save to do
+    const newToDos = { ...toDos, [Date.now()]: { text, working } };
+    **setToDos(newToDos);**
+    **saveToDos**(**newToDos**);
+    await saveToDos(newToDos);
+    setText(&quot;&quot;);
+  };
+</code></pre>
+<p>(1) component 가 mount 될 때, useEffect 가 실행된다.</p>
+<p>(2) s 를 string 으로 만들기 위해 <code>JSON.parse(s)</code> 한다.</p></div></main><footer class="w p-3">만든이 : 배자현</footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"post":{"title":"Persist","date":"2022-12-23T00:00:00.000Z","description":"TIL / React Native","body":{"raw":"\n## 저장\n\npersist:지속하다\n\nToDo 의 목록은 todo 에서만\n\nwork 의 목록은 work 에서만 보이고 싶다면?\n\n우리가 렌더링하는 Todo가 working true 혹은 false , 즉 불리언 값을 갖고 있다면 그것을 모드와 비교한다.\n\n```jsx\n{Object.keys(toDos).map((key) =\u003e\n          toDos[key].working === working ? (\n            \u003cView style={styles.toDo} key={key}\u003e\n              \u003cText style={styles.toDoText}\u003e{toDos[key].text}\u003c/Text\u003e\n            \u003c/View\u003e\n```\n\n```jsx\nconst addToDo = () =\u003e {\n  if (text === '') {\n    return;\n  }\n  //save to do\n  const newToDos = { ...toDos, [Date.now()]: { text, working } };\n  setTodos(newToDos);\n  setText('');\n};\n```\n\n## 읽기\n\n`expo install @react-native-async-storage/async-storage`\n\n\\*expo install 은 기본적으로 npm install 을 실행시킨다. 그러나 이것을 사용하면 현재 사용중인 expo 버전과 같은 버전의 모듈을 설치한다.\n\n### Storing string value\n\n```jsx\nconst storeData = async (value) =\u003e {\n  try {\n    await AsyncStroage.setItem('@storage_key', value);\n  } catch (e) {\n    // saving error\n  }\n};\n```\n\n### Storing object value\n\n```jsx\nconst storeDatea = aync(value) {\ntry {\nconst jsonValue = JSON.stringify(value)\nawait AsyncStorage.setItem('@storage_key', value)\n}catch(e)\n//saving error\n}\n```\n\nasync await 을 사용해야한다.\n\nObject 를 String 으로 바꿔주어야 한다. 마치 브라우저의 local storage 처럼 작동한다.\n\n---\n\n### Reading Data\n\n`getItem` returns a promise that either sesolves to stored value when data is found for given key, or returns, `null` otherwise.\n\n- 주어진 키에 대한 데이터가 발견되면 저장된 값으로 확인하거나 그렇지 않으면 promise 를 반환하거나 `null` 을 반환한다.\n\n### Reading string value\n\n```jsx\nconst getData = async () =\u003e {\n  try {\n    const value = await AsyncStorage.getItem('storage_Key');\n    if (value !== null) {\n      //value previously sored\n    }\n  } catch (e) {\n    //error reading value\n  }\n};\n```\n\n### Reading object value\n\n```jsx\nconst getData = async () =\u003e {\n  try {\n    const jsonValue = await AsyncStorage.getItem('@storage_Key');\n    return jsonValue !== null ? JSON.parse(jsonValue) : null;\n  } catch (e) {\n    //error reading value\n  }\n};\n```\n\n---\n\n### saveTodos function 만들기\n\n- JSON.stringify : object 를 string 으로 바꿔줌\n\n→ input에 텍스트 입력(toDos)\n\n→ 현재 있는 toDos를 stiring 으로 바꿔주고,\n\n→ await AsyncStorage.setItem 을 해줌.\n\n→ toSave 형태의 toDos 를 받음\n\n→ addToDo 안에서 새로운 object 를 만들기 때문에, newToDos에 saveToDos(newToDos)를 추가\n\n→ newToDos를 state 에 넣어주고 , 또 그 새로운 object 를 saveToDos 함수에 보냄\n\n```jsx\nconst [**toDos**, setTodos] = useState({});\nconst STORAGE_KEY = “@toDos”;\n (1)const saveToDos = async(toSave) =\u003e {\n(3)await AsyncStorage.setItem(\"@toDos\",JSON.stringify(\"toSave\"))\n//setItem은 promise 를 리턴할것임\n}\n\nconst addToDo = async () =\u003e {\n    if (text === \"\") {\n      return;\n    }\n    //save to do\n    const newToDos = { ...toDos, [Date.now()]: { text, working } };\n    **setToDos(newToDos);**\n  (2)  **saveToDos**(**newToDos**);\n    await saveToDos(newToDos);\n    setText(\"\");\n  };\n```\n\n(1) addToDo function 안에서 새로운 object 를 만들기 때문에,\n\n(2) **newToDos를** state 에 넣어주고 , 또 그 새로운 object 를 saveToDos 함수에 보냄\n\n(3) 에서 saveToDos 는 key 인 “@toDos” 와 함께 AsyncStorage 에 저장하고있고,\n\n저장할 toDos 를 stringify 해주고 있다.(같은 키를 나중에 사용할 것이기 때문에 변수화시킨다)\n\n`const STORAGE_KEY = “@toDos”;`\n\n```jsx\nconst [**toDos**, setTodos] = useState({});\nconst STORAGE_KEY = “@toDos”;\nconst saveToDos = async(toSave) =\u003e {\nawait AsyncStorage.setItem(STORAGE_KEY,JSON.stringify(\"toSave\"))\n\n}\n\nconst addToDo = async () =\u003e {\n    if (text === \"\") {\n      return;\n    }\n    //save to do\n    const newToDos = { ...toDos, [Date.now()]: { text, working } };\n    **setToDos(newToDos);**\n    **saveToDos**(**newToDos**);\n    await saveToDos(newToDos);\n    setText(\"\");\n  };\n```\n\n---\n\n### loadToDos function 만들기\n\n```jsx\nconst [**toDos**, setTodos] = useState({});\nconst STORAGE_KEY = “@toDos”;\nconst saveToDos = async(toSave) =\u003e {\nawait AsyncStorage.setItem(STORAGE_KEY,JSON.stringify(\"toSave\"))\n}\nconst loadingToDos = async()=\u003e {\n const s = await AsyncStorage.getItem(STORAGE_KEY)\n JSON.parse(s);\n}\n\n(1)useEffect(()=\u003e{loadToDos()},[])\nconst addToDo = async () =\u003e {\n    if (text === \"\") {\n      return;\n    }\n    //save to do\n    const newToDos = { ...toDos, [Date.now()]: { text, working } };\n    **setToDos(newToDos);**\n    **saveToDos**(**newToDos**);\n    await saveToDos(newToDos);\n    setText(\"\");\n  };\n```\n\n(1) component 가 mount 될 때, useEffect 가 실행된다.\n\n(2) s 를 string 으로 만들기 위해 `JSON.parse(s)` 한다.\n","code":"var Component=(()=\u003e{var h=Object.create;var a=Object.defineProperty;var g=Object.getOwnPropertyDescriptor;var D=Object.getOwnPropertyNames;var T=Object.getPrototypeOf,u=Object.prototype.hasOwnProperty;var p=(o,n)=\u003e()=\u003e(n||o((n={exports:{}}).exports,n),n.exports),y=(o,n)=\u003e{for(var t in n)a(o,t,{get:n[t],enumerable:!0})},c=(o,n,t,r)=\u003e{if(n\u0026\u0026typeof n==\"object\"||typeof n==\"function\")for(let s of D(n))!u.call(o,s)\u0026\u0026s!==t\u0026\u0026a(o,s,{get:()=\u003en[s],enumerable:!(r=g(n,s))||r.enumerable});return o};var w=(o,n,t)=\u003e(t=o!=null?h(T(o)):{},c(n||!o||!o.__esModule?a(t,\"default\",{value:o,enumerable:!0}):t,o)),v=o=\u003ec(a({},\"__esModule\",{value:!0}),o);var l=p((k,i)=\u003e{i.exports=_jsx_runtime});var j={};y(j,{default:()=\u003em,frontmatter:()=\u003eS});var e=w(l()),S={title:\"Persist\",date:new Date(16717536e5),description:\"TIL / React Native\"};function d(o){let n=Object.assign({h2:\"h2\",p:\"p\",pre:\"pre\",code:\"code\",h3:\"h3\",hr:\"hr\",ul:\"ul\",li:\"li\",strong:\"strong\"},o.components);return(0,e.jsxs)(e.Fragment,{children:[(0,e.jsx)(n.h2,{children:\"\\uC800\\uC7A5\"}),`\n`,(0,e.jsx)(n.p,{children:\"persist:\\uC9C0\\uC18D\\uD558\\uB2E4\"}),`\n`,(0,e.jsx)(n.p,{children:\"ToDo \\uC758 \\uBAA9\\uB85D\\uC740 todo \\uC5D0\\uC11C\\uB9CC\"}),`\n`,(0,e.jsx)(n.p,{children:\"work \\uC758 \\uBAA9\\uB85D\\uC740 work \\uC5D0\\uC11C\\uB9CC \\uBCF4\\uC774\\uACE0 \\uC2F6\\uB2E4\\uBA74?\"}),`\n`,(0,e.jsx)(n.p,{children:\"\\uC6B0\\uB9AC\\uAC00 \\uB80C\\uB354\\uB9C1\\uD558\\uB294 Todo\\uAC00 working true \\uD639\\uC740 false , \\uC989 \\uBD88\\uB9AC\\uC5B8 \\uAC12\\uC744 \\uAC16\\uACE0 \\uC788\\uB2E4\\uBA74 \\uADF8\\uAC83\\uC744 \\uBAA8\\uB4DC\\uC640 \\uBE44\\uAD50\\uD55C\\uB2E4.\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`{Object.keys(toDos).map((key) =\u003e\n          toDos[key].working === working ? (\n            \u003cView style={styles.toDo} key={key}\u003e\n              \u003cText style={styles.toDoText}\u003e{toDos[key].text}\u003c/Text\u003e\n            \u003c/View\u003e\n`})}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`const addToDo = () =\u003e {\n  if (text === '') {\n    return;\n  }\n  //save to do\n  const newToDos = { ...toDos, [Date.now()]: { text, working } };\n  setTodos(newToDos);\n  setText('');\n};\n`})}),`\n`,(0,e.jsx)(n.h2,{children:\"\\uC77D\\uAE30\"}),`\n`,(0,e.jsx)(n.p,{children:(0,e.jsx)(n.code,{children:\"expo install @react-native-async-storage/async-storage\"})}),`\n`,(0,e.jsx)(n.p,{children:\"*expo install \\uC740 \\uAE30\\uBCF8\\uC801\\uC73C\\uB85C npm install \\uC744 \\uC2E4\\uD589\\uC2DC\\uD0A8\\uB2E4. \\uADF8\\uB7EC\\uB098 \\uC774\\uAC83\\uC744 \\uC0AC\\uC6A9\\uD558\\uBA74 \\uD604\\uC7AC \\uC0AC\\uC6A9\\uC911\\uC778 expo \\uBC84\\uC804\\uACFC \\uAC19\\uC740 \\uBC84\\uC804\\uC758 \\uBAA8\\uB4C8\\uC744 \\uC124\\uCE58\\uD55C\\uB2E4.\"}),`\n`,(0,e.jsx)(n.h3,{children:\"Storing string value\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`const storeData = async (value) =\u003e {\n  try {\n    await AsyncStroage.setItem('@storage_key', value);\n  } catch (e) {\n    // saving error\n  }\n};\n`})}),`\n`,(0,e.jsx)(n.h3,{children:\"Storing object value\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`const storeDatea = aync(value) {\ntry {\nconst jsonValue = JSON.stringify(value)\nawait AsyncStorage.setItem('@storage_key', value)\n}catch(e)\n//saving error\n}\n`})}),`\n`,(0,e.jsx)(n.p,{children:\"async await \\uC744 \\uC0AC\\uC6A9\\uD574\\uC57C\\uD55C\\uB2E4.\"}),`\n`,(0,e.jsx)(n.p,{children:\"Object \\uB97C String \\uC73C\\uB85C \\uBC14\\uAFD4\\uC8FC\\uC5B4\\uC57C \\uD55C\\uB2E4. \\uB9C8\\uCE58 \\uBE0C\\uB77C\\uC6B0\\uC800\\uC758 local storage \\uCC98\\uB7FC \\uC791\\uB3D9\\uD55C\\uB2E4.\"}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsx)(n.h3,{children:\"Reading Data\"}),`\n`,(0,e.jsxs)(n.p,{children:[(0,e.jsx)(n.code,{children:\"getItem\"}),\" returns a promise that either sesolves to stored value when data is found for given key, or returns, \",(0,e.jsx)(n.code,{children:\"null\"}),\" otherwise.\"]}),`\n`,(0,e.jsxs)(n.ul,{children:[`\n`,(0,e.jsxs)(n.li,{children:[\"\\uC8FC\\uC5B4\\uC9C4 \\uD0A4\\uC5D0 \\uB300\\uD55C \\uB370\\uC774\\uD130\\uAC00 \\uBC1C\\uACAC\\uB418\\uBA74 \\uC800\\uC7A5\\uB41C \\uAC12\\uC73C\\uB85C \\uD655\\uC778\\uD558\\uAC70\\uB098 \\uADF8\\uB807\\uC9C0 \\uC54A\\uC73C\\uBA74 promise \\uB97C \\uBC18\\uD658\\uD558\\uAC70\\uB098 \",(0,e.jsx)(n.code,{children:\"null\"}),\" \\uC744 \\uBC18\\uD658\\uD55C\\uB2E4.\"]}),`\n`]}),`\n`,(0,e.jsx)(n.h3,{children:\"Reading string value\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`const getData = async () =\u003e {\n  try {\n    const value = await AsyncStorage.getItem('storage_Key');\n    if (value !== null) {\n      //value previously sored\n    }\n  } catch (e) {\n    //error reading value\n  }\n};\n`})}),`\n`,(0,e.jsx)(n.h3,{children:\"Reading object value\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`const getData = async () =\u003e {\n  try {\n    const jsonValue = await AsyncStorage.getItem('@storage_Key');\n    return jsonValue !== null ? JSON.parse(jsonValue) : null;\n  } catch (e) {\n    //error reading value\n  }\n};\n`})}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsx)(n.h3,{children:\"saveTodos function \\uB9CC\\uB4E4\\uAE30\"}),`\n`,(0,e.jsxs)(n.ul,{children:[`\n`,(0,e.jsx)(n.li,{children:\"JSON.stringify : object \\uB97C string \\uC73C\\uB85C \\uBC14\\uAFD4\\uC90C\"}),`\n`]}),`\n`,(0,e.jsx)(n.p,{children:\"\\u2192 input\\uC5D0 \\uD14D\\uC2A4\\uD2B8 \\uC785\\uB825(toDos)\"}),`\n`,(0,e.jsx)(n.p,{children:\"\\u2192 \\uD604\\uC7AC \\uC788\\uB294 toDos\\uB97C stiring \\uC73C\\uB85C \\uBC14\\uAFD4\\uC8FC\\uACE0,\"}),`\n`,(0,e.jsx)(n.p,{children:\"\\u2192 await AsyncStorage.setItem \\uC744 \\uD574\\uC90C.\"}),`\n`,(0,e.jsx)(n.p,{children:\"\\u2192 toSave \\uD615\\uD0DC\\uC758 toDos \\uB97C \\uBC1B\\uC74C\"}),`\n`,(0,e.jsx)(n.p,{children:\"\\u2192 addToDo \\uC548\\uC5D0\\uC11C \\uC0C8\\uB85C\\uC6B4 object \\uB97C \\uB9CC\\uB4E4\\uAE30 \\uB54C\\uBB38\\uC5D0, newToDos\\uC5D0 saveToDos(newToDos)\\uB97C \\uCD94\\uAC00\"}),`\n`,(0,e.jsx)(n.p,{children:\"\\u2192 newToDos\\uB97C state \\uC5D0 \\uB123\\uC5B4\\uC8FC\\uACE0 , \\uB610 \\uADF8 \\uC0C8\\uB85C\\uC6B4 object \\uB97C saveToDos \\uD568\\uC218\\uC5D0 \\uBCF4\\uB0C4\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`const [**toDos**, setTodos] = useState({});\nconst STORAGE_KEY = \\u201C@toDos\\u201D;\n (1)const saveToDos = async(toSave) =\u003e {\n(3)await AsyncStorage.setItem(\"@toDos\",JSON.stringify(\"toSave\"))\n//setItem\\uC740 promise \\uB97C \\uB9AC\\uD134\\uD560\\uAC83\\uC784\n}\n\nconst addToDo = async () =\u003e {\n    if (text === \"\") {\n      return;\n    }\n    //save to do\n    const newToDos = { ...toDos, [Date.now()]: { text, working } };\n    **setToDos(newToDos);**\n  (2)  **saveToDos**(**newToDos**);\n    await saveToDos(newToDos);\n    setText(\"\");\n  };\n`})}),`\n`,(0,e.jsx)(n.p,{children:\"(1) addToDo function \\uC548\\uC5D0\\uC11C \\uC0C8\\uB85C\\uC6B4 object \\uB97C \\uB9CC\\uB4E4\\uAE30 \\uB54C\\uBB38\\uC5D0,\"}),`\n`,(0,e.jsxs)(n.p,{children:[\"(2) \",(0,e.jsx)(n.strong,{children:\"newToDos\\uB97C\"}),\" state \\uC5D0 \\uB123\\uC5B4\\uC8FC\\uACE0 , \\uB610 \\uADF8 \\uC0C8\\uB85C\\uC6B4 object \\uB97C saveToDos \\uD568\\uC218\\uC5D0 \\uBCF4\\uB0C4\"]}),`\n`,(0,e.jsx)(n.p,{children:\"(3) \\uC5D0\\uC11C saveToDos \\uB294 key \\uC778 \\u201C@toDos\\u201D \\uC640 \\uD568\\uAED8 AsyncStorage \\uC5D0 \\uC800\\uC7A5\\uD558\\uACE0\\uC788\\uACE0,\"}),`\n`,(0,e.jsx)(n.p,{children:\"\\uC800\\uC7A5\\uD560 toDos \\uB97C stringify \\uD574\\uC8FC\\uACE0 \\uC788\\uB2E4.(\\uAC19\\uC740 \\uD0A4\\uB97C \\uB098\\uC911\\uC5D0 \\uC0AC\\uC6A9\\uD560 \\uAC83\\uC774\\uAE30 \\uB54C\\uBB38\\uC5D0 \\uBCC0\\uC218\\uD654\\uC2DC\\uD0A8\\uB2E4)\"}),`\n`,(0,e.jsx)(n.p,{children:(0,e.jsx)(n.code,{children:\"const STORAGE_KEY = \\u201C@toDos\\u201D;\"})}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`const [**toDos**, setTodos] = useState({});\nconst STORAGE_KEY = \\u201C@toDos\\u201D;\nconst saveToDos = async(toSave) =\u003e {\nawait AsyncStorage.setItem(STORAGE_KEY,JSON.stringify(\"toSave\"))\n\n}\n\nconst addToDo = async () =\u003e {\n    if (text === \"\") {\n      return;\n    }\n    //save to do\n    const newToDos = { ...toDos, [Date.now()]: { text, working } };\n    **setToDos(newToDos);**\n    **saveToDos**(**newToDos**);\n    await saveToDos(newToDos);\n    setText(\"\");\n  };\n`})}),`\n`,(0,e.jsx)(n.hr,{}),`\n`,(0,e.jsx)(n.h3,{children:\"loadToDos function \\uB9CC\\uB4E4\\uAE30\"}),`\n`,(0,e.jsx)(n.pre,{children:(0,e.jsx)(n.code,{className:\"language-jsx\",children:`const [**toDos**, setTodos] = useState({});\nconst STORAGE_KEY = \\u201C@toDos\\u201D;\nconst saveToDos = async(toSave) =\u003e {\nawait AsyncStorage.setItem(STORAGE_KEY,JSON.stringify(\"toSave\"))\n}\nconst loadingToDos = async()=\u003e {\n const s = await AsyncStorage.getItem(STORAGE_KEY)\n JSON.parse(s);\n}\n\n(1)useEffect(()=\u003e{loadToDos()},[])\nconst addToDo = async () =\u003e {\n    if (text === \"\") {\n      return;\n    }\n    //save to do\n    const newToDos = { ...toDos, [Date.now()]: { text, working } };\n    **setToDos(newToDos);**\n    **saveToDos**(**newToDos**);\n    await saveToDos(newToDos);\n    setText(\"\");\n  };\n`})}),`\n`,(0,e.jsx)(n.p,{children:\"(1) component \\uAC00 mount \\uB420 \\uB54C, useEffect \\uAC00 \\uC2E4\\uD589\\uB41C\\uB2E4.\"}),`\n`,(0,e.jsxs)(n.p,{children:[\"(2) s \\uB97C string \\uC73C\\uB85C \\uB9CC\\uB4E4\\uAE30 \\uC704\\uD574 \",(0,e.jsx)(n.code,{children:\"JSON.parse(s)\"}),\" \\uD55C\\uB2E4.\"]})]})}function x(o={}){let{wrapper:n}=o.components||{};return n?(0,e.jsx)(n,Object.assign({},o,{children:(0,e.jsx)(d,o)})):d(o)}var m=x;return v(j);})();\n;return Component;"},"_id":"36th.mdx","_raw":{"sourceFilePath":"36th.mdx","sourceFileName":"36th.mdx","sourceFileDir":".","contentType":"mdx","flattenedPath":"36th"},"type":"Post"}},"__N_SSG":true},"page":"/blog/[slug]","query":{"slug":"36th"},"buildId":"xLDZNyWmzn6o3OpXpUoeC","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

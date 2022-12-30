@@ -1,0 +1,67 @@
+---
+title: ssh connect to host github.com port 22 Operation timed out[오류해결]
+date: 2022-12-30
+description: 오류해결
+---
+
+### 1. 터미널에
+
+`sudo nano ~/.ssh/config`
+
+를 입력한다
+
+### 2. password 를 입력한다.
+
+```jsx
+Host github.com
+ Hostname ssh.github.com
+ Port 443
+
+```
+
+![hose.png](/40/hose.png)
+
+위와 같이 입력 한다.
+
+### 3. ctr + X 를 입력해 창을 빠져나간다.
+
+### 4. 아래와 같은 창이 보이면 Y 를 눌러 save를 하고 빠져나온다.
+
+![save.png](/40/save.png)
+
+### 5. `ssh -T git@github.com` 는
+
+[SSH를 통한 GitHub 연결 - GitHub Docs](https://docs.github.com/ko/authentication/connecting-to-github-with-ssh)
+
+ssh 를 통한 깃허브가 잘 연결되었다는 확인을 위한 명령어입니다.
+
+- git push 안되는 오류 해결
+
+[ssh: connect to host github.com port 22: Connection timed out](https://stackoverflow.com/questions/15589682/ssh-connect-to-host-github-com-port-22-connection-timed-out)
+
+<aside>
+💡 For my case none of the suggested solutions worked so I tried to fix it myself and I got it resolved.
+
+For me I am getting this error on my AWS EC2 UBUNTU instance, what I did to resolve it was to edit the ssh config (or add it if it does not exist).
+
+`sudo nano ~/.ssh/config`
+
+And I added the following
+
+```
+Host github.com
+ Hostname ssh.github.com
+ Port 443
+
+```
+
+Then, run the command `ssh -T git@github.com` to confirm if the issue is fixed.
+
+According to [this](https://help.github.com/articles/using-ssh-over-the-https-port/)
+
+> Sometimes, firewalls refuse to allow SSH connections entirely. If using HTTPS cloning with credential caching is not an option, you can attempt to clone using an SSH connection made over the HTTPS port. Most firewall rules should allow this, but proxy servers may interfere
+
+Hopefully this helps anyone else who's having the same issue I did.
+
+</aside>
+나는 이 답변이 매우 도움이 되었다.

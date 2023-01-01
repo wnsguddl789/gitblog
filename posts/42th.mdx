@@ -1,0 +1,37 @@
+---
+title: nodemon 설치와 사용
+date: 2023-01-01
+description: nodemon 사용이유/`npm run “dev”`(script_명령어) 를 매번 실행 할 필요가 없어진다.
+---
+
+### index.js
+
+```jsx
+import express from 'express';
+
+console.log('how are you');
+```
+
+## nodemon 설치
+
+<aside>
+💡 $ `npm i nodemon —save-dev`
+
+</aside>
+
+## package.json
+
+<aside>
+💡` “scripts”:{
+ “dev” : ”nodemon —exec babel-node index.js”
+}`
+
+</aside>
+
+추가해준다
+
+## 터미널에 `npm run dev` 실행
+
+![nodemon.png](/42/nodemon.png)
+
+이렇게 하면 계속 코드를 수정해도 콘솔 창이 종료되지 않고 업데이트 된다.

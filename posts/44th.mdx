@@ -1,0 +1,71 @@
+---
+title: middleware
+date: 2023-01-04
+description: middleware
+---
+
+### middleware 구성
+
+```jsx
+const gossipMiddleware = (req, res, next) => {
+  console.log('Im in the middle');
+  next();
+};
+```
+
+### gossipMiddleware 가 들어가는 곳
+
+```jsx
+const handleHome = (req, res, next) => {
+  return res.end();
+};
+
+app.get('/'.gosshipMiddleware, handleHome);
+```
+
+<aside>
+💡 브라우저는 홈페이지를 get 하려고 할 것이다.
+→ 그럼 express 가 gossipMiddleware을 호출한다.
+→ console.log() 를 실행하고, next() 를 호출한다.
+→ express 는 그러면 다음 함수인 handleHome 을 호출하게 된다.
+
+</aside>
+
+### app.use()
+
+<aside>
+💡 global middleware 를 만들 수 있게 해준다. == 어느 url 에도 작동하는 middleware
+middleware 를 사용하는 순서가 선행되어야 하고, 그 다음에 URL의 get 이 따라와야한다.
+
+</aside>
+
+```jsx
+app.use(gossipMiddleware);
+app.get('/', handleHome);
+```
+
+## morgan
+
+- HTTP logger middleware for node.js
+
+<aside>
+💡 $`npm i morgan` 으로 설치한다.
+
+</aside>
+
+<aside>
+💡 morgan 함수를 호출한다.
+
+</aside>
+
+```jsx
+import morgan from 'morgan';
+
+const logger = morgan('dev');
+
+app.use(logger);
+```
+
+![middleware.png](/44/middleware.png)
+
+- GET, path , status code 모든 정보를 가지고 있다.

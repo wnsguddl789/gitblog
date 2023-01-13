@@ -1,0 +1,47 @@
+---
+title: let 과 const 이해하기
+date: 2023-01-04
+description: 자바스크립트에서의 변수의 사용
+---
+
+let 과 const 는 변수를 생성하는 방법이다.
+
+자바스크립트에서 var 는 변수를 생성한다.
+
+몇몇 변수들은 절대 변하지 않는데, 그것을 상수라고 부른다
+
+let = 새로운 var , 변수를 선언할 때 사용,
+
+let 과 const 는 모두 변수들의 범위를 변경할 때 사용하는 것
+
+---
+
+## let
+
+값을 수정할 수 있는 변수를 선언할 때 사용
+
+## const
+
+한번 지정하면 절대 변하지 않는 값인 상수를 선언할 때 사용
+
+const 에는 새로운 값을 할당할 수 없다.
+
+```jsx
+let myName = 'Baeja';
+console.log(myName);
+// Baeja
+
+myName = 'Sherlock';
+console.log(myName);
+// Sherlock;
+```
+
+```jsx
+const myName = 'Baeja';
+console.log(myName);
+// Baeja
+
+myName = 'Sherlock';
+console.log(myName);
+// TypeError Aggignment to constant variable at null
+```

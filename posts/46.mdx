@@ -1,0 +1,72 @@
+---
+title: JavaScript 에서 Events를 Listening 하기
+date: 2023-01-22
+description: 자바스크립트에서의 Event와 Event listen 의 원리
+---
+
+> HTML 문서에 app.js 파일이 연결되어 있기 때문에, javascript를 통해 html 의 내용을 가져올 수 있다.
+
+```jsx
+//index.js
+<html>
+  <head>
+    <meta>...</meta>
+    <link rel="stylesheet" href="style.css" />
+    <title>momentum</title>
+  </head>
+  <body>
+    <div class="hello">
+      <h1> Grab me! </h1>
+    </div>
+    <script src="**app.js**"></script>
+  </body>
+</html>
+```
+
+_document가 HTML이 app.js를 load 하기 때문에 존재하는 것이다_
+
+그 다음에 브라우저가 우리가 document 에 접근할 수 있게 해준다.
+
+javascript 가 qurerySelector () 괄호 안의 elemenet 에 접근할 수 있게 해준다
+
+console.dir = javascript object
+
+자바스크립트에서 일어나는 모든 일은 event 이고, 모든 event 는 listen 할 수 있다.
+
+## 1.HTML 요소를 JavaScript 로 가져올 수 있는가
+
+```jsx
+//app.js
+
+const title = document.querySelector('div.hello:first-child h1');
+```
+
+## 2.Event 를 listen 할 수 있는가?
+
+상수 ‘title’ 에 “click” 이라는 event가 일어났는지를 읽어내는 함수를 사용한다.
+
+```jsx
+//app.js
+
+const title = document.querySelector('div.hello:first-child h1');
+
+title.addEventListener('click', handleTitleClick);
+```
+
+## 3.handler 를 사용하여 event 를 트리거로 콜백함수까지 이어지게 할 수 있는가?
+
+누군가 title 을 click 했을 때, 무언가를 해줘야한다.
+
+무언가…?=== fx(handler) : 클릭이라는 이벤트를 읽어냈을 때 일어나는 반응 로직을 짜놓은 함수
+
+```jsx
+//app.js
+
+const title = document.querySelector('div.hello:first-child h1');
+
+function handleTitleClick() {
+  console.log('title was clicked!');
+}
+
+title.addEventListener('click', handleTitleClick);
+```

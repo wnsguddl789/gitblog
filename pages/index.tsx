@@ -5,14 +5,14 @@ import RecentPosts from '../components/RecentPosts';
 import metadata from '../data/metadata';
 import { allPosts } from '../.contentlayer/generated';
 import { InferGetStaticPropsType } from 'next';
-
+import { chosenImage } from './background';
 const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Container>
       <div className={`my-5 w-full`}>
         <div className={`relative`}>
           <Image
-            src={`/sky.jpeg`}
+            src={`/${chosenImage}`}
             alt="대표 이미지"
             width={`100%`}
             height={45}
@@ -21,9 +21,14 @@ const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
             className={`rounded-3xl`}
           />
           <span
-            className={`absolute top-12 font-extrabold italic text-white text-5xl md:text-9xl text flex justify-center w-full drop-shadow-lg`}
+            className={`absolute top-12 font-bold  text-white text-4xl md:text-5xl text flex justify-center w-full drop-shadow-2xl`}
           >
-            {metadata.title}
+            {metadata.quote}
+            <span
+              className={`absolute top-32 font-bold italic text-white text-3xl md:text-3xl text flex justify-center w-full drop-shadow-lg`}
+            >
+              {metadata.authors}
+            </span>
           </span>
         </div>
         <RecentPosts posts={posts} />

@@ -1,6 +1,5 @@
-node_modules
-
+node_modules/
+.next/
 
 # Contentlayer
-.contentlayer
-node_modules
+.contentlayer/

@@ -5,7 +5,9 @@ import RecentPosts from '../components/RecentPosts';
 import metadata from '../data/metadata';
 import { allPosts } from '../.contentlayer/generated';
 import { InferGetStaticPropsType } from 'next';
-import { chosenImage } from './background';
+
+import { chosenImage } from '../constant/background';
+
 const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Container>

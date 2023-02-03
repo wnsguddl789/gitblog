@@ -1,14 +1,21 @@
+import { ReactNode } from 'react';
 import Image from 'next/image';
 import Head from 'next/head';
 import metadata from '../data/metadata';
 import Nav from './Nav';
 import SideBar from './SideBar';
-const Container = (props) => {
-  const meta = {
+
+type Props = {
+  children: ReactNode;
+  customMeta?: any;
+};
+
+const Container = ({ customMeta, children }: Props) => {
+  const meta: typeof metadata = {
     title: metadata.title,
     description: metadata.description,
     author: metadata.author,
-    ...props.customMeta
+    ...customMeta
   };
 
   return (
@@ -37,7 +44,7 @@ const Container = (props) => {
         <Nav />
         {/* <SideBar /> */}
       </header>
-      <main className={`w-full max-w-3xl`}>{props.children}</main>
+      <main className={`w-full max-w-3xl`}>{children}</main>
       <footer className={`w p-3`}>만든이 : 배자현</footer>
     </div>
   );
